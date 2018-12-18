@@ -1,0 +1,165 @@
+<template>
+	
+	<div class="wrap">
+		
+		<div class="modal fade" id="create-vendor" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="defaultModalLabel">Vendor Information</h4>
+					</div>
+					<div class="modal-body">
+						<div class="alert alert-danger" v-if="errors">
+							<ul>
+								<li v-for="error in errors">{{ error[0] }}</li>
+							</ul>
+						</div>
+						<form>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">person</i>
+										</span>
+										<div class="form-line">
+											<input type="text" class="form-control date" placeholder="Vendor Name" v-model="vendor.name">
+										</div>
+									</div>
+								</div>        
+
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">email</i>
+										</span>
+										<div class="form-line">
+											<input type="text" class="form-control date" placeholder="Vendor Email" v-model="vendor.email">
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">phone</i>
+										</span>
+										<div class="form-line">
+											<input type="text" class="form-control date" placeholder="Vendor Phone no" v-model="vendor.phone">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">address</i>
+										</span>
+										<div class="form-line">
+											<input type="text" class="form-control date" placeholder="Vendor Address" v-model="vendor.address">
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+						</form>
+
+					</div>
+					<div class="modal-footer">
+						<br>
+						<button @click="createVendor" type="button" class="btn btn-success waves-effect">SAVE</button>
+						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">CLOSE</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</template>
+
+<script>
+
+	import {EventBus} from '../../vue-asset';
+
+
+	export default {
+
+		data(){
+
+			return {
+
+				vendor : {
+
+					name : '',
+					email : '',
+					phone : '',
+					address : ''
+
+				},
+
+				errors : null 
+
+
+			}
+
+		},
+
+		methods : {
+
+
+			createVendor(){
+
+				axios.post(base_url+'supplier',this.vendor)
+
+				.then(response => {
+
+					$('#create-vendor').modal('hide');
+
+					this.vendor = {'name':'','email':'','phone':'','address':''};
+					this.errors = null;
+					this.showMessage(response.data);
+
+				})
+				.catch(err => {
+
+					if(err.response){
+
+						this.errors = err.response.data.errors;
+					}
+
+				})
+
+			},
+
+			showMessage(data){
+				if(data.status == 'success'){
+					toastr.success(data.message,'Success Alert',{timeOut:500});
+				}else{
+					toastr.error(data.message,'Error Alert',{timeOut:500});
+				}
+			}
+
+
+
+		},
+
+  // end of method section 
+
+
+  created(){
+
+
+  },
+
+
+
+
+}
+
+
+
+</script>

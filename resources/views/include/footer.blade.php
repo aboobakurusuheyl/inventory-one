@@ -39,3 +39,4 @@
 
     <!-- Demo Js -->
     <script src="{{ url('js/demo.js') }}"></script>
+     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Vendor;
 use Illuminate\Http\Request;
+use Session;
+use Validator;
+use Auth;
 
 class VendorController extends Controller
 {
@@ -14,7 +17,16 @@ class VendorController extends Controller
      */
     public function index()
     {
-        //
+     
+
+     return view('vendor.vendor');
+    }
+
+    public function Vendor(){
+
+        $vendor = Vendor::all();
+
+        return $vendor;
     }
 
     /**
@@ -35,7 +47,31 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'nullable|unique:vendors',
+            'phone' => 'required|unique:vendors'
+        ]);
+
+
+     try{
+        $vendor = new Vendor;
+
+        $vendor->name = $request->name;
+        $vendor->email = $request->email;
+        $vendor->phone = $request->phone;
+        $vendor->address = $request->address;
+
+        $vendor->save();
+
+        return response()->json(['status'=>'success','message'=>'Vendor Created!']);
+    }
+    catch(\Exception $e){
+        return response()->json(['status'=>'error','message'=>'Something Error Found !, Please try again']);
+    }
+
+        
     }
 
     /**

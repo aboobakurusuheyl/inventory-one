@@ -17,6 +17,12 @@ Route::get('/', function () {
 });
 
 
+Route::resource('supplier','VendorController');
+Route::get('vendor-list','VendorController@Vendor');
+Route::resource('product','ProductController');
+Route::resource('customer','CustomerController');
+
+
 Route::get('logout','UserController@logout');
 
 });

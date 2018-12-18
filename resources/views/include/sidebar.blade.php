@@ -41,14 +41,14 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="" >
+                                <a href="{{ route('supplier.index') }}" >
                                     <span>Vendor</span>
                                 </a>
                           
                             </li>    
 
                              <li>
-                                <a href="" >
+                                <a href="{{ route('product.index') }}" >
                                     <span>Product</span>
                                 </a>
                           
