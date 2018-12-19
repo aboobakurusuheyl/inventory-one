@@ -4,7 +4,21 @@
 			
 			filtering element 
 		</div> -->
-		      <div class="body table-responsive">
+		      <div class="body">
+
+		      	<div class="row">
+		      		<div class="col-md-4">
+		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Name" name="" v-model="name">
+		      		</div>
+		      		<div class="col-md-4">
+		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Email" name="" v-model="email">
+		      		</div>
+		      		<div class="col-md-4">
+		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Phone" name="" v-model="phone">
+		      		</div>
+		      	</div>
+
+		      	<div class="table-responsive">
                         	
                             <table class="table table-condensed table-hover">
                                 <thead>
@@ -17,25 +31,58 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="vendor in vendors">
-                                        <td>{{ vendor.name }}</td>
-                                        <td>{{ vendor.email }}</td>
-                                        <td>{{ vendor.phone }}</td>
-                                        <td>{{ vendor.address }}</td>
+                                    <tr v-for="(value,index) in vendors.data">
+                                        <td>{{ value.name }}</td>
+                                        <td>{{ value.email }}</td>
+                                        <td>{{ value.phone }}</td>
+                                        <td>{{ value.address }}</td>
                                         <td>
-                                        	<button type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
-                                    <i class="material-icons">delete</i>
-                                </button>     	
-
+                              
                                 <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">edit</i>
                                 </button>
+
+                                  <button @click="deleteVendor(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                                    <i class="material-icons">delete</i>
+                                </button>     	
+
                             </td>
                                     </tr>
                             
                                 </tbody>
                             </table>
-                        </div>
+
+
+                   </div>
+                     
+                   		     <div class="row">
+            <div class="text-center col-md-12" v-if="vendors.last_page > 1">
+                <ul class="pagination">
+                    <li :class="[ ((vendors.current_page == 1) ? 'disabled' : '') ]">
+                         <a :href="'?page='+vendors.current_page" @click.prevent="pageClicked(vendors.current_page-1)" aria-label="Previous" v-if="vendors.current_page != 1">
+                             <span aria-hidden="true">«</span>
+                         </a>
+                        <a v-else>
+                            <span  aria-hidden="true">«</span>
+                        </a>
+                    </li>
+                    <li v-for="pageNo in range(paginateLoop, numberOfPage)"
+                        :class="[ ((vendors.current_page == pageNo) ? 'active' : '') ]">
+                        <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
+                    </li>
+                    <li :class="[ ((vendors.current_page == vendors.last_page) ? 'disabled' : '') ]" >
+                        <a  :href="'?page='+vendors.current_page" @click.prevent="pageClicked(vendors.current_page+1)" aria-label="Next" v-if="vendors.current_page != vendors.last_page">
+                            <span aria-hidden="true">»</span>
+                        </a>
+                        <a v-else>
+                            <span  aria-hidden="true">»</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+</div>  
+
+                   </div>
 	</div>
 </template>
 
@@ -49,7 +96,10 @@
           
           return {
 
-            vendors : []
+            vendors : [],
+            name : '',
+            email : '',
+            phone : '',
 
           }
           
@@ -57,15 +107,21 @@
         },
         created(){
           
+         var _this = this; 
          this.getData();
+
+        EventBus.$on('vendor-created', function () {
+			window.history.pushState({}, null, location.pathname);
+			_this.getData();
+		});
 
         },
 
         methods : {
         
-         getData(){
+         getData(page = 1){
           
-          axios.get(base_url+'vendor-list')
+          axios.get(base_url+"vendor-list?page="+page+"&name="+this.name+"&email="+this.email+"&phone="+this.phone)
           .then(response => {
            
            // console.log(response.data);
@@ -77,11 +133,77 @@
           	console.log(error);
           })
 
+         },
+
+         // delete vendor 
+
+         deleteVendor(id){
+              
+           
+         if(confirm('Are You Sure ?')){
+
+           axios.delete(base_url+'supplier/'+id)
+
+           .then(response => {
+             
+             if(response.data.status == 'success'){
+
+             	this.showMassage(response.data);
+             	EventBus.$emit('vendor-created',response.data);
+             }
+
+             else{
+             	this.showMassage(response.data);
+             }
+
+           })
+
          }
+
+
+            
+         },
+
+         range(start, count) {
+        return Array.apply(0, Array(count))
+            .map(function (element, index){
+                return index + start;
+            });
+   		 },
+   		  pageClicked(pageNo){
+                var vm = this;
+                vm.getData(pageNo);
+            },
+
+        },
+
+        computed: {
+          
+           paginateLoop(){
+                let vendors = this.vendors;
+                if(vendors.last_page > 11){
+                    if((vendors.last_page - 5) <= vendors.current_page){
+                        return vendors.last_page - 10;
+                    }
+                    if(vendors.current_page > 6){
+                        return vendors.current_page - 5;
+                    }
+                }
+                return 1;
+            },
+            numberOfPage(){
+                if(this.vendors.last_page < 11){
+                    return this.vendors.last_page;
+                }else{
+                    return 11;
+                }
+            }
+
 
         }
          
 	}
+        
         
         
         

@@ -16,10 +16,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// vendor 
 
 Route::resource('supplier','VendorController');
 Route::get('vendor-list','VendorController@Vendor');
+// product 
 Route::resource('product','ProductController');
+
+// customer 
 Route::resource('customer','CustomerController');
 
 

@@ -17,17 +17,36 @@ class VendorController extends Controller
      */
     public function index()
     {
+       
+
+       return view('vendor.vendor');
+
+   }
+
+   public function Vendor(Request $request){
+    
+
+    $vendor = Vendor::orderBy('id','desc');
+
+    if($request->name != ''){
      
+     $vendor->where('name','LIKE','%'.$request->name.'%');
+ }  
 
-     return view('vendor.vendor');
-    }
+ if($request->email != ''){
+     
+     $vendor->where('email','LIKE','%'.$request->email.'%');
+ }  
 
-    public function Vendor(){
+ if($request->phone != ''){
+     
+     $vendor->where('phone','LIKE','%'.$request->phone.'%');
+ }
 
-        $vendor = Vendor::all();
+ $vendor = $vendor->paginate(10);
 
-        return $vendor;
-    }
+ return $vendor;
+}
 
     /**
      * Show the form for creating a new resource.
@@ -55,21 +74,21 @@ class VendorController extends Controller
         ]);
 
 
-     try{
-        $vendor = new Vendor;
+        try{
+            $vendor = new Vendor;
 
-        $vendor->name = $request->name;
-        $vendor->email = $request->email;
-        $vendor->phone = $request->phone;
-        $vendor->address = $request->address;
+            $vendor->name = $request->name;
+            $vendor->email = $request->email;
+            $vendor->phone = $request->phone;
+            $vendor->address = $request->address;
 
-        $vendor->save();
+            $vendor->save();
 
-        return response()->json(['status'=>'success','message'=>'Vendor Created!']);
-    }
-    catch(\Exception $e){
-        return response()->json(['status'=>'error','message'=>'Something Error Found !, Please try again']);
-    }
+            return response()->json(['status'=>'success','message'=>'Vendor Created!']);
+        }
+        catch(\Exception $e){
+            return response()->json(['status'=>'error','message'=>'Something Error Found !, Please try again']);
+        }
 
         
     }
@@ -114,8 +133,24 @@ class VendorController extends Controller
      * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $vendor)
+    public function destroy($id)
     {
-        //
+
+        try{
+
+            $data = Vendor::find($id);
+
+            $data->delete();
+
+            return response()->json(['status'=>'success','message'=>'Vendor Deleted']);
+            
+
+        }
+        catch(\Exception $e){
+            return response()->json(['status'=>'error','message'=>'Something Error Found !, Please try again']);
+        }
+
+
     }
+
 }

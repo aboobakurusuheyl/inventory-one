@@ -121,6 +121,8 @@
 
 					this.vendor = {'name':'','email':'','phone':'','address':''};
 					this.errors = null;
+					EventBus.$emit('vendor-created',response.data);
+
 					this.showMessage(response.data);
 
 				})
