@@ -38,7 +38,7 @@
                                         <td>{{ value.address }}</td>
                                         <td>
                               
-                                <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                <button @click="editVendor(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">edit</i>
                                 </button>
 
@@ -82,7 +82,14 @@
             </div>
 </div>  
 
-                   </div>
+
+ <div class="row">
+ 	<update-vendor></update-vendor>
+ </div>
+
+
+
+         </div>
 	</div>
 </template>
 
@@ -90,7 +97,15 @@
 	
 	import {EventBus} from '../../vue-asset';
 
+	import UpdateVendor from './UpdateVendor.vue'
+
 	export default{
+
+		components : {
+           
+            'update-vendor' : UpdateVendor
+
+		},
 
         data(){
           
@@ -135,13 +150,22 @@
 
          },
 
+         // edit vendor 
+
+         editVendor(id){
+
+           EventBus.$emit('vendor-edit',id);
+
+         },
+
          // delete vendor 
 
          deleteVendor(id){
-              
+           
+               
            
          if(confirm('Are You Sure ?')){
-
+      
            axios.delete(base_url+'supplier/'+id)
 
            .then(response => {

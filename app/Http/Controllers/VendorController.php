@@ -110,9 +110,9 @@ class VendorController extends Controller
      * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $vendor)
+    public function edit(Vendor $supplier)
     {
-        //
+        return $supplier;
     }
 
     /**
@@ -122,9 +122,32 @@ class VendorController extends Controller
      * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(Request $request, Vendor $supplier)
     {
-        //
+        
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'nullable',
+            'phone' => 'required'
+        ]);
+
+
+        try{
+            
+
+            $supplier->name = $request->name;
+            $supplier->email = $request->email;
+            $supplier->phone = $request->phone;
+            $supplier->address = $request->address;
+
+            $supplier->update();
+
+            return response()->json(['status'=>'success','message'=>'Vendor Updated!']);
+        }
+        catch(\Exception $e){
+            return response()->json(['status'=>'error','message'=>'Something Error Found !, Please try again']);
+        }
     }
 
     /**
