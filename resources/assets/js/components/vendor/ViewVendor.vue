@@ -1,25 +1,25 @@
 <template>
-	<div class="wrap">
-	<!-- 	<div class="row">
-			
-			filtering element 
-		</div> -->
-		      <div class="body">
+    <div class="wrap">
+    <!--    <div class="row">
+            
+            filtering element 
+        </div> -->
+              <div class="body">
 
-		      	<div class="row">
-		      		<div class="col-md-4">
-		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Name" name="" v-model="name">
-		      		</div>
-		      		<div class="col-md-4">
-		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Email" name="" v-model="email">
-		      		</div>
-		      		<div class="col-md-4">
-		      			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Phone" name="" v-model="phone">
-		      		</div>
-		      	</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" v-on:keyup="getData" placeholder="Name" name="" v-model="name">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" v-on:keyup="getData" placeholder="Email" name="" v-model="email">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" v-on:keyup="getData" placeholder="Phone" name="" v-model="phone">
+                    </div>
+                </div>
 
-		      	<div class="table-responsive">
-                        	
+                <div class="table-responsive">
+                            
                             <table class="table table-condensed table-hover">
                                 <thead>
                                     <tr>
@@ -44,7 +44,7 @@
 
                                   <button @click="deleteVendor(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">delete</i>
-                                </button>     	
+                                </button>       
 
                             </td>
                                     </tr>
@@ -55,7 +55,7 @@
 
                    </div>
                      
-                   		     <div class="row">
+                             <div class="row">
             <div class="text-center col-md-12" v-if="vendors.last_page > 1">
                 <ul class="pagination">
                     <li :class="[ ((vendors.current_page == 1) ? 'disabled' : '') ]">
@@ -84,28 +84,28 @@
 
 
  <div class="row">
- 	<update-vendor></update-vendor>
+    <update-vendor></update-vendor>
  </div>
 
 
 
          </div>
-	</div>
+    </div>
 </template>
 
 <script>
-	
-	import {EventBus} from '../../vue-asset';
+    
+    import {EventBus} from '../../vue-asset';
 
-	import UpdateVendor from './UpdateVendor.vue'
+    import UpdateVendor from './UpdateVendor.vue'
 
-	export default{
+    export default{
 
-		components : {
+        components : {
            
             'update-vendor' : UpdateVendor
 
-		},
+        },
 
         data(){
           
@@ -126,9 +126,9 @@
          this.getData();
 
         EventBus.$on('vendor-created', function () {
-			window.history.pushState({}, null, location.pathname);
-			_this.getData();
-		});
+            window.history.pushState({}, null, location.pathname);
+            _this.getData();
+        });
 
         },
 
@@ -145,7 +145,7 @@
 
           }).catch(error => {
 
-          	console.log(error);
+            console.log(error);
           })
 
          },
@@ -158,31 +158,61 @@
 
          },
 
+        showMessage(data){
+            if(data.status == 'success'){
+                toastr.success(data.message,'Success Alert',{timeOut:500});
+            }else{
+                toastr.error(data.message,'Error Alert',{timeOut:500});
+            }
+        },
+
          // delete vendor 
 
          deleteVendor(id){
+
+             Swal({
+                 title: 'Are you sure?',
+                 text: "You won't be able to revert this!",
+                 type: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes, delete it!'
+             },() => {
+
+
+
+             }).then((result) => {
+                 if (result.value) {
+
+                    axios.delete(base_url+'supplier/'+id)
+                    .then(res => {
+
+                     EventBus.$emit('vendor-created',1);
+                    })
+
+                     Swal(
+                         'Deleted!',
+                         'Your file has been deleted.',
+                         'success'
+                         )
+                 }
+             })       
            
-               
-           
-         if(confirm('Are You Sure ?')){
+         // if(confirm('Are You Sure ?')){
       
-           axios.delete(base_url+'supplier/'+id)
+         //   axios.delete(base_url+'supplier/'+id).then(response => {
+         //     console.log(response.data)
+         //     if(response.data.status == 'success'){
+         //        this.showMessage(response.data);
+         //        EventBus.$emit('vendor-created',1);
+         //     }else{
+         //        this.showMessage(response.data);
+         //     }
 
-           .then(response => {
-             
-             if(response.data.status == 'success'){
+         //   })
 
-             	this.showMassage(response.data);
-             	EventBus.$emit('vendor-created',response.data);
-             }
-
-             else{
-             	this.showMassage(response.data);
-             }
-
-           })
-
-         }
+         // }
 
 
             
@@ -193,8 +223,8 @@
             .map(function (element, index){
                 return index + start;
             });
-   		 },
-   		  pageClicked(pageNo){
+         },
+          pageClicked(pageNo){
                 var vm = this;
                 vm.getData(pageNo);
             },
@@ -226,7 +256,7 @@
 
         }
          
-	}
+    }
         
         
         

@@ -158,15 +158,15 @@ export default{
         axios.put(base_url+'supplier/'+id,this.vendor)
         .then(res => {
          
-          if(response.data.status == 'success'){
+          if(res.data.status == 'success'){
           
-               this.showMassage(response.data);
-
+               this.successALert(res.data);
+              EventBus.$emit('vendor-created',1);
+              this.closeModal();
+              $('#update-vendor').modal('hide');
             }
 
-            EventBus.$emit('vendor-created',1);
-            this.closeModal();
-            $('#update-vendor').modal('hide');
+
 
         })
         .catch(err => {
@@ -179,12 +179,15 @@ export default{
 
    },
    
-   showMessage(data){
-				if(data.status == 'success'){
-					toastr.success(data.message,'Success Alert',{timeOut:500});
-				}else{
-					toastr.error(data.message,'Error Alert',{timeOut:500});
-				}
+		successALert(data){
+
+				Swal({
+					position: 'top-end',
+					type: data.status,
+					title: data.message,
+					showConfirmButton: false,
+					timer: 1500
+				})
 			},
 
    closeModal(){

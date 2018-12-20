@@ -123,7 +123,9 @@
 					this.errors = null;
 					EventBus.$emit('vendor-created',response.data);
 
-					this.showMessage(response.data);
+					// this.showMessage(response.data);
+
+					this.successALert(response.data);
 
 				})
 				.catch(err => {
@@ -137,12 +139,15 @@
 
 			},
 
-			showMessage(data){
-				if(data.status == 'success'){
-					toastr.success(data.message,'Success Alert',{timeOut:500});
-				}else{
-					toastr.error(data.message,'Error Alert',{timeOut:500});
-				}
+			successALert(data){
+
+				Swal({
+					position: 'top-end',
+					type: data.status,
+					title: data.message,
+					showConfirmButton: false,
+					timer: 1500
+				})
 			}
 
 
