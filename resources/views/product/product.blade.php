@@ -27,8 +27,8 @@
                             </h2> -->
                           
                           <h2 >
-                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-vendor">
-                                <i class="glyphicon glyphicon-plus"></i> Create New
+                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-product">
+                                <i class="glyphicon glyphicon-plus"></i> Create Product
                              </button>
                           </h2>
                         </div>
