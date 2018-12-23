@@ -27,6 +27,12 @@ Route::get('product-list','ProductController@ProductList');
 // customer 
 Route::resource('customer','CustomerController');
 
+//Stock
+
+Route::resource('stock','StockController');
+
+Route::get('stock-asset','StockController@StockAsset');
+
 
 Route::get('logout','UserController@logout');
 

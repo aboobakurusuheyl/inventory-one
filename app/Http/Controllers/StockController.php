@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Stock;
+use App\Product;
+use App\Vendor;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -14,8 +16,14 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+       
+
+       $vendor = Vendor::orderBy('name','asc')->get();
+       $product = Product::orderBy('product_name','asc')->get();
+       return view('stock.stock',['vendor'=>$vendor,'product'=>$product]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

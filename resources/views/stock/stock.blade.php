@@ -1,0 +1,51 @@
+@extends('include.master')
+
+
+@section('title','Belontory | Vendor')
+
+
+@section('page-title','Product List')
+
+
+@section('content')
+
+
+        <div class="row clearfix">
+        	
+        	<create-stock :vendor="{{ $vendor }}" :products="{{ $product }}"></create-stock>
+
+        </div>
+
+
+        <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                        <!--     <h2>
+                                Vendor List
+                          
+                            </h2> -->
+                          
+                          <h2 >
+                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-stock">
+                                <i class="glyphicon glyphicon-plus"></i> New Stock
+                             </button>
+                          </h2>
+                        </div>
+
+                        <view-stock></view-stock>
+
+                    </div>
+                </div>
+            </div>
+
+          
+
+
+@endsection
+
+@push('script')
+
+<script type="text/javascript" src="{{ url('public/js/stock.js') }}"></script>
+
+@endpush

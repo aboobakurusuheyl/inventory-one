@@ -1,0 +1,1 @@
+ViewStock.vue
