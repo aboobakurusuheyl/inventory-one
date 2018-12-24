@@ -22,7 +22,7 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
-											<select class="form-control show-tick" v-model="stock.product">
+											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.product">
 												<option value="">Select Product</option>
 
 												 <option v-for="(value,index) in products" :value="value.id">{{ value.product_name }}</option>
@@ -37,7 +37,11 @@
 											<i class="material-icons">line_style</i>
 										</span>
 										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="stock note" v-model="stock.vendor">
+												<select class="form-control show-tick" data-live-serach="true" v-model="stock.vendor">
+												<option value="">Select Vendor</option>
+
+												 <option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name }}</option>
+											</select>
 										</div>
 									</div>
 								</div>	
@@ -48,7 +52,7 @@
 											<i class="material-icons">line_style</i>
 										</span>
 										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="Quantity " v-model="stock.quantity">
+											<input type="text" class="form-control" placeholder="Quantity " v-model="stock.quantity">
 										</div>
 									</div>
 								</div>		
@@ -60,7 +64,7 @@
 											<i class="material-icons">line_style</i>
 										</span>
 										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="Buying Price" v-model="stock.buying_price">
+											<input type="text" class="form-control" placeholder="Buying Price" v-model="stock.buying_price">
 										</div>
 									</div>
 								</div>		
@@ -71,7 +75,31 @@
 											<i class="material-icons">line_style</i>
 										</span>
 										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="Selling Price" v-model="stock.selling_price">
+											<input type="text" class="form-control" placeholder="Selling Price" v-model="stock.selling_price">
+										</div>
+									</div>
+								</div>				
+
+
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">line_style</i>
+										</span>
+										<div class="form-line">
+											<input v-on:keyup.8="defaultValue" type="text" class="form-control" placeholder="Chalan No:" title="Chalan No" v-model="stock.chalan_no">
+										</div>
+									</div>
+								</div>			
+
+
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">line_style</i>
+										</span>
+										<div class="form-line">
+											<input type="text" class="form-control" placeholder="Note (optional)" title="NOte" v-model="stock.note">
 										</div>
 									</div>
 								</div>	
@@ -87,8 +115,8 @@
 					</div>
 					<div class="modal-footer">
 						<br>
-						<button @click="createStock" type="button" class="btn btn-success waves-effect">SAVE</button>
-						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">CLOSE</button>
+						<button @click="createStock()" type="button" class="btn btn-success waves-effect">SAVE</button>
+						<button @click="resetForm()" type="button" class="btn btn-default waves-effect" data-dismiss="modal">CLOSE</button>
 					</div>
 				</div>
 			</div>
@@ -100,12 +128,17 @@
 
 <script>
 
+var myDate = new Date();
+var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+var day = ('0' + myDate.getDate()).slice(-2);
+var year = myDate.getFullYear();
+
 	import {EventBus} from '../../vue-asset';
 
 
 	export default {
 
-		props:['vendor','products'],
+		props:['vendors','products','date'],
 
 		data(){
 
@@ -114,10 +147,11 @@
 
 					product : '',
 					vendor : '',
-					quantity : 0,
-					buying_price : 0,
-					selling_price :0,
-					chalan_no : '',
+					quantity : '',
+					buying_price : '',
+					selling_price :'',
+					note :'',
+					chalan_no : 'Chalan No:'+year+'-'+month+'-'+day,
 
 				},
 
@@ -139,7 +173,7 @@
 
 					$('#create-stock').modal('hide');
 
-					this.stock = {'product':'','vendor':'','quantity':0,'buying_price':0,'selling_price':0,'chalan_no':''};
+					this.resetForm();
 
 					this.errors = null;
 					EventBus.$emit('stock-created',response.data);
@@ -157,6 +191,22 @@
 					}
 
 				})
+
+			},
+
+			defaultValue(){
+              
+             if(this.stock.chalan_no.length <= 20 ){
+              
+                this.stock.chalan_no = 'Chalan No:'+this.date;
+             }
+
+
+			},
+
+			resetForm(){
+               
+               this.stock = {'product':'','vendor':'','quantity':'','buying_price':'','selling_price':'','note':''};
 
 			},
 

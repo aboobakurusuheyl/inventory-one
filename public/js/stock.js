@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(5);
 var isBuffer = __webpack_require__(13);
 
 /*global toString:true*/
@@ -424,10 +424,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(7);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(7);
   }
   return adapter;
 }
@@ -498,10 +498,148 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert2__);
+
+window.axios = __webpack_require__(11);
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+
+
+window.Swal = __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default.a;
+
+window.Vue = __webpack_require__(30);
+var EventBus = new Vue();
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -519,7 +657,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -709,7 +847,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -720,7 +858,7 @@ var settle = __webpack_require__(16);
 var buildURL = __webpack_require__(18);
 var parseHeaders = __webpack_require__(19);
 var isURLSameOrigin = __webpack_require__(20);
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(8);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(21);
 
 module.exports = function xhrAdapter(config) {
@@ -896,7 +1034,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -921,7 +1059,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -933,7 +1071,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -959,144 +1097,6 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert2__);
-
-window.axios = __webpack_require__(11);
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
-
-
-window.Swal = __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default.a;
-
-window.Vue = __webpack_require__(30);
-var EventBus = new Vue();
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1110,7 +1110,7 @@ module.exports = __webpack_require__(12);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(5);
 var Axios = __webpack_require__(14);
 var defaults = __webpack_require__(2);
 
@@ -1145,9 +1145,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(8);
+axios.Cancel = __webpack_require__(10);
 axios.CancelToken = __webpack_require__(28);
-axios.isCancel = __webpack_require__(7);
+axios.isCancel = __webpack_require__(9);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -1300,7 +1300,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(8);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1735,7 +1735,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(25);
-var isCancel = __webpack_require__(7);
+var isCancel = __webpack_require__(9);
 var defaults = __webpack_require__(2);
 var isAbsoluteURL = __webpack_require__(26);
 var combineURLs = __webpack_require__(27);
@@ -1895,7 +1895,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(8);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -13213,7 +13213,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
 
 /***/ }),
 /* 33 */
@@ -16009,34 +16009,24 @@ module.exports = __webpack_require__(68);
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
-Vue.component('create-stock', __webpack_require__(79));
-Vue.component('view-stock', __webpack_require__(82));
+__webpack_require__(4);
+Vue.component('create-stock', __webpack_require__(69));
+Vue.component('view-stock', __webpack_require__(72));
 
 var app = new Vue({
     el: '#belontory'
 });
 
 /***/ }),
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(10)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(70)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(71)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -16075,12 +16065,40 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 80 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16182,77 +16200,94 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+var myDate = new Date();
+var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
+var day = ('0' + myDate.getDate()).slice(-2);
+var year = myDate.getFullYear();
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-	props: ['vendor', 'products'],
+			props: ['vendors', 'products', 'date'],
 
-	data: function data() {
+			data: function data() {
 
-		return {
-			stock: {
+						return {
+									stock: {
 
-				product: '',
-				vendor: '',
-				quantity: 0,
-				buying_price: 0,
-				selling_price: 0,
-				chalan_no: ''
+												product: '',
+												vendor: '',
+												quantity: '',
+												buying_price: '',
+												selling_price: '',
+												note: '',
+												chalan_no: 'Chalan No:' + year + '-' + month + '-' + day
 
+									},
+
+									errors: null
+
+						};
 			},
 
-			errors: null
 
-		};
-	},
+			methods: {
+						createStock: function createStock() {
+									var _this = this;
+
+									axios.post(base_url + 'stock', this.stock).then(function (response) {
+
+												$('#create-stock').modal('hide');
+
+												_this.resetForm();
+
+												_this.errors = null;
+												__WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-created', response.data);
+
+												// this.showMessage(response.data);
+
+												_this.successALert(response.data);
+									}).catch(function (err) {
+
+												if (err.response) {
+
+															_this.errors = err.response.data.errors;
+												}
+									});
+						},
+						defaultValue: function defaultValue() {
+
+									if (this.stock.chalan_no.length <= 20) {
+
+												this.stock.chalan_no = 'Chalan No:' + this.date;
+									}
+						},
+						resetForm: function resetForm() {
+
+									this.stock = { 'product': '', 'vendor': '', 'quantity': '', 'buying_price': '', 'selling_price': '', 'note': '' };
+						},
+						successALert: function successALert(data) {
+
+									Swal({
+												position: 'top-end',
+												type: data.status,
+												title: data.message,
+												showConfirmButton: false,
+												timer: 1500
+									});
+						}
+			},
+
+			// end of method section 
 
 
-	methods: {
-		createStock: function createStock() {
-			var _this = this;
-
-			axios.post(base_url + 'stock', this.stock).then(function (response) {
-
-				$('#create-stock').modal('hide');
-
-				_this.stock = { 'product': '', 'vendor': '', 'quantity': 0, 'buying_price': 0, 'selling_price': 0, 'chalan_no': '' };
-
-				_this.errors = null;
-				__WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-created', response.data);
-
-				// this.showMessage(response.data);
-
-				_this.successALert(response.data);
-			}).catch(function (err) {
-
-				if (err.response) {
-
-					_this.errors = err.response.data.errors;
-				}
-			});
-		},
-		successALert: function successALert(data) {
-
-			Swal({
-				position: 'top-end',
-				type: data.status,
-				title: data.message,
-				showConfirmButton: false,
-				timer: 1500
-			});
-		}
-	},
-
-	// end of method section 
-
-
-	created: function created() {}
+			created: function created() {}
 });
 
 /***/ }),
-/* 81 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -16304,7 +16339,9 @@ var render = function() {
                                   expression: "stock.product"
                                 }
                               ],
-                              staticClass: "form-control show-tick",
+                              staticClass:
+                                "form-control show-tick bootstrap-select",
+                              attrs: { "data-live-serach": "true" },
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -16350,31 +16387,55 @@ var render = function() {
                         _vm._m(2),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.stock.vendor,
-                                expression: "stock.vendor"
-                              }
-                            ],
-                            staticClass: "form-control date",
-                            attrs: { type: "text", placeholder: "stock note" },
-                            domProps: { value: _vm.stock.vendor },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.stock.vendor,
+                                  expression: "stock.vendor"
                                 }
-                                _vm.$set(
-                                  _vm.stock,
-                                  "vendor",
-                                  $event.target.value
-                                )
+                              ],
+                              staticClass: "form-control show-tick",
+                              attrs: { "data-live-serach": "true" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.stock,
+                                    "vendor",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
                               }
-                            }
-                          })
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Vendor")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.vendors, function(vd, index) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: vd.id } },
+                                  [_vm._v(_vm._s(vd.name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
                         ])
                       ])
                     ]),
@@ -16393,7 +16454,7 @@ var render = function() {
                                 expression: "stock.quantity"
                               }
                             ],
-                            staticClass: "form-control date",
+                            staticClass: "form-control",
                             attrs: { type: "text", placeholder: "Quantity " },
                             domProps: { value: _vm.stock.quantity },
                             on: {
@@ -16427,7 +16488,7 @@ var render = function() {
                                 expression: "stock.buying_price"
                               }
                             ],
-                            staticClass: "form-control date",
+                            staticClass: "form-control",
                             attrs: {
                               type: "text",
                               placeholder: "Buying Price"
@@ -16464,7 +16525,7 @@ var render = function() {
                                 expression: "stock.selling_price"
                               }
                             ],
-                            staticClass: "form-control date",
+                            staticClass: "form-control",
                             attrs: {
                               type: "text",
                               placeholder: "Selling Price"
@@ -16485,6 +16546,87 @@ var render = function() {
                           })
                         ])
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-line" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.stock.chalan_no,
+                                expression: "stock.chalan_no"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Chalan No:",
+                              title: "Chalan No"
+                            },
+                            domProps: { value: _vm.stock.chalan_no },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !("button" in $event) &&
+                                  $event.keyCode !== 8
+                                ) {
+                                  return null
+                                }
+                                return _vm.defaultValue($event)
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.stock,
+                                  "chalan_no",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-line" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.stock.note,
+                                expression: "stock.note"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "Note (optional)",
+                              title: "NOte"
+                            },
+                            domProps: { value: _vm.stock.note },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.stock, "note", $event.target.value)
+                              }
+                            }
+                          })
+                        ])
+                      ])
                     ])
                   ])
                 ])
@@ -16498,7 +16640,11 @@ var render = function() {
                   {
                     staticClass: "btn btn-success waves-effect",
                     attrs: { type: "button" },
-                    on: { click: _vm.createStock }
+                    on: {
+                      click: function($event) {
+                        _vm.createStock()
+                      }
+                    }
                   },
                   [_vm._v("SAVE")]
                 ),
@@ -16507,7 +16653,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-default waves-effect",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        _vm.resetForm()
+                      }
+                    }
                   },
                   [_vm._v("CLOSE")]
                 )
@@ -16571,6 +16722,22 @@ var staticRenderFns = [
     return _c("span", { staticClass: "input-group-addon" }, [
       _c("i", { staticClass: "material-icons" }, [_vm._v("line_style")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("line_style")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("line_style")])
+    ])
   }
 ]
 render._withStripped = true
@@ -16583,10 +16750,10 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var normalizeComponent = __webpack_require__(10)
+var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = null
 /* template */

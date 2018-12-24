@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-stock :vendor="{{ $vendor }}" :products="{{ $product }}"></create-stock>
+        	<create-stock :date="{{ json_encode(date('Y-m-d')) }}" :vendors="{{ $vendor }}" :products="{{ $product }}"></create-stock>
 
         </div>
 

@@ -6,6 +6,7 @@ use App\Stock;
 use App\Product;
 use App\Vendor;
 use Illuminate\Http\Request;
+use Auth;
 
 class StockController extends Controller
 {
@@ -43,7 +44,51 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+          
+          'product' => 'required',
+          'vendor' => 'required',
+          'quantity' => 'required',
+          'buying_price' => 'required',
+          'selling_price' => 'required',
+
+        ]);
+        
+        try{
+
+        $chalan = explode(':',$request->chalan_no);
+
+          $stock = new Stock;   
+          $stock->product_id = $request->product;
+          $stock->product_code = time();
+          $stock->vendor_id = $request->vendor;
+          $stock->user_id = Auth::user()->id;
+          $stock->buying_price = $request->buying_price;
+          $stock->selling_price = $request->selling_price;
+          $stock->chalan_no = $chalan[1];
+          $stock->stock_quantity = $request->quantity;
+          $stock->current_quantity = $request->quantity;
+          $stock->discount = 0;
+          $stock->note = $request->note;
+          $stock->status = 1;
+          $stock->save();
+
+          return response()->json(['status'=>'success','message'=>'Product Added To Stock']);
+
+        }
+        catch(\Exception $e){
+            
+            return response()->json(['status'=>'error','message'=>'Problem To Update Stock']);
+
+
+        }
+       
+
+
+
+
+
+
     }
 
     /**

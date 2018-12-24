@@ -22,7 +22,7 @@ class CreateStocksTable extends Migration
             $table->string('chalan_no');
             $table->double('buying_price');
             $table->double('selling_price');
-            $table->double('discout')->default(0);
+            $table->double('discount')->default(0);
             $table->integer('stock_quantity');
             $table->integer('current_quantity')->default(0);
             $table->text('note')->nullable();
