@@ -87,7 +87,7 @@
 											<i class="material-icons">line_style</i>
 										</span>
 										<div class="form-line">
-											<input v-on:keyup.8="defaultValue" type="text" class="form-control" placeholder="Chalan No:" title="Chalan No" v-model="stock.chalan_no">
+											<input v-on:keyup.8="defaultValue" type="text" class="form-control" placeholder="Chalan No:" title="Chalan No" v-model="date" disabled="">
 										</div>
 									</div>
 								</div>			
@@ -128,11 +128,6 @@
 
 <script>
 
-var myDate = new Date();
-var month = ('0' + (myDate.getMonth() + 1)).slice(-2);
-var day = ('0' + myDate.getDate()).slice(-2);
-var year = myDate.getFullYear();
-
 	import {EventBus} from '../../vue-asset';
 
 
@@ -151,7 +146,6 @@ var year = myDate.getFullYear();
 					buying_price : '',
 					selling_price :'',
 					note :'',
-					chalan_no : 'Chalan No:'+year+'-'+month+'-'+day,
 
 				},
 
@@ -194,15 +188,15 @@ var year = myDate.getFullYear();
 
 			},
 
-			defaultValue(){
+			// defaultValue(){
               
-             if(this.stock.chalan_no.length <= 20 ){
+   //           if(this.stock.chalan_no.length <= 20 ){
               
-                this.stock.chalan_no = 'Chalan No:'+this.date;
-             }
+   //              this.stock.chalan_no = 'Chalan No:'+this.date;
+   //           }
 
 
-			},
+			// },
 
 			resetForm(){
                

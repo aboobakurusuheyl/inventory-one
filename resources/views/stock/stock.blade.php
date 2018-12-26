@@ -33,7 +33,7 @@
                           </h2>
                         </div>
 
-                        <view-stock></view-stock>
+                        <view-stock :products="{{ $product }}"></view-stock>
 
                     </div>
                 </div>

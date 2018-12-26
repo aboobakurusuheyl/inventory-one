@@ -25,6 +25,35 @@ class StockController extends Controller
     }
 
 
+    public function StockList(Request $request){
+          
+
+       $stock = Stock::with('product')
+                  ->selectRaw('sum(stock_quantity) as stock_quantity,sum(current_quantity) as current_quantity,product_id');
+          
+
+          if($request->product != ''){
+             
+             $stock->where('product_id','=',$request->product);
+
+            }
+
+            // if($request->start_date != '' && $request->end_date != ''){
+
+            //      $start_date = $request->start_date.' 12:01:01';
+            //      $end_date = $request->end_date.' 23:59:59';
+
+            //    $stock->whereBetween('created_at',[$start_date,$end_date]);
+            //   } 
+
+               $stock = $stock->groupBy('product_id')
+                         ->paginate(10);
+
+             return $stock;            
+
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,15 +77,15 @@ class StockController extends Controller
           
           'product' => 'required',
           'vendor' => 'required',
-          'quantity' => 'required',
-          'buying_price' => 'required',
-          'selling_price' => 'required',
+          'quantity' => 'required|integer',
+          'buying_price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
+          'selling_price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
 
         ]);
         
         try{
 
-        $chalan = explode(':',$request->chalan_no);
+
 
           $stock = new Stock;   
           $stock->product_id = $request->product;
@@ -65,7 +94,7 @@ class StockController extends Controller
           $stock->user_id = Auth::user()->id;
           $stock->buying_price = $request->buying_price;
           $stock->selling_price = $request->selling_price;
-          $stock->chalan_no = $chalan[1];
+          $stock->chalan_no = date('Y-m-d');
           $stock->stock_quantity = $request->quantity;
           $stock->current_quantity = $request->quantity;
           $stock->discount = 0;

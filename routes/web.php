@@ -31,6 +31,8 @@ Route::resource('customer','CustomerController');
 
 Route::resource('stock','StockController');
 
+Route::get('stock-list','StockController@StockList');
+
 Route::get('stock-asset','StockController@StockAsset');
 
 
