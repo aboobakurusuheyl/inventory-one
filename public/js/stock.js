@@ -502,6 +502,35 @@ module.exports = defaults;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert2__);
+
+window.axios = __webpack_require__(11);
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+
+
+window.Swal = __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default.a;
+
+window.Vue = __webpack_require__(30);
+var EventBus = new Vue();
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -608,35 +637,6 @@ module.exports = function normalizeComponent (
   }
 }
 
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EventBus", function() { return EventBus; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_sweetalert2__);
-
-window.axios = __webpack_require__(11);
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
-
-
-window.Swal = __WEBPACK_IMPORTED_MODULE_0_sweetalert2___default.a;
-
-window.Vue = __webpack_require__(30);
-var EventBus = new Vue();
 
 /***/ }),
 /* 5 */
@@ -16009,7 +16009,7 @@ module.exports = __webpack_require__(68);
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(4);
+__webpack_require__(3);
 Vue.component('create-stock', __webpack_require__(69));
 Vue.component('view-stock', __webpack_require__(72));
 
@@ -16022,7 +16022,7 @@ var app = new Vue({
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(70)
 /* template */
@@ -16070,7 +16070,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(3);
 //
 //
 //
@@ -16750,11 +16750,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(3)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(83)
+var __vue_script__ = __webpack_require__(73)
 /* template */
-var __vue_template__ = __webpack_require__(84)
+var __vue_template__ = __webpack_require__(74)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -16793,22 +16793,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ViewChalan_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ViewChalan_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ViewChalan_vue__);
+//
+//
 //
 //
 //
@@ -16913,17 +16907,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-// import UpdateProduct from './UpdateProduct.vue'
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
     props: ['products'],
 
-    // components : {
+    components: {
 
-    //     'update-product' : UpdateProduct
+        'view-chalan': __WEBPACK_IMPORTED_MODULE_1__ViewChalan_vue___default.a
 
-    // },
+    },
 
     data: function data() {
 
@@ -16968,9 +16962,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         // edit vendor 
 
-        ViewStock: function ViewStock(id) {
+        viewStock: function viewStock(id) {
 
-            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-view', id);
+            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-chalan', id);
         },
         showMessage: function showMessage(data) {
             if (data.status == 'success') {
@@ -16994,6 +16988,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // delete vendor 
 
         deleteStock: function deleteStock(id) {
+            var _this3 = this;
 
             Swal({
                 title: 'Are you sure?',
@@ -17009,9 +17004,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     axios.delete(base_url + 'stock/' + id).then(function (res) {
 
                         __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-created', 1);
-                    });
 
-                    Swal('Deleted!', 'Your Product has been deleted.', 'success');
+                        _this3.successALert(res.data);
+                    });
                 }
             });
         },
@@ -17051,7 +17046,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 84 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -17060,6 +17055,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrap" }, [
     _c("div", { staticClass: "body" }, [
+      _c("div", { staticClass: "row" }, [_c("view-chalan")], 1),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-4" }, [
           _c(
@@ -17097,9 +17094,7 @@ var render = function() {
               }
             },
             [
-              _c("option", { attrs: { value: "" } }, [
-                _vm._v("Filter By Product")
-              ]),
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Product")]),
               _vm._v(" "),
               _vm._l(_vm.products, function(vd, index) {
                 return _c("option", { domProps: { value: vd.id } }, [
@@ -17317,6 +17312,253 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-7ffddad1", module.exports)
   }
 }
+
+/***/ }),
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(86)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/stock/ViewChalan.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-680d8fd2", Component.options)
+  } else {
+    hotAPI.reload("data-v-680d8fd2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.isActive
+    ? _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-condensed table-hover" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.chalanStock.data, function(value, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(value.chalan_no))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.product.product_name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.vendor.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.user.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.stock_quantity))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.current_quantity))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.deleteChalan(value.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "material-icons" }, [
+                        _vm._v("delete")
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            })
+          )
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Chalan No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Product")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Vendor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Entry By")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Initial Stock")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Current Stock")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-680d8fd2", module.exports)
+  }
+}
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+   data: function data() {
+
+      return {
+
+         isActive: false,
+
+         product_id: 0,
+
+         chalanStock: []
+
+      };
+   },
+   created: function created() {
+
+      var vm = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on('stock-chalan', function (id) {
+
+         vm.product_id = id;
+         vm.GetChalan(id);
+         vm.isActive = true;
+      });
+   },
+
+
+   methods: {
+      GetChalan: function GetChalan(product_id) {
+         var _this = this;
+
+         axios.get(base_url + 'chalan-list/chalan/' + product_id).then(function (res) {
+
+            _this.chalanStock = res.data;
+         });
+      },
+      deleteChalan: function deleteChalan(id) {}
+   }
+
+});
 
 /***/ })
 /******/ ]);

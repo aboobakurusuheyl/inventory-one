@@ -4,7 +4,7 @@
 @section('title','Belontory | Vendor')
 
 
-@section('page-title','Product List')
+@section('page-title','Stock List')
 
 
 @section('content')

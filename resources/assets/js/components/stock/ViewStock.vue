@@ -6,10 +6,14 @@
         </div> -->
               <div class="body">
 
+              	 <div class="row">
+                  <view-chalan></view-chalan>
+                  </div>
+
                 <div class="row">
                     <div class="col-md-4">
                      	<select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="product">
-								<option value="">Filter By Product</option>
+								<option value="">All Product</option>
 
 							 <option v-for="(vd,index) in products" :value="vd.id">{{ vd.product_name  }}</option>
 						</select>
@@ -88,9 +92,7 @@
 </div>  
 
 
-<!--  <div class="row">
-    <update-product></update-product>
- </div> -->
+
 
 
 
@@ -102,17 +104,17 @@
     
     import {EventBus} from '../../vue-asset';
 
-    // import UpdateProduct from './UpdateProduct.vue'
+    import ViewChalan from './ViewChalan.vue'
 
     export default{
 
     	props:['products'],
 
-        // components : {
+        components : {
            
-        //     'update-product' : UpdateProduct
+            'view-chalan' : ViewChalan
 
-        // },
+        },
 
         data(){
           
@@ -158,9 +160,9 @@
 
          // edit vendor 
 
-         ViewStock(id){
+         viewStock(id){
 
-           EventBus.$emit('stock-view',id);
+           EventBus.$emit('stock-chalan',id);
 
          },
 
@@ -207,13 +209,12 @@
                     .then(res => {
 
                      EventBus.$emit('stock-created',1);
+                      
+                      this.successALert(res.data);
+
                     })
 
-                     Swal(
-                         'Deleted!',
-                         'Your Product has been deleted.',
-                         'success'
-                         )
+              
                  }
              })       
 

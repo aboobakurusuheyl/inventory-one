@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Stock;
 use App\Product;
 use App\Vendor;
+use App\SellDetails;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -50,6 +51,18 @@ class StockController extends Controller
                          ->paginate(10);
 
              return $stock;            
+
+    }
+
+
+    public function ChalanList($id){
+         
+     
+     $chalan = Stock::with(['vendor','user','product'])->where('product_id','=',$id)->orderBy('id','desc')->get();
+
+
+     return $chalan;
+
 
     }
 
@@ -160,8 +173,33 @@ class StockController extends Controller
      * @param  \App\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Stock $stock)
+    public function destroy($id)
     {
-        //
+        
+        $check = SellDetails::where('product_id','=',$id)->count();
+
+         if($check > 0){
+           
+
+           return response()->json(['status'=>'error','message','This Product Has Sells Record']);
+
+         }
+
+
+         try{
+            
+             Stock::where('product_id', '=', $id)->delete();
+             return response()->json(['status'=>'success','message','Delete success !']);
+
+         }
+         catch(\Exception $e){
+          
+          return response()->json(['status'=>'error','message','Something Went Wrong !']);
+
+         }
+
+        
+
+
     }
 }

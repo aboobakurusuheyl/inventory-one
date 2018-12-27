@@ -32,6 +32,7 @@ Route::resource('customer','CustomerController');
 Route::resource('stock','StockController');
 
 Route::get('stock-list','StockController@StockList');
+Route::get('chalan-list/chalan/{id}','StockController@ChalanList');
 
 Route::get('stock-asset','StockController@StockAsset');
 

@@ -20,4 +20,11 @@ class Stock extends Model
 
     	return $this->belongsTo('App\User');
     }
+
+    // realtion with vendor 
+
+    public function vendor(){
+
+    	return $this->belongsTo('App\Stock');
+    }
 }
