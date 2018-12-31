@@ -1,6 +1,5 @@
 <template>
- 
-
+         <div class="wrap">
                 <div v-if="isActive" class="table-responsive">
                             
                             <table class="table table-condensed table-hover">
@@ -40,6 +39,7 @@
                             </table>
 
 
+                   </div>	 
                    </div>	 
 
 
@@ -82,6 +82,9 @@
          vm.product_id = id;
          vm.GetChalan(id);
          vm.isActive = true;
+
+
+         
 
        });
 

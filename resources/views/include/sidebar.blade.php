@@ -45,6 +45,13 @@
                                     <span>Vendor</span>
                                 </a>
                           
+                            </li>         
+
+                            <li>
+                                <a href="{{ route('category.index') }}" >
+                                    <span>Product Category</span>
+                                </a>
+                          
                             </li>    
 
                              <li>

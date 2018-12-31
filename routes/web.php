@@ -20,9 +20,16 @@ Route::get('/', function () {
 
 Route::resource('supplier','VendorController');
 Route::get('vendor-list','VendorController@Vendor');
+
+// product category 
+
+Route::resource('category','CategoryController');
+
 // product 
 Route::resource('product','ProductController');
 Route::get('product-list','ProductController@ProductList');
+
+
 
 // customer 
 Route::resource('customer','CustomerController');
