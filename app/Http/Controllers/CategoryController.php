@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +15,24 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('category.category');
+    }
+
+    public function CategoryList(Request $request){
+
+         
+         $category = Category::orderBy('name','ASC');
+
+         if($request->name != ''){
+         
+          $category->where('name','LIKE','%'.$request->name.'%');
+
+         }
+
+         $category = $category->paginate(10);
+
+         return $category;
+
     }
 
     /**
@@ -35,7 +53,32 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+         'name' => 'required|unique:categories'
+        ]);
+
+      
+      try{
+        $category = new Category;
+
+        $category->name = $request->name;
+
+        $category->save();
+
+        return response()->json(['status'=>'success','message'=>'Category Added']);
+
+      }
+      catch(\Exception $e){
+
+        return response()->json(['status'=>'error','message'=>'Something Went Wrong']);
+      }
+        
+
+
+
+
+
+
     }
 
     /**
@@ -57,7 +100,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return $category;
     }
 
     /**
@@ -69,7 +112,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+         'name' => 'required|unique:categories'
+        ]);
+
+      
+      try{
+       
+        $category->name = $request->name;
+
+        $category->save();
+
+        return response()->json(['status'=>'success','message'=>'Category Added']);
+
+      }
+      catch(\Exception $e){
+
+        return response()->json(['status'=>'error','message'=>'Something Went Wrong']);
+      }
     }
 
     /**
@@ -80,6 +140,26 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+
+        $check = Product::where('category_id','=',$category->id)->count();
+
+        if($check>0){
+
+          return response()->json(['status'=>'error','message'=>'This Category Has Product Delete Product First']);
+        }
+        try{
+         
+         $category->delete();
+          
+         return response()->json(['status'=>'success','message'=>'Category Deleted']);
+
+         }
+
+         catch(\Exception $e){
+
+            return response()->json(['status'=>'error','message'=>'Something Went Wrong !']);
+         }
+
+
     }
 }

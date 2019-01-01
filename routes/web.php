@@ -25,6 +25,8 @@ Route::get('vendor-list','VendorController@Vendor');
 
 Route::resource('category','CategoryController');
 
+Route::get('category-list','CategoryController@CategoryList');
+
 // product 
 Route::resource('product','ProductController');
 Route::get('product-list','ProductController@ProductList');
