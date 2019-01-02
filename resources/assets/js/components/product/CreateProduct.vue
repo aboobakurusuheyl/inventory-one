@@ -22,6 +22,22 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
+											<select class="form-control" v-model="product.category">
+												<option value="">Select Category</option>
+
+												<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
+											</select>
+										</div>
+									</div>
+								</div>  				
+
+
+								<div class="col-md-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">palette</i>
+										</span>
+										<div class="form-line">
 											<input type="text" class="form-control date" placeholder="product Name" v-model="product.name">
 										</div>
 									</div>
@@ -64,6 +80,8 @@
 
 
 	export default {
+        
+        props:['categorys'],
 
 		data(){
 
@@ -71,6 +89,7 @@
 
 				product : {
 
+					cateogry : '',
 					name : '',
 					details : '',
 
@@ -113,6 +132,7 @@
 				})
 
 			},
+               
 
 			successALert(data){
 

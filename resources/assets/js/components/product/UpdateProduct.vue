@@ -15,6 +15,22 @@
 						</div>
 						<form>
 							<div class="row">
+                               
+                               				<div class="col-md-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">palette</i>
+										</span>
+										<div class="form-line">
+											<select class="form-control" v-model="product.category">
+												<option value="">Select Category</option>
+
+												<option v-for="(value,index) in cat" :value="value.id" :selected="product.id === value.id">{{ value.name }}</option>
+											</select>
+										</div>
+									</div>
+								</div> 
+
 								<div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon">
@@ -62,6 +78,8 @@ import {EventBus} from '../../vue-asset';
 
 	
 export default{
+
+ props:['cat'],	
  
  name : 'update-product',
 
@@ -71,7 +89,7 @@ export default{
       
       product : {
          
-         id : 0,
+         id : 1,
          name : '',
          details : '',
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Stock;
+use App\Category;
 use Session;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-      
-       return view('product.product');
+       
+        
+        $category = Category::orderBy('name','asc')
+                    ->get();
+       return view('product.product',['category'=>$category]);
     }
 
     /**
@@ -62,6 +66,7 @@ class ProductController extends Controller
     {
            $request->validate([
             'name' => 'required|unique:products,product_name',
+            'category' => 'required',
         ]);
 
 
@@ -69,6 +74,7 @@ class ProductController extends Controller
 
             $product = new Product;
 
+            $product->category_id = $request->category;
             $product->product_name = $request->name;
             $product->details = $request->details;
 
@@ -114,11 +120,13 @@ class ProductController extends Controller
     {
          $request->validate([
             'name' => 'required',
+            'category' => 'required',
         ]);
 
 
         try{
 
+            $product->category_id = $request->category;
             $product->product_name = $request->name;
             $product->details = $request->details;
 

@@ -80,7 +80,7 @@
 
 
  <div class="row">
-    <update-product></update-product>
+    <update-product :cat="categorys"></update-product>
  </div>
 
 
@@ -96,6 +96,8 @@
     import UpdateProduct from './UpdateProduct.vue'
 
     export default{
+      
+       props:['categorys'],
 
         components : {
            

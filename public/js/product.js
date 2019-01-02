@@ -16121,17 +16121,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+	props: ['categorys'],
+
 	data: function data() {
 
 		return {
 
 			product: {
 
+				cateogry: '',
 				name: '',
 				details: ''
 
@@ -16226,6 +16246,63 @@ var render = function() {
                         _vm._m(1),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.product.category,
+                                  expression: "product.category"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.product,
+                                    "category",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Category")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.categorys, function(value, index) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: value.id } },
+                                  [_vm._v(_vm._s(value.name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-line" }, [
                           _c("input", {
                             directives: [
                               {
@@ -16260,7 +16337,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16338,6 +16415,14 @@ var staticRenderFns = [
         { staticClass: "modal-title", attrs: { id: "defaultModalLabel" } },
         [_vm._v("Product Information")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("palette")])
     ])
   },
   function() {
@@ -16520,6 +16605,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ['categorys'],
 
     components: {
 
@@ -16753,11 +16840,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+  props: ['cat'],
 
   name: 'update-product',
 
@@ -16767,7 +16872,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       product: {
 
-        id: 0,
+        id: 1,
         name: '',
         details: ''
 
@@ -16891,6 +16996,68 @@ var render = function() {
                         _vm._m(1),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.product.category,
+                                  expression: "product.category"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.product,
+                                    "category",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Category")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.cat, function(value, index) {
+                                return _c(
+                                  "option",
+                                  {
+                                    domProps: {
+                                      value: value.id,
+                                      selected: _vm.product.id === value.id
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(value.name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-line" }, [
                           _c("input", {
                             directives: [
                               {
@@ -16925,7 +17092,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -17012,6 +17179,14 @@ var staticRenderFns = [
         { staticClass: "modal-title", attrs: { id: "defaultModalLabel" } },
         [_vm._v("Update product Information")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("palette")])
     ])
   },
   function() {
@@ -17254,7 +17429,12 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [_c("update-product")], 1)
+      _c(
+        "div",
+        { staticClass: "row" },
+        [_c("update-product", { attrs: { cat: _vm.categorys } })],
+        1
+      )
     ])
   ])
 }

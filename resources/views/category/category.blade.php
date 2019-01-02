@@ -4,7 +4,7 @@
 @section('title','Belontory | Vendor')
 
 
-@section('page-title','Product List')
+@section('page-title','Category List')
 
 
 @section('content')
@@ -26,7 +26,7 @@
                           
                             </h2> -->
                           
-                          <h2 >
+                          <h2>
                           	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-category">
                                 <i class="glyphicon glyphicon-plus"></i> Create Category
                              </button>

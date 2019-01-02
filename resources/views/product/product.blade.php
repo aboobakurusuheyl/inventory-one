@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-product></create-product>
+        	<create-product :categorys="{{ json_encode($category) }}"></create-product>
 
         </div>
 
@@ -33,7 +33,7 @@
                           </h2>
                         </div>
 
-                        <view-product></view-product>
+                        <view-product :categorys="{{ json_encode($category) }}"></view-product>
 
                     </div>
                 </div>
