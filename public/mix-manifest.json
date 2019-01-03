@@ -1,6 +1,8 @@
 {
     "/js/vendor.js": "/js/vendor.js",
+    "/js/stock.js": "/js/stock.js",
+    "/js/product.js": "/js/product.js",
+    "/js/category.js": "/js/category.js",
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/product.js": "/js/product.js"
+    "/css/app.css": "/css/app.css"
 }

@@ -20,11 +20,32 @@ Route::get('/', function () {
 
 Route::resource('supplier','VendorController');
 Route::get('vendor-list','VendorController@Vendor');
+
+// product category 
+
+Route::resource('category','CategoryController');
+
+Route::get('category-list','CategoryController@CategoryList');
+
+Route::get('all-category','CategoryController@AllCategory');
+
 // product 
 Route::resource('product','ProductController');
+Route::get('product-list','ProductController@ProductList');
+
+
 
 // customer 
 Route::resource('customer','CustomerController');
+
+//Stock
+
+Route::resource('stock','StockController');
+
+Route::get('stock-list','StockController@StockList');
+Route::get('chalan-list/chalan/{id}','StockController@ChalanList');
+
+Route::get('stock-asset','StockController@StockAsset');
 
 
 Route::get('logout','UserController@logout');

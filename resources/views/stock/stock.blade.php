@@ -4,7 +4,7 @@
 @section('title','Belontory | Vendor')
 
 
-@section('page-title','Product List')
+@section('page-title','Stock List')
 
 
 @section('content')
@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-product :categorys="{{ json_encode($category) }}"></create-product>
+        	<create-stock :date="{{ json_encode(date('Y-m-d')) }}" :vendors="{{ $vendor }}" :products="{{ $product }}"></create-stock>
 
         </div>
 
@@ -27,13 +27,13 @@
                             </h2> -->
                           
                           <h2 >
-                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-product">
-                                <i class="glyphicon glyphicon-plus"></i> Create Product
+                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-stock">
+                                <i class="glyphicon glyphicon-plus"></i> New Stock
                              </button>
                           </h2>
                         </div>
 
-                        <view-product :categorys="{{ json_encode($category) }}"></view-product>
+                        <view-stock :products="{{ $product }}"></view-stock>
 
                     </div>
                 </div>
@@ -46,6 +46,6 @@
 
 @push('script')
 
-<script type="text/javascript" src="{{ url('public/js/product.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/js/stock.js') }}"></script>
 
 @endpush

@@ -27,3 +27,15 @@
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{ url('css/themes/all-themes.css') }}" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+        <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="{{ url('plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet" />
+
+    <!-- Bootstrap DatePicker Css -->
+    <link href="{{ url('plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet') }}" />
+
+    <!-- Wait Me Css -->
+    <link href="{{ url('plugins/waitme/waitMe.css') }}" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <!-- <link href="{{ url('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" /> -->

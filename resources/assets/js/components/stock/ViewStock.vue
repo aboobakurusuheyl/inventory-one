@@ -6,9 +6,17 @@
         </div> -->
               <div class="body">
 
+              	 <div class="row">
+                  <view-chalan></view-chalan>
+                  </div>
+
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" class="form-control" v-on:keyup="getData" placeholder="Serach By Name" name="" v-model="name">
+                     	<select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="product">
+								<option value="">All Product</option>
+
+							 <option v-for="(vd,index) in products" :value="vd.id">{{ vd.product_name  }}</option>
+						</select>
                     </div>
                     <div class="col-md-4">
                     
@@ -16,6 +24,9 @@
                     <div class="col-md-4">
                 
                     </div>
+
+                
+
                 </div>
 
                 <div class="table-responsive">
@@ -23,22 +34,24 @@
                             <table class="table table-condensed table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>details</th>
+                                        <th>Product Name</th>
+                                        <th>Initial Stock</th>
+                                        <th>Current Stock</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(value,index) in products.data">
-                                        <td>{{ value.product_name }}</td>
-                                        <td>{{ value.details }}</td>
+                                    <tr v-for="(value,index) in stocks.data">
+                                        <td>{{ value.product.product_name }}</td>
+                                        <td>{{ value.stock_quantity }}</td>
+                                        <td>{{ value.current_quantity }}</td>
                                         <td>
                               
-                                <button @click="editProduct(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
-                                    <i class="material-icons">edit</i>
+                                <button @click="viewStock(value.product_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                    <i class="material-icons">remove_red_eye</i>
                                 </button>
 
-                                  <button @click="deleteProduct(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                                  <button @click="deleteStock(value.product_id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">delete</i>
                                 </button>       
 
@@ -52,10 +65,10 @@
                    </div>
                      
                              <div class="row">
-            <div class="text-center col-md-12" v-if="products.last_page > 1">
+            <div class="text-center col-md-12" v-if="stocks.last_page > 1">
                 <ul class="pagination">
-                    <li :class="[ ((products.current_page == 1) ? 'disabled' : '') ]">
-                         <a :href="'?page='+products.current_page" @click.prevent="pageClicked(products.current_page-1)" aria-label="Previous" v-if="products.current_page != 1">
+                    <li :class="[ ((stocks.current_page == 1) ? 'disabled' : '') ]">
+                         <a :href="'?page='+stocks.current_page" @click.prevent="pageClicked(stocks.current_page-1)" aria-label="Previous" v-if="stocks.current_page != 1">
                              <span aria-hidden="true">«</span>
                          </a>
                         <a v-else>
@@ -63,11 +76,11 @@
                         </a>
                     </li>
                     <li v-for="pageNo in range(paginateLoop, numberOfPage)"
-                        :class="[ ((products.current_page == pageNo) ? 'active' : '') ]">
+                        :class="[ ((stocks.current_page == pageNo) ? 'active' : '') ]">
                         <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
                     </li>
-                    <li :class="[ ((products.current_page == products.last_page) ? 'disabled' : '') ]" >
-                        <a  :href="'?page='+products.current_page" @click.prevent="pageClicked(products.current_page+1)" aria-label="Next" v-if="products.current_page != products.last_page">
+                    <li :class="[ ((stocks.current_page == stocks.last_page) ? 'disabled' : '') ]" >
+                        <a  :href="'?page='+stocks.current_page" @click.prevent="pageClicked(stocks.current_page+1)" aria-label="Next" v-if="stocks.current_page != stocks.last_page">
                             <span aria-hidden="true">»</span>
                         </a>
                         <a v-else>
@@ -79,9 +92,7 @@
 </div>  
 
 
- <div class="row">
-    <update-product :cat="categorys"></update-product>
- </div>
+
 
 
 
@@ -93,15 +104,15 @@
     
     import {EventBus} from '../../vue-asset';
 
-    import UpdateProduct from './UpdateProduct.vue'
+    import ViewChalan from './ViewChalan.vue'
 
     export default{
-      
-       props:['categorys'],
+
+    	props:['products'],
 
         components : {
            
-            'update-product' : UpdateProduct
+            'view-chalan' : ViewChalan
 
         },
 
@@ -109,8 +120,9 @@
           
           return {
 
-            products : [],
+            stocks : [],
             name : '',
+            product: '',
 
           }
           
@@ -121,7 +133,7 @@
          var _this = this; 
          this.getData();
 
-        EventBus.$on('product-created', function () {
+        EventBus.$on('stock-created', function () {
             window.history.pushState({}, null, location.pathname);
             _this.getData();
         });
@@ -132,12 +144,12 @@
         
          getData(page = 1){
           
-          axios.get(base_url+"product-list?page="+page+"&name="+this.name)
+          axios.get(base_url+"stock-list?page="+page+"&product="+this.product)
           .then(response => {
            
            // console.log(response.data);
 
-           this.products = response.data;
+           this.stocks = response.data;
 
           }).catch(error => {
 
@@ -148,9 +160,9 @@
 
          // edit vendor 
 
-         editProduct(id){
+         viewStock(id){
 
-           EventBus.$emit('product-edit',id);
+           EventBus.$emit('stock-chalan',id);
 
          },
 
@@ -162,9 +174,21 @@
             }
         },
 
+
+      successALert(data){
+
+				Swal({
+					position: 'top-end',
+					type: data.status,
+					title: data.message,
+					showConfirmButton: false,
+					timer: 1500
+				})
+			},
+
          // delete vendor 
 
-         deleteProduct(id){
+         deleteStock(id){
 
              Swal({
                  title: 'Are you sure?',
@@ -181,17 +205,16 @@
              }).then((result) => {
                  if (result.value) {
 
-                    axios.delete(base_url+'product/'+id)
+                    axios.delete(base_url+'stock/'+id)
                     .then(res => {
 
-                     EventBus.$emit('product-created',1);
+                     EventBus.$emit('stock-created',1);
+                      
+                      this.successALert(res.data);
+
                     })
 
-                     Swal(
-                         'Deleted!',
-                         'Your Product has been deleted.',
-                         'success'
-                         )
+              
                  }
              })       
 
@@ -214,20 +237,20 @@
         computed: {
           
            paginateLoop(){
-                let products = this.products;
-                if(products.last_page > 11){
-                    if((products.last_page - 5) <= products.current_page){
-                        return products.last_page - 10;
+                let stocks = this.stocks;
+                if(stocks.last_page > 11){
+                    if((stocks.last_page - 5) <= stocks.current_page){
+                        return stocks.last_page - 10;
                     }
-                    if(products.current_page > 6){
-                        return products.current_page - 5;
+                    if(stocks.current_page > 6){
+                        return stocks.current_page - 5;
                     }
                 }
                 return 1;
             },
             numberOfPage(){
-                if(this.products.last_page < 11){
-                    return this.products.last_page;
+                if(this.stocks.last_page < 11){
+                    return this.stocks.last_page;
                 }else{
                     return 11;
                 }

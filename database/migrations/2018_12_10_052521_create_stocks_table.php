@@ -17,12 +17,13 @@ class CreateStocksTable extends Migration
             $table->increments('id');
             $table->string('product_code');
             $table->integer('product_id');
+            $table->integer('category_id');
             $table->integer('vendor_id');
             $table->integer('user_id');
             $table->string('chalan_no');
             $table->double('buying_price');
             $table->double('selling_price');
-            $table->double('discout')->default(0);
+            $table->double('discount')->default(0);
             $table->integer('stock_quantity');
             $table->integer('current_quantity')->default(0);
             $table->text('note')->nullable();

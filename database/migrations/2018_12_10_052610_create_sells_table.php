@@ -15,8 +15,9 @@ class CreateSellsTable extends Migration
     {
         Schema::create('sells', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('customer_id');
-            $table->string('branch_id')->default(1);
+            $table->integer('user_id');
+            $table->integer('customer_id');
+            $table->integer('branch_id')->default(1);
             $table->double('total_amount');
             $table->double('paid_amount')->default(0);
             $table->string('sell_date')->nullable();

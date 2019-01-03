@@ -4,7 +4,7 @@
 @section('title','Belontory | Vendor')
 
 
-@section('page-title','Product List')
+@section('page-title','Category List')
 
 
 @section('content')
@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-product :categorys="{{ json_encode($category) }}"></create-product>
+        	<create-category></create-category>
 
         </div>
 
@@ -26,14 +26,14 @@
                           
                             </h2> -->
                           
-                          <h2 >
-                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-product">
-                                <i class="glyphicon glyphicon-plus"></i> Create Product
+                          <h2>
+                          	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-category">
+                                <i class="glyphicon glyphicon-plus"></i> Create Category
                              </button>
                           </h2>
                         </div>
 
-                        <view-product :categorys="{{ json_encode($category) }}"></view-product>
+                        <view-category></view-category>
 
                     </div>
                 </div>
@@ -46,6 +46,6 @@
 
 @push('script')
 
-<script type="text/javascript" src="{{ url('public/js/product.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/js/category.js') }}"></script>
 
 @endpush

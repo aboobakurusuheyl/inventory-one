@@ -2,11 +2,11 @@
 	
 	<div class="wrap">
 		
-		<div class="modal fade" id="create-product" tabindex="-1" role="dialog">
+		<div class="modal fade" id="create-category" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="defaultModalLabel">Product Information</h4>
+						<h4 class="modal-title" id="defaultModalLabel">Add Category</h4>
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-danger" v-if="errors">
@@ -22,37 +22,10 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
-											<select class="form-control" v-model="product.category">
-												<option value="">Select Category</option>
-
-												<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
-											</select>
-										</div>
-									</div>
-								</div>  				
-
-
-								<div class="col-md-12">
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
-										</span>
-										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="product Name" v-model="product.name">
+											<input type="text" class="form-control date" placeholder="category Name" v-model="category.name">
 										</div>
 									</div>
 								</div>        
-
-								<div class="col-md-12">
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
-										</span>
-										<div class="form-line">
-											<input type="text" class="form-control date" placeholder="product note" v-model="product.details">
-										</div>
-									</div>
-								</div>
 
 
 								</div>
@@ -63,7 +36,7 @@
 					</div>
 					<div class="modal-footer">
 						<br>
-						<button @click="createProduct" type="button" class="btn btn-success waves-effect">SAVE</button>
+						<button @click="createCategory" type="button" class="btn btn-success waves-effect">SAVE</button>
 						<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">CLOSE</button>
 					</div>
 				</div>
@@ -80,18 +53,15 @@
 
 
 	export default {
-        
-        props:['categorys'],
-
+     
+     
 		data(){
 
 			return {
 
-				product : {
+				category : {
 
-					cateogry : '',
 					name : '',
-					details : '',
 
 				},
 
@@ -105,17 +75,17 @@
 		methods : {
 
 
-			createProduct(){
+			createCategory(){
 
-				axios.post(base_url+'product',this.product)
+				axios.post(base_url+'category',this.category)
 
 				.then(response => {
 
-					$('#create-product').modal('hide');
+					$('#create-category').modal('hide');
 
-					this.product = {'name':'','details':''};
+					this.category = {'name':'','details':''};
 					this.errors = null;
-					EventBus.$emit('product-created',response.data);
+					EventBus.$emit('category-created',response.data);
 
 					// this.showMessage(response.data);
 
@@ -132,7 +102,6 @@
 				})
 
 			},
-               
 
 			successALert(data){
 
