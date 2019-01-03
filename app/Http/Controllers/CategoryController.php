@@ -35,6 +35,16 @@ class CategoryController extends Controller
 
     }
 
+
+
+    public function AllCategory(){
+
+        $cat   = Category::all();
+
+
+        return $cat;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

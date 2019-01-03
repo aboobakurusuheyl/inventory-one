@@ -16,7 +16,7 @@
 						<form>
 							<div class="row">
                                
-                               				<div class="col-md-12">
+                               <div class="col-md-12">
 									<div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">palette</i>
@@ -25,7 +25,7 @@
 											<select class="form-control" v-model="product.category">
 												<option value="">Select Category</option>
 
-												<option v-for="(value,index) in cat" :value="value.id" :selected="product.id === value.id">{{ value.name }}</option>
+												<option v-for="(value,index) in cat" :value="value.id" :selected="product.category === value.id">{{ value.name }}</option>
 											</select>
 										</div>
 									</div>
@@ -90,6 +90,7 @@ export default{
       product : {
          
          id : 1,
+         category : '',
          name : '',
          details : '',
 
@@ -137,6 +138,7 @@ export default{
        
        this.product = {
        	id:response.data.id,
+       	category:response.data.category_id,
        	name:response.data.product_name,
        	details:response.data.details,
        }

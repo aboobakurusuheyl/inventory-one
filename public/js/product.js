@@ -16873,6 +16873,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       product: {
 
         id: 1,
+        category: '',
         name: '',
         details: ''
 
@@ -16909,6 +16910,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         _this.product = {
           id: response.data.id,
+          category: response.data.category_id,
           name: response.data.product_name,
           details: response.data.details
         };
@@ -17040,7 +17042,8 @@ var render = function() {
                                   {
                                     domProps: {
                                       value: value.id,
-                                      selected: _vm.product.id === value.id
+                                      selected:
+                                        _vm.product.category === value.id
                                     }
                                   },
                                   [_vm._v(_vm._s(value.name))]

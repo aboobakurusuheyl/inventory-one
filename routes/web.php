@@ -27,7 +27,7 @@ Route::resource('category','CategoryController');
 
 Route::get('category-list','CategoryController@CategoryList');
 
-Route::get('category/all','CategoryController@AllCategory');
+Route::get('all-category','CategoryController@AllCategory');
 
 // product 
 Route::resource('product','ProductController');
