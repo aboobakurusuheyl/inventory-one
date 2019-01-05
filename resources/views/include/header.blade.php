@@ -38,4 +38,6 @@
     <link href="{{ url('plugins/waitme/waitMe.css') }}" rel="stylesheet" />
 
     <!-- Bootstrap Select Css -->
-    <!-- <link href="{{ url('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" /> -->
+   <!--  <link href="{{ url('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />   --> 
+
+    <link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />

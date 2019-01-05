@@ -12,17 +12,25 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                     	<select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="product">
-								<option value="">All Product</option>
+                     	<select class="form-control show-tick" data-live-serach="true" @change="getProduct()" v-model="category">
+								<option value="">All Category</option>
 
-							 <option v-for="(vd,index) in products" :value="vd.id">{{ vd.product_name  }}</option>
+							 <option v-for="(cat,index) in categorys" :value="cat.id">{{ cat.name  }}</option>
 						</select>
                     </div>
                     <div class="col-md-4">
-                    
+                      <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="product">
+                                <option value="">All Product</option>
+
+                             <option v-for="(pd,index) in products" :value="pd.id">{{ pd.product_name  }}</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
-                
+                          <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="vendor">
+                                <option value="">All Vendor</option>
+
+                             <option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name  }}</option>
+                        </select>
                     </div>
 
                 
@@ -34,24 +42,32 @@
                             <table class="table table-condensed table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Product Name</th>
+                                        <th>Product</th>
+                                        <th>Vendor</th>
+                                        <th>Chalan</th>
                                         <th>Initial Stock</th>
                                         <th>Current Stock</th>
+                                        <th>Buying Price</th>
+                                        <th>Selling Price</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(value,index) in stocks.data">
                                         <td>{{ value.product.product_name }}</td>
+                                        <td>{{ value.vendor.name }}</td>
+                                        <td>{{ value.chalan_no }}</td>
                                         <td>{{ value.stock_quantity }}</td>
                                         <td>{{ value.current_quantity }}</td>
+                                        <td>{{ value.buying_price }}</td>
+                                        <td>{{ value.selling_price }}</td>
                                         <td>
                               
-                                <button @click="viewStock(value.product_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                <button @click="viewStock(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">remove_red_eye</i>
                                 </button>
 
-                                  <button @click="deleteStock(value.product_id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                                  <button @click="deleteStock(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">delete</i>
                                 </button>       
 
@@ -108,7 +124,7 @@
 
     export default{
 
-    	props:['products'],
+    	props:['categorys','vendors'],
 
         components : {
            
@@ -123,6 +139,9 @@
             stocks : [],
             name : '',
             product: '',
+            category: '',
+            vendor: '',
+            products : [],
 
           }
           
@@ -144,7 +163,7 @@
         
          getData(page = 1){
           
-          axios.get(base_url+"stock-list?page="+page+"&product="+this.product)
+          axios.get(base_url+"stock-list?page="+page+"&product="+this.product+"&category="+this.category+"&vendor="+this.vendor)
           .then(response => {
            
            // console.log(response.data);
@@ -156,6 +175,30 @@
             console.log(error);
           })
 
+         },
+
+
+         getProduct(){
+
+              if(this.category === ''){
+
+               this.products = [];
+
+                this.product = '';
+
+                }
+                else{
+              
+               axios.get(base_url+'category/product/'+this.category)
+              .then(response => {
+               
+                this.products = response.data;
+
+              })
+
+                }
+
+            this.getData(1);    
          },
 
          // edit vendor 

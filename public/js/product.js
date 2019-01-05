@@ -16598,6 +16598,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -16619,7 +16627,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
 
             products: [],
-            name: ''
+            name: '',
+            cat: ''
 
         };
     },
@@ -16642,7 +16651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
 
-            axios.get(base_url + "product-list?page=" + page + "&name=" + this.name).then(function (response) {
+            axios.get(base_url + "product-list?page=" + page + "&name=" + this.name + "&cat=" + this.cat).then(function (response) {
 
                 // console.log(response.data);
 
@@ -16928,6 +16937,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this2.closeModal();
           $('#update-product').modal('hide');
         }
+
+        setTimeout(function () {
+          $('select').selectpicker();
+        }, 100);
       }).catch(function (err) {
 
         if (err.response) {
@@ -17224,6 +17237,53 @@ var render = function() {
     _c("div", { staticClass: "body" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-4" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.cat,
+                  expression: "cat"
+                }
+              ],
+              staticClass: "form-control select2",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.cat = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.getData
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [
+                _vm._v("Filter By Category")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.categorys, function(value, index) {
+                return _c("option", { domProps: { value: value.id } }, [
+                  _vm._v(_vm._s(value.name))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
           _c("input", {
             directives: [
               {
@@ -17248,8 +17308,6 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }),
-        _vm._v(" "),
         _c("div", { staticClass: "col-md-4" })
       ]),
       _vm._v(" "),
@@ -17261,6 +17319,8 @@ var render = function() {
             "tbody",
             _vm._l(_vm.products.data, function(value, index) {
               return _c("tr", [
+                _c("td", [_vm._v(_vm._s(value.category.name))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(value.product_name))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(value.details))]),
@@ -17442,9 +17502,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Name")]),
+        _c("th", [_vm._v("Category")]),
         _vm._v(" "),
-        _c("th", [_vm._v("details")]),
+        _c("th", [_vm._v("Product Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Details")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

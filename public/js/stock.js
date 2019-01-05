@@ -16199,13 +16199,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-	props: ['vendors', 'products', 'date'],
+	props: ['vendors', 'date', 'categorys'],
 
 	data: function data() {
 
@@ -16213,6 +16229,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			stock: {
 
 				product: '',
+				category: '',
 				vendor: '',
 				quantity: '',
 				buying_price: '',
@@ -16221,6 +16238,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			},
 
+			products: [],
+
 			errors: null
 
 		};
@@ -16228,26 +16247,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 	methods: {
-		createStock: function createStock() {
+		findProduct: function findProduct() {
 			var _this = this;
+
+			if (this.stock.category === '') {
+
+				this.products = [];
+			} else {
+
+				axios.get(base_url + 'category/product/' + this.stock.category).then(function (response) {
+
+					_this.products = response.data;
+				});
+			}
+		},
+		createStock: function createStock() {
+			var _this2 = this;
 
 			axios.post(base_url + 'stock', this.stock).then(function (response) {
 
 				$('#create-stock').modal('hide');
 
-				_this.resetForm();
+				_this2.resetForm();
 
-				_this.errors = null;
+				_this2.errors = null;
 				__WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-created', response.data);
 
 				// this.showMessage(response.data);
 
-				_this.successALert(response.data);
+				_this2.successALert(response.data);
 			}).catch(function (err) {
 
 				if (err.response) {
 
-					_this.errors = err.response.data.errors;
+					_this2.errors = err.response.data.errors;
 				}
 			});
 		},
@@ -16265,7 +16298,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		resetForm: function resetForm() {
 
-			this.stock = { 'product': '', 'vendor': '', 'quantity': '', 'buying_price': '', 'selling_price': '', 'note': '' };
+			this.stock = { 'product': '', 'vendor': '', 'quantity': '', 'buying_price': '', 'selling_price': '', 'note': '', 'category': '' };
 		},
 		successALert: function successALert(data) {
 
@@ -16334,6 +16367,70 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
+                                  value: _vm.stock.category,
+                                  expression: "stock.category"
+                                }
+                              ],
+                              staticClass:
+                                "form-control show-tick bootstrap-select",
+                              attrs: { "data-live-serach": "true" },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.stock,
+                                      "category",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    _vm.findProduct()
+                                  }
+                                ]
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Category")
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.categorys, function(value, index) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: value.id } },
+                                  [_vm._v(_vm._s(value.name))]
+                                )
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-line" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
                                   value: _vm.stock.product,
                                   expression: "stock.product"
                                 }
@@ -16383,7 +16480,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c(
@@ -16441,7 +16538,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(3),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16475,7 +16572,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(4),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16512,7 +16609,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(5),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16549,7 +16646,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(6),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16593,7 +16690,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "input-group" }, [
-                        _vm._m(7),
+                        _vm._m(8),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-line" }, [
                           _c("input", {
@@ -16677,6 +16774,14 @@ var staticRenderFns = [
         { staticClass: "modal-title", attrs: { id: "defaultModalLabel" } },
         [_vm._v("Stock In")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("palette")])
     ])
   },
   function() {
@@ -16903,6 +17008,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -16911,7 +17032,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['products'],
+    props: ['categorys', 'vendors'],
 
     components: {
 
@@ -16925,7 +17046,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             stocks: [],
             name: '',
-            product: ''
+            product: '',
+            category: '',
+            vendor: '',
+            products: []
 
         };
     },
@@ -16948,7 +17072,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
 
-            axios.get(base_url + "stock-list?page=" + page + "&product=" + this.product).then(function (response) {
+            axios.get(base_url + "stock-list?page=" + page + "&product=" + this.product + "&category=" + this.category + "&vendor=" + this.vendor).then(function (response) {
 
                 // console.log(response.data);
 
@@ -16957,6 +17081,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 console.log(error);
             });
+        },
+        getProduct: function getProduct() {
+            var _this3 = this;
+
+            if (this.category === '') {
+
+                this.products = [];
+
+                this.product = '';
+            } else {
+
+                axios.get(base_url + 'category/product/' + this.category).then(function (response) {
+
+                    _this3.products = response.data;
+                });
+            }
+
+            this.getData(1);
         },
 
 
@@ -16988,7 +17130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // delete vendor 
 
         deleteStock: function deleteStock(id) {
-            var _this3 = this;
+            var _this4 = this;
 
             Swal({
                 title: 'Are you sure?',
@@ -17005,7 +17147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                         __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('stock-created', 1);
 
-                        _this3.successALert(res.data);
+                        _this4.successALert(res.data);
                     });
                 }
             });
@@ -17305,6 +17447,54 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
+                  value: _vm.category,
+                  expression: "category"
+                }
+              ],
+              staticClass: "form-control show-tick",
+              attrs: { "data-live-serach": "true" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.category = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.getProduct()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Category")]),
+              _vm._v(" "),
+              _vm._l(_vm.categorys, function(cat, index) {
+                return _c("option", { domProps: { value: cat.id } }, [
+                  _vm._v(_vm._s(cat.name))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
                   value: _vm.product,
                   expression: "product"
                 }
@@ -17335,9 +17525,9 @@ var render = function() {
             [
               _c("option", { attrs: { value: "" } }, [_vm._v("All Product")]),
               _vm._v(" "),
-              _vm._l(_vm.products, function(vd, index) {
-                return _c("option", { domProps: { value: vd.id } }, [
-                  _vm._v(_vm._s(vd.product_name))
+              _vm._l(_vm.products, function(pd, index) {
+                return _c("option", { domProps: { value: pd.id } }, [
+                  _vm._v(_vm._s(pd.product_name))
                 ])
               })
             ],
@@ -17345,9 +17535,53 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" })
+        _c("div", { staticClass: "col-md-4" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.vendor,
+                  expression: "vendor"
+                }
+              ],
+              staticClass: "form-control show-tick",
+              attrs: { "data-live-serach": "true" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.vendor = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.getData(1)
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Vendor")]),
+              _vm._v(" "),
+              _vm._l(_vm.vendors, function(vd, index) {
+                return _c("option", { domProps: { value: vd.id } }, [
+                  _vm._v(_vm._s(vd.name))
+                ])
+              })
+            ],
+            2
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -17360,9 +17594,17 @@ var render = function() {
               return _c("tr", [
                 _c("td", [_vm._v(_vm._s(value.product.product_name))]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.vendor.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.chalan_no))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(value.stock_quantity))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(value.current_quantity))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.buying_price))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(value.selling_price))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -17373,7 +17615,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          _vm.viewStock(value.product_id)
+                          _vm.viewStock(value.id)
                         }
                       }
                     },
@@ -17392,7 +17634,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          _vm.deleteStock(value.product_id)
+                          _vm.deleteStock(value.id)
                         }
                       }
                     },
@@ -17532,11 +17774,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Product Name")]),
+        _c("th", [_vm._v("Product")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Vendor")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Chalan")]),
         _vm._v(" "),
         _c("th", [_vm._v("Initial Stock")]),
         _vm._v(" "),
         _c("th", [_vm._v("Current Stock")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Buying Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Selling Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

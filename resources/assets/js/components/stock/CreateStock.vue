@@ -22,6 +22,22 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
+											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.category" @change="findProduct()">
+												<option value="">Select Category</option>
+
+												 <option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
+											</select>
+										</div>
+									</div>
+								</div>  		
+
+
+								<div class="col-md-6">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">palette</i>
+										</span>
+										<div class="form-line">
 											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.product">
 												<option value="">Select Product</option>
 
@@ -133,7 +149,7 @@
 
 	export default {
 
-		props:['vendors','products','date'],
+		props:['vendors','date','categorys'],
 
 		data(){
 
@@ -141,6 +157,7 @@
 			  stock : {
 
 					product : '',
+					category : '',
 					vendor : '',
 					quantity : '',
 					buying_price : '',
@@ -148,6 +165,8 @@
 					note :'',
 
 				},
+
+				products : [],
 
 				errors : null 
 
@@ -157,6 +176,32 @@
 		},
 
 		methods : {
+
+
+		  findProduct(){ 
+
+		  	 if(this.stock.category === ''){
+
+               this.products = [];
+
+		  	  }
+		  	  else{
+              
+               axios.get(base_url+'category/product/'+this.stock.category)
+              .then(response => {
+               
+                this.products = response.data;
+
+              })
+
+		  	  }
+
+
+                 
+              
+		  	 
+
+			},
 
 
 			createStock(){
@@ -200,7 +245,7 @@
 
 			resetForm(){
                
-               this.stock = {'product':'','vendor':'','quantity':'','buying_price':'','selling_price':'','note':''};
+               this.stock = {'product':'','vendor':'','quantity':'','buying_price':'','selling_price':'','note':'','category':''};
 
 			},
 

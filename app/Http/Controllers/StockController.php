@@ -6,6 +6,7 @@ use App\Stock;
 use App\Product;
 use App\Vendor;
 use App\SellDetails;
+use App\Category;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -21,21 +22,48 @@ class StockController extends Controller
        
 
        $vendor = Vendor::orderBy('name','asc')->get();
+       $category = Category::orderBy('name','asc')->get();
        $product = Product::orderBy('product_name','asc')->get();
-       return view('stock.stock',['vendor'=>$vendor,'product'=>$product]);
+       return view('stock.stock',[
+        'vendor'=>$vendor,
+        'category'=>$category,
+        'product'=>$product,
+    ]);
     }
 
 
     public function StockList(Request $request){
           
 
-       $stock = Stock::with('product')
-                  ->selectRaw('sum(stock_quantity) as stock_quantity,sum(current_quantity) as current_quantity,product_id');
+       $stock = Stock::with([
+        'product'=>function($query){
+              $query->select('id','product_name');
+       },
+       'vendor'=>function($query){
+        $query->select('id','name');
+       },
+       'user'=> function($query){
+
+            $query->select('id','name');
+       }
+       ])->orderBy('updated_at','desc');
           
 
-          if($request->product != ''){
+          if($request->category != ''){
              
-             $stock->where('product_id','=',$request->product);
+             $stock->where('category_id','=',$request->category);
+
+            }
+
+            if($request->product != ''){
+             
+              $stock->where('product_id','=',$request->product);
+
+            }
+
+             if($request->vendor != ''){
+             
+              $stock->where('vendor_id','=',$request->vendor);
 
             }
 
@@ -47,8 +75,7 @@ class StockController extends Controller
             //    $stock->whereBetween('created_at',[$start_date,$end_date]);
             //   } 
 
-               $stock = $stock->groupBy('product_id')
-                         ->paginate(10);
+               $stock = $stock->paginate(10);
 
              return $stock;            
 
@@ -90,6 +117,7 @@ class StockController extends Controller
           
           'product' => 'required',
           'vendor' => 'required',
+          'category' => 'required',
           'quantity' => 'required|integer',
           'buying_price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
           'selling_price' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
@@ -101,6 +129,7 @@ class StockController extends Controller
 
 
           $stock = new Stock;   
+          $stock->category_id = $request->category;
           $stock->product_id = $request->product;
           $stock->product_code = time();
           $stock->vendor_id = $request->vendor;
@@ -176,19 +205,19 @@ class StockController extends Controller
     public function destroy($id)
     {
         
-        $check = SellDetails::where('product_id','=',$id)->count();
+        $check = SellDetails::where('stock_id','=',$id)->count();
 
          if($check > 0){
            
 
-           return response()->json(['status'=>'error','message','This Product Has Sells Record']);
+           return response()->json(['status'=>'error','message','This Chalan Has Sells Record Delete Sold Item First']);
 
          }
 
 
          try{
             
-             Stock::where('product_id', '=', $id)->delete();
+             Stock::where('id', '=', $id)->delete();
              return response()->json(['status'=>'success','message','Delete success !']);
 
          }

@@ -269,6 +269,13 @@
         var base_url = "{{ url('/').'/' }}";
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+           $('.select2').select2();
+        });
+    </script>
+
 
     @stack('script')
 

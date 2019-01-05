@@ -33,6 +33,8 @@ Route::get('all-category','CategoryController@AllCategory');
 Route::resource('product','ProductController');
 Route::get('product-list','ProductController@ProductList');
 
+Route::get('category/product/{id}','ProductController@productByCategory');
+
 
 
 // customer 

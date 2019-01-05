@@ -160,6 +160,10 @@ export default{
               $('#update-product').modal('hide');
             }
 
+            setTimeout(function(){
+            	$('select').selectpicker();
+            },100)
+
 
 
         })

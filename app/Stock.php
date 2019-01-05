@@ -25,6 +25,6 @@ class Stock extends Model
 
     public function vendor(){
 
-    	return $this->belongsTo('App\Stock');
+    	return $this->belongsTo('App\Vendor');
     }
 }

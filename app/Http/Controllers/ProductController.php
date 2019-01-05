@@ -38,13 +38,21 @@ class ProductController extends Controller
     public function ProductList(Request $request){
        
 
-       $product = Product::orderBy('product_name','asc');
+       $product = Product::with(['category' => function($query){
+        $query->select('id','name');
+       }])->orderBy('product_name','asc');
 
        $name = $request->name;
 
        if($name != ''){
 
         $product->where('product_name','LIKE','%'.$name.'%');
+
+       }    
+
+       if($request->cat != ''){
+
+        $product->where('category_id','=',$request->cat);
 
        } 
         
@@ -53,6 +61,16 @@ class ProductController extends Controller
         return $product;
 
 
+
+    }
+
+    public function productByCategory($id){
+          
+
+          $product = Product::where('category_id','=',$id)->get();
+
+
+          return $product;
 
     }
 

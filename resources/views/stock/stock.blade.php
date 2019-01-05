@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-stock :date="{{ json_encode(date('Y-m-d')) }}" :vendors="{{ $vendor }}" :products="{{ $product }}"></create-stock>
+        	<create-stock :date="{{ json_encode(date('Y-m-d')) }}" :vendors="{{ $vendor }}" :categorys="{{ $category }}"></create-stock>
 
         </div>
 
@@ -33,7 +33,7 @@
                           </h2>
                         </div>
 
-                        <view-stock :products="{{ $product }}"></view-stock>
+                        <view-stock :vendors="{{ $vendor }}" :categorys="{{ $category }}" :products="{{ $product }}"></view-stock>
 
                     </div>
                 </div>
