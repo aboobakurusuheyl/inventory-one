@@ -35,7 +35,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">shopping_basket</i>
 										</span>
 										<div class="form-line">
 											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.product">
@@ -50,7 +50,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">supervisor_account</i>
 										</span>
 										<div class="form-line">
 												<select class="form-control show-tick" data-live-serach="true" v-model="stock.vendor">
@@ -65,10 +65,10 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">add</i>
 										</span>
 										<div class="form-line">
-											<input type="text" class="form-control" placeholder="Quantity " v-model="stock.quantity">
+											<input type="number" class="form-control" placeholder="Quantity " v-model="stock.quantity">
 										</div>
 									</div>
 								</div>		
@@ -77,7 +77,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">attach_money</i>
 										</span>
 										<div class="form-line">
 											<input type="text" class="form-control" placeholder="Buying Price" v-model="stock.buying_price">
@@ -88,7 +88,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">attach_money</i>
 										</span>
 										<div class="form-line">
 											<input type="text" class="form-control" placeholder="Selling Price" v-model="stock.selling_price">
@@ -100,10 +100,10 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">playlist_add_check</i>
 										</span>
 										<div class="form-line">
-											<input v-on:keyup.8="defaultValue" type="text" class="form-control" placeholder="Chalan No:" title="Chalan No" v-model="date" disabled="">
+											<input  type="text" class="form-control" placeholder="Chalan No:" title="Chalan No" v-model="date" disabled="">
 										</div>
 									</div>
 								</div>			
@@ -112,7 +112,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">line_style</i>
+											<i class="material-icons">assignment</i>
 										</span>
 										<div class="form-line">
 											<input type="text" class="form-control" placeholder="Note (optional)" title="NOte" v-model="stock.note">

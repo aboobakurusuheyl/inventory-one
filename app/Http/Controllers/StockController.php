@@ -170,7 +170,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        //
+       
     }
 
     /**
@@ -181,7 +181,7 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        return $stock;
     }
 
     /**
@@ -193,7 +193,39 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        //
+       
+       $request->validate([
+        'category'=>'required',
+        'product'=>'required',
+        'vendor'=>'required',
+        'buying_price'=>'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
+        'selling_price'=>'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
+       ]);
+
+
+        try{
+  
+          $stock->category_id = $request->category;
+          $stock->product_id = $request->product;
+          $stock->vendor_id = $request->vendor;
+          $stock->buying_price = $request->buying_price;
+          $stock->selling_price = $request->selling_price;
+          $stock->note = $request->note;
+          $stock->update();
+
+          return response()->json(['status'=>'success','message'=>'Stock Updated']);
+
+        }
+        catch(\Exception $e){
+            
+            return response()->json(['status'=>'error','message'=>'Problem To Update Stock']);
+
+
+        }
+
+
+
+
     }
 
     /**

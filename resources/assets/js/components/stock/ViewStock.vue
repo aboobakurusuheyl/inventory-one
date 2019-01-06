@@ -7,7 +7,7 @@
               <div class="body">
 
               	 <div class="row">
-                  <view-chalan></view-chalan>
+                  <edit-stock :categorys="categorys" :vendors="vendors"></edit-stock>
                   </div>
 
                 <div class="row">
@@ -49,6 +49,7 @@
                                         <th>Current Stock</th>
                                         <th>Buying Price</th>
                                         <th>Selling Price</th>
+                                        <th>Entry By</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -61,10 +62,11 @@
                                         <td>{{ value.current_quantity }}</td>
                                         <td>{{ value.buying_price }}</td>
                                         <td>{{ value.selling_price }}</td>
+                                        <td>{{ value.user.name }}</td>
                                         <td>
                               
-                                <button @click="viewStock(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
-                                    <i class="material-icons">remove_red_eye</i>
+                                <button @click="editStock(value.id,value.category_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                    <i class="material-icons">edit</i>
                                 </button>
 
                                   <button @click="deleteStock(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
@@ -120,7 +122,7 @@
     
     import {EventBus} from '../../vue-asset';
 
-    import ViewChalan from './ViewChalan.vue'
+    import editStock from './editStock.vue'
 
     export default{
 
@@ -128,7 +130,7 @@
 
         components : {
            
-            'view-chalan' : ViewChalan
+            'edit-stock' : editStock
 
         },
 
@@ -203,9 +205,9 @@
 
          // edit vendor 
 
-         viewStock(id){
+        editStock(id,category_id){
 
-           EventBus.$emit('stock-chalan',id);
+           EventBus.$emit('edit-stock',id,category_id);
 
          },
 
