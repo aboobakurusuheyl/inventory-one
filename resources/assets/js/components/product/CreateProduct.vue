@@ -77,11 +77,13 @@
 <script>
 
 	import {EventBus} from '../../vue-asset';
+	import mixin from '../../mixin';
 
 
 	export default {
         
         props:['categorys'],
+        mixins:[mixin],
 
 		data(){
 
@@ -134,16 +136,7 @@
 			},
                
 
-			successALert(data){
 
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			}
 
 
 

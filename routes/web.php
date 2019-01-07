@@ -49,6 +49,8 @@ Route::get('chalan-list/chalan/{id}','StockController@ChalanList');
 
 Route::get('stock-asset','StockController@StockAsset');
 
+Route::post('stock-update','StockController@StockUpdate');
+
 
 Route::get('logout','UserController@logout');
 

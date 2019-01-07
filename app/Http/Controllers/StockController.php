@@ -179,9 +179,9 @@ class StockController extends Controller
      * @param  \App\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stock $stock)
+    public function edit($stock)
     {
-        return $stock;
+        return $stock = Stock::with('product')->where('id','=',$stock)->first();
     }
 
     /**
@@ -223,6 +223,54 @@ class StockController extends Controller
 
         }
 
+
+
+
+    }
+
+    public function StockUpdate(Request $request){
+
+
+      
+      $request->validate([
+          
+          'new_qty'=>'required|integer',
+          'state'=>'required',
+      ]);
+
+      $stock = Stock::find($request->id);
+
+      if($request->state == '+'){
+           
+           $stock->current_quantity = $stock->current_quantity+$request->new_qty;
+           $stock->stock_quantity = $stock->stock_quantity+$request->new_qty;
+
+           $stock->update();
+
+           return response()->json(['status'=>'success','message'=>'Quantity Updated']);
+      }
+
+      else{
+
+        if($request->new_qty > $stock->current_quantity){
+
+            return response()->json(['status'=>'error','message'=>'quantity is greater then current quantity']);
+           
+          }
+
+          else{
+           
+           $stock->current_quantity = $stock->current_quantity-$request->new_qty;
+           $stock->stock_quantity = $stock->stock_quantity-$request->new_qty;
+
+           $stock->update();
+
+           return response()->json(['status'=>'success','message'=>'Quantity Updated']);
+
+          }
+
+
+        }
 
 
 

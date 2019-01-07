@@ -8,6 +8,7 @@
 
               	 <div class="row">
                   <edit-stock :categorys="categorys" :vendors="vendors"></edit-stock>
+                  <update-qty></update-qty>
                   </div>
 
                 <div class="row">
@@ -39,7 +40,7 @@
 
                 <div class="table-responsive">
                             
-                            <table class="table table-condensed table-hover">
+                            <table class="table table-condensed table-hover table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Product</th>
@@ -50,6 +51,7 @@
                                         <th>Buying Price</th>
                                         <th>Selling Price</th>
                                         <th>Entry By</th>
+                                        <th>Entry Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -63,8 +65,13 @@
                                         <td>{{ value.buying_price }}</td>
                                         <td>{{ value.selling_price }}</td>
                                         <td>{{ value.user.name }}</td>
+                                        <td>{{ value.created_at | moment('LL') }}</td>
                                         <td>
                               
+                                <button @click="editQty(value.id,value.category_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                    <i class="material-icons">add</i>
+                                </button>   
+
                                 <button @click="editStock(value.id,value.category_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">edit</i>
                                 </button>
@@ -121,16 +128,22 @@
 <script>
     
     import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin.js';
 
-    import editStock from './editStock.vue'
+    import editStock from './editStock.vue';
+    import UpdateQuantity from './UpdateQuantity.vue';
+    
 
     export default{
 
     	props:['categorys','vendors'],
 
+        mixins:[mixin],
+
         components : {
            
-            'edit-stock' : editStock
+            'edit-stock' : editStock,
+            'update-qty' : UpdateQuantity,
 
         },
 
@@ -150,6 +163,9 @@
 
         },
         created(){
+
+
+           // this.hello();
           
          var _this = this; 
          this.getData();
@@ -211,25 +227,11 @@
 
          },
 
-        showMessage(data){
-            if(data.status == 'success'){
-                toastr.success(data.message,'Success Alert',{timeOut:500});
-            }else{
-                toastr.error(data.message,'Error Alert',{timeOut:500});
-            }
-        },
+         editQty(id){
 
+           EventBus.$emit('edit-qty',id);
 
-      successALert(data){
-
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			},
+         },
 
          // delete vendor 
 
@@ -302,7 +304,9 @@
             }
 
 
-        }
+        },
+
+
          
     }
         

@@ -145,11 +145,14 @@
 <script>
 
 	import {EventBus} from '../../vue-asset';
+	import mixin from '../../mixin';
 
 
 	export default {
 
 		props:['vendors','date','categorys'],
+
+		mixins:[mixin],
 
 		data(){
 
@@ -206,6 +209,8 @@
 
 			createStock(){
 
+			
+
 				axios.post(base_url+'stock',this.stock)
 
 				.then(response => {
@@ -217,7 +222,7 @@
 					this.errors = null;
 					EventBus.$emit('stock-created',response.data);
 
-					// this.showMessage(response.data);
+					
 
 					this.successALert(response.data);
 
@@ -249,16 +254,7 @@
 
 			},
 
-			successALert(data){
 
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			}
 
 
 

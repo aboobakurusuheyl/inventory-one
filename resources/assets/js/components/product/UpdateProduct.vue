@@ -75,13 +75,17 @@
 <script>
 
 import {EventBus} from '../../vue-asset';
+import mixin from '../../mixin';
 
 	
 export default{
 
  props:['cat'],	
  
+ mixins : [mixin],
  name : 'update-product',
+
+
 
  data(){
    
@@ -177,16 +181,7 @@ export default{
 
    },
    
-		successALert(data){
 
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			},
 
    closeModal(){
 

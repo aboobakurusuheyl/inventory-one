@@ -48,11 +48,14 @@
 <script>
 
 import {EventBus} from '../../vue-asset';
+import mixin from '../../mixin';
 
 	
 export default{
  
  name : 'update-category',
+
+ mixins:[mixin],
 
  data(){
    
@@ -139,16 +142,7 @@ export default{
 
    },
    
-		successALert(data){
 
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			},
 
    closeModal(){
 

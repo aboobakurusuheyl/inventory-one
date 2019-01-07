@@ -128,48 +128,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">reply</i>
-										</span>
-										<div class="form-line">
-											<p>Change Quantity ?</p>
-										     <select class="form-control" v-model="stock.state">
-										     	<option value="no">No</option>
-										     	<option value="yes">Yes</option>
-										     </select>
-										</div>
-									</div>
-								</div>				
-
-
-								<div class="col-md-6" v-if="stock.state === 'yes'">
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">tune</i>
-										</span>
-										<div class="form-line">
-											<p>Incremnt Or Decrement</p>
-										     <select class="form-control" v-model="stock.change_state">
-										     	<option value="0">+Add</option>
-										     	<option value="1">-Remove</option>
-										     </select>
-										</div>
-									</div>
-								</div>				
-
-								<div class="col-md-6" v-if="stock.state === 'yes'">
-									<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">add</i>
-										</span>
-										<div class="form-line">
-											<p>Update Quantity</p>
-										<input type="number" class="form-control" placeholder="Quantity " v-model="stock.new_quantity" >
-										</div>
-									</div>
-								</div>	
+						
 
 
 
@@ -196,11 +155,13 @@
 <script>
 
 	import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin';
 
 
 	export default {
 
 		props:['vendors','categorys'],
+		mixins : [mixin],
 
 		data(){
 
@@ -217,9 +178,6 @@
 					selling_price :'',
 					note :'',
 					chalan_no :'',
-					state : 'no',
-					change_state : 0,
-					new_quantity : 0,
 
 				},
 
@@ -346,17 +304,6 @@
 				this.stock = {'product':'','vendor':'','quantity':'','buying_price':'','selling_price':'','note':'','category':''};
 
 			},
-
-			successALert(data){
-
-				Swal({
-					position: 'top-end',
-					type: data.status,
-					title: data.message,
-					showConfirmButton: false,
-					timer: 1500
-				})
-			}
 
 
 

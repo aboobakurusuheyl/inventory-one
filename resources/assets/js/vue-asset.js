@@ -16,6 +16,15 @@ import Swal from 'sweetalert2';
 
 window.Swal = Swal;
 
+// import VueMoment from 'vue-moment';
+// Vue.use(VueMoment, {
+//     moment,
+// })
+
+// import mixin from './mixin.js';
+
+// Vue.mixin(mixin);
+
 
 
 window.Vue = require('vue');

@@ -97,9 +97,15 @@
     
     import {EventBus} from '../../vue-asset';
 
+    import mixin from '../../mixin';
+
     import UpdateVendor from './UpdateVendor.vue'
 
+
+
     export default{
+
+        mixins : [mixin],
 
         components : {
            
@@ -158,13 +164,7 @@
 
          },
 
-        showMessage(data){
-            if(data.status == 'success'){
-                toastr.success(data.message,'Success Alert',{timeOut:500});
-            }else{
-                toastr.error(data.message,'Error Alert',{timeOut:500});
-            }
-        },
+  
 
          // delete vendor 
 
@@ -189,13 +189,10 @@
                     .then(res => {
 
                      EventBus.$emit('vendor-created',1);
+                     this.successAlert(res.data);
                     })
 
-                     Swal(
-                         'Deleted!',
-                         'Your file has been deleted.',
-                         'success'
-                         )
+                 
                  }
              })       
            

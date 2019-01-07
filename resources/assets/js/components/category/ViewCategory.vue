@@ -97,10 +97,13 @@
 <script>
 	
 	import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin';
 
 	import Updatecategory from './Updatecategory.vue'
 
 	export default{
+
+        mixins:[mixin],
 
 		components : {
 			
@@ -188,13 +191,10 @@
          			.then(res => {
 
          				EventBus.$emit('category-created',1);
+                         this.successAlert(res.data);
          			})
 
-         			Swal(
-         				'Deleted!',
-         				'Your category has been deleted.',
-         				'success'
-         				)
+         		   
          		}
          	})       
 

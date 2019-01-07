@@ -100,12 +100,17 @@
 <script>
     
     import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin';
 
     import UpdateProduct from './UpdateProduct.vue';
+
+
 
     export default{
       
      props:['categorys'],
+
+     mixins:[mixin],
 
      components : {
          
@@ -194,13 +199,9 @@ methods : {
                 .then(res => {
 
                    EventBus.$emit('product-created',1);
-               })
 
-                Swal(
-                   'Deleted!',
-                   'Your Product has been deleted.',
-                   'success'
-                   )
+                   this.successAlert(res.data);
+               })
             }
         })       
 
