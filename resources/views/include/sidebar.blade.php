@@ -71,6 +71,7 @@
                         <ul class="ml-menu">
                             <li>
                                 <a href="{{ route('stock.index') }}">Stock In</a>
+                                <a href="{{ route('invoice.index') }}">Stock Out/Invoice</a>
                             </li>
                            
                         </ul>

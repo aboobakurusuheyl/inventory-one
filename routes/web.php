@@ -52,6 +52,9 @@ Route::get('stock-asset','StockController@StockAsset');
 Route::post('stock-update','StockController@StockUpdate');
 
 
+Route::resource('invoice','InvoiceController');
+
+
 Route::get('logout','UserController@logout');
 
 });

@@ -1,10 +1,10 @@
 @extends('include.master')
 
 
-@section('title','Belontory | Stock')
+@section('title','Belontory | Invoice')
 
 
-@section('page-title','Stock List')
+@section('page-title','Invoice')
 
 
 @section('content')
@@ -12,7 +12,7 @@
 
         <div class="row clearfix">
         	
-        	<create-stock :date="{{ json_encode(date('Y-m-d')) }}" :vendors="{{ $vendor }}" :categorys="{{ $category }}"></create-stock>
+        	<create-invoice  :categorys="{{ $category }}" :customers="{{ $customer }}"></create-invoice>
 
         </div>
 
@@ -26,14 +26,14 @@
                           
                             </h2> -->
                           
-                          <h2 >
+                 <!--          <h2 >
                           	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-stock">
-                                <i class="glyphicon glyphicon-plus"></i> New Stock
+                                <i class="glyphicon glyphicon-plus"></i> New Invoice
                              </button>
-                          </h2>
+                          </h2> -->
                         </div>
 
-                        <view-stock :vendors="{{ $vendor }}" :categorys="{{ $category }}" :products="{{ $product }}"></view-stock>
+                        <view-invoice  :categorys="{{ $category }}" :customers="{{ $customer }}"></view-invoice>
 
                     </div>
                 </div>
@@ -46,6 +46,6 @@
 
 @push('script')
 
-<script type="text/javascript" src="{{ url('public/js/stock.js') }}"></script>
+<script type="text/javascript" src="{{ url('public/js/invoice.js') }}"></script>
 
 @endpush
