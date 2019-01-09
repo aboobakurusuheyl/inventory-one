@@ -113,7 +113,7 @@
                               		
                               		<table class="table table-bordered">
 
-                              			<thead>
+                              			<thead class="bg-teal">
                               			 <tr>
                               				<th>#</th>
                               				<th>Category</th>
@@ -130,41 +130,43 @@
                                          
                                          <tr v-for="(vl,index) in invoice.product">
                                          	<td>
-                                         	<a href="" class="btn btn-sm btn-danger">
+                                 <a href="" @click.prevent="removeItem(index)" class="btn bg-red btn-circle waves-effect waves-circle waves-float">
                                     <i class="material-icons">delete</i>
-                                       </a>       
+                                </a>       
                                          	</td>
                               				<td>
-                              					<select class="form-control">
+                              					<select class="form-control" v-model="invoice.product[index].category">
                               						<option value="">Select Category</option>
-                              						<option v-for="value in categorys" :value="value.id">{{ value.name }}</option>
+                              						<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
                               					</select>
                               				</td>	
 
                               				<td>
-                              					<select class="form-control">
+                              					<select class="form-control" v-model="invoice.product[index].product">
                               						<option value="">Select Product</option>
                               					<!-- 	<option v-for="value in categorys" :value="value.id">{{ value.name }}</option> -->
                               					</select>
                               				</td>
 
                               				<td>
-                              					<select class="form-control">
+                              					<select class="form-control" v-model="invoice.product[index].chalan">
                               						<option value="">Select Chalan</option>
                               					<!-- 	<option v-for="value in categorys" :value="value.id">{{ value.name }}</option> -->
                               					</select>
                               				</td>		
 
                               				<td>
-                              					<input class="form-control" type="number" name="" placeholder="QTY">
+                              					<input class="form-control" type="number" name="" v-model="invoice.product[index].quantity" placeholder="QTY">
                               				</td>
 
                               				<td>
-                              					<input class="form-control" type="text" name="" placeholder="price">
+                              					<input class="form-control" type="text" name="" v-model="invoice.product[index].price"
+                              					placeholder="price" >
                               				</td>	
 
                               				<td>
-                              					<input class="form-control" type="text" name="" placeholder="Discount">
+                              					<input class="form-control" type="text" name="" 
+                              					v-model="invoice.product[index].discount" placeholder="Discount">
                               				</td>	
 
                               				<td>
@@ -181,7 +183,7 @@
                               	</div>
                               	<div class="row">
                               		<div class="col-md-12">
-                              		<a href="" @click.prevent="addmore" class="btn btn-success">Add More</a>	
+                              		<a href="" @click.prevent="addmore" class="btn bg-teal">+ Add More</a>	
                               		</div>
                               		
                               	</div>
@@ -226,7 +228,15 @@
                customer_address : '',
                
                product : [
-                   {category : '',product : '' },
+                   {
+                   	category : '',
+                   	product : '',
+                   	chalan: '',
+                   	quantity : 0,
+                   	price : 0,
+                    total_price : 0 ,
+                    discount : 0 ,
+                   }
                ],
 
               },
@@ -269,8 +279,20 @@
 
 			addmore(){
 
-				this.invoice.product.push({category:'',product:''});
+				this.invoice.product.push({category : '',product : '',chalan: '', quantity : 0, price : 0,total_price : 0 });
+			},
+
+			removeItem(index){
+                
+                  var _this = this;
+                if(_this.invoice.product.length > 1){
+                    _this.invoice.product.splice(index, 1);
+                    // _this.totalPrice(index);
+                }
+
 			}
+
+
 
 
 

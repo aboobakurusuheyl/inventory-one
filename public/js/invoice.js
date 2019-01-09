@@ -33133,6 +33133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -33141,64 +33143,80 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-	props: ['categorys', 'customers'],
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
+  props: ['categorys', 'customers'],
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
 
-	data: function data() {
+  data: function data() {
 
-		return {
+    return {
 
-			invoice: {
-				customer_type: '',
-				customer_id: '',
-				customer_name: '',
-				customer_email: '',
-				customer_phone: '',
-				customer_address: '',
+      invoice: {
+        customer_type: '',
+        customer_id: '',
+        customer_name: '',
+        customer_email: '',
+        customer_phone: '',
+        customer_address: '',
 
-				product: [{ category: '', product: '' }]
+        product: [{
+          category: '',
+          product: '',
+          chalan: '',
+          quantity: 0,
+          price: 0,
+          total_price: 0,
+          discount: 0
+        }]
 
-			},
+      },
 
-			invoice_state: false,
+      invoice_state: false,
 
-			errors: null
-		};
-	},
-
-
-	methods: {
-		createVendor: function createVendor() {
-			var _this = this;
-
-			axios.post(base_url + 'invoice').then(function (response) {
-				__WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('invoice-created', response.data);
-				_this.successALert(response.data);
-			}).catch(function (err) {
-
-				if (err.response) {
-
-					_this.errors = err.response.data.errors;
-				}
-			});
-		},
-		showInvoice: function showInvoice() {
-
-			this.invoice_state = !this.invoice_state;
-		},
-		addmore: function addmore() {
-
-			this.invoice.product.push({ category: '', product: '' });
-		}
-	},
-
-	// end of method section 
+      errors: null
+    };
+  },
 
 
-	created: function created() {
+  methods: {
+    createVendor: function createVendor() {
+      var _this2 = this;
 
-		console.log('invoice page created');
-	}
+      axios.post(base_url + 'invoice').then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('invoice-created', response.data);
+        _this2.successALert(response.data);
+      }).catch(function (err) {
+
+        if (err.response) {
+
+          _this2.errors = err.response.data.errors;
+        }
+      });
+    },
+    showInvoice: function showInvoice() {
+
+      this.invoice_state = !this.invoice_state;
+    },
+    addmore: function addmore() {
+
+      this.invoice.product.push({ category: '', product: '', chalan: '', quantity: 0, price: 0, total_price: 0 });
+    },
+    removeItem: function removeItem(index) {
+
+      var _this = this;
+      if (_this.invoice.product.length > 1) {
+        _this.invoice.product.splice(index, 1);
+        // _this.totalPrice(index);
+      }
+    }
+  },
+
+  // end of method section 
+
+
+  created: function created() {
+
+    console.log('invoice page created');
+  }
 });
 
 /***/ }),
@@ -33521,18 +33539,68 @@ var render = function() {
                     "tbody",
                     _vm._l(_vm.invoice.product, function(vl, index) {
                       return _c("tr", [
-                        _vm._m(8, true),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn bg-red btn-circle waves-effect waves-circle waves-float",
+                              attrs: { href: "" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.removeItem(index)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("delete")
+                              ])
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
                             "select",
-                            { staticClass: "form-control" },
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.invoice.product[index].category,
+                                  expression: "invoice.product[index].category"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.invoice.product[index],
+                                    "category",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
                             [
                               _c("option", { attrs: { value: "" } }, [
                                 _vm._v("Select Category")
                               ]),
                               _vm._v(" "),
-                              _vm._l(_vm.categorys, function(value) {
+                              _vm._l(_vm.categorys, function(value, index) {
                                 return _c(
                                   "option",
                                   { domProps: { value: value.id } },
@@ -33544,17 +33612,193 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(9, true),
+                        _c("td", [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.invoice.product[index].product,
+                                  expression: "invoice.product[index].product"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.invoice.product[index],
+                                    "product",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Product")
+                              ])
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _vm._m(10, true),
+                        _c("td", [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.invoice.product[index].chalan,
+                                  expression: "invoice.product[index].chalan"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.invoice.product[index],
+                                    "chalan",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Select Chalan")
+                              ])
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _vm._m(11, true),
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.invoice.product[index].quantity,
+                                expression: "invoice.product[index].quantity"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "number",
+                              name: "",
+                              placeholder: "QTY"
+                            },
+                            domProps: {
+                              value: _vm.invoice.product[index].quantity
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.invoice.product[index],
+                                  "quantity",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
-                        _vm._m(12, true),
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.invoice.product[index].price,
+                                expression: "invoice.product[index].price"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "",
+                              placeholder: "price"
+                            },
+                            domProps: {
+                              value: _vm.invoice.product[index].price
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.invoice.product[index],
+                                  "price",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
-                        _vm._m(13, true),
+                        _c("td", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.invoice.product[index].discount,
+                                expression: "invoice.product[index].discount"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "",
+                              placeholder: "Discount"
+                            },
+                            domProps: {
+                              value: _vm.invoice.product[index].discount
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.invoice.product[index],
+                                  "discount",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
-                        _vm._m(14, true)
+                        _vm._m(8, true)
                       ])
                     })
                   )
@@ -33566,7 +33810,7 @@ var render = function() {
                   _c(
                     "a",
                     {
-                      staticClass: "btn btn-success",
+                      staticClass: "btn bg-teal",
                       attrs: { href: "" },
                       on: {
                         click: function($event) {
@@ -33575,7 +33819,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Add More")]
+                    [_vm._v("+ Add More")]
                   )
                 ])
               ])
@@ -33651,7 +33895,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
+    return _c("thead", { staticClass: "bg-teal" }, [
       _c("tr", [
         _c("th", [_vm._v("#")]),
         _vm._v(" "),
@@ -33669,69 +33913,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "btn btn-sm btn-danger", attrs: { href: "" } }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("delete")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("select", { staticClass: "form-control" }, [
-        _c("option", { attrs: { value: "" } }, [_vm._v("Select Product")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("select", { staticClass: "form-control" }, [
-        _c("option", { attrs: { value: "" } }, [_vm._v("Select Chalan")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "number", name: "", placeholder: "QTY" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "", placeholder: "price" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "", placeholder: "Discount" }
-      })
     ])
   },
   function() {
