@@ -33135,6 +33135,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33151,21 +33203,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
 
       invoice: {
+        invoice_no: '',
         customer_type: '',
         customer_id: '',
         customer_name: '',
         customer_email: '',
         customer_phone: '',
         customer_address: '',
+        invoice_date: '',
+        total_discount: 0,
+        total_amount: 0,
 
         product: [{
           category: '',
-          product: '',
+          product_id: '',
           chalan: '',
+          chalan_id: '',
           quantity: 0,
           price: 0,
           total_price: 0,
-          discount: 0
+          discount: 0,
+          discount_type: '1',
+          discount_amount: 0,
+          products: [],
+          stocks: []
         }]
 
       },
@@ -33175,30 +33236,86 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       errors: null
     };
   },
+  created: function created() {},
 
 
   methods: {
-    createVendor: function createVendor() {
+    findProduct: function findProduct(index) {
       var _this2 = this;
 
-      axios.post(base_url + 'invoice').then(function (response) {
-        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('invoice-created', response.data);
-        _this2.successALert(response.data);
-      }).catch(function (err) {
+      if (this.invoice.product[index].category === '') {
 
-        if (err.response) {
+        this.invoice.product[index].products = [];
+      } else {
 
-          _this2.errors = err.response.data.errors;
-        }
-      });
+        axios.get(base_url + 'category/product/' + this.invoice.product[index].category).then(function (response) {
+
+          _this2.invoice.product[index].products = response.data;
+          _this2.invoice.product[index].stocks = [];
+        });
+      }
+    },
+    findStock: function findStock(index) {
+      var _this3 = this;
+
+      if (this.invoice.product[index].product_id === '') {
+
+        this.invoice.product[index].stocks = [];
+      } else {
+
+        axios.get(base_url + 'chalan-list/chalan/' + this.invoice.product[index].product_id).then(function (response) {
+
+          _this3.invoice.product[index].stocks = response.data;
+        });
+      }
+    },
+    findStockDetails: function findStockDetails(index) {
+      var _this4 = this;
+
+      if (this.invoice.product[index].chalan_id === '') {
+
+        this.invoice.product[index].quantity = 0;
+        this.invoice.product[index].price = 0;
+        this.invoice.product[index].discount = 0;
+      } else {
+
+        axios.get(base_url + 'stock/' + this.invoice.product[index].chalan_id).then(function (response) {
+
+          _this4.invoice.product[index].quantity = 1;
+          _this4.invoice.product[index].price = response.data.selling_price;
+          _this4.invoice.product[index].discount = response.data.discount;
+        });
+      }
     },
     showInvoice: function showInvoice() {
+      var _this5 = this;
 
       this.invoice_state = !this.invoice_state;
+      // $("html, body").animate({ scrollTop: 0 }, 800);
+
+      axios.get(base_url + 'get/invoice/number').then(function (response) {
+
+        _this5.invoice.invoice_no = response.data;
+      });
+
+      window.scrollTo(0, top);
     },
     addmore: function addmore() {
 
-      this.invoice.product.push({ category: '', product: '', chalan: '', quantity: 0, price: 0, total_price: 0 });
+      this.invoice.product.push({
+        category: '',
+        product_id: '',
+        chalan: '',
+        chalan_id: '',
+        quantity: 0,
+        price: 0,
+        total_price: 0,
+        discount: 0,
+        discount_type: '1',
+        discount_amount: 0,
+        products: [],
+        stocks: []
+      });
     },
     removeItem: function removeItem(index) {
 
@@ -33207,16 +33324,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.invoice.product.splice(index, 1);
         // _this.totalPrice(index);
       }
+    },
+    resetForm: function resetForm() {},
+    discount: function discount(type, _discount, main_amount) {
+
+      if (type === '2') {
+
+        return _discount / 100 * main_amount;
+      } else {
+
+        return _discount;
+      }
     }
   },
 
   // end of method section 
 
 
-  created: function created() {
+  computed: {
 
-    console.log('invoice page created');
+    // discount(index){
+
+    //     if(this.invoice.product[index].disount_type == '2'){
+
+    //      return ((this.invoice.product[index].discount / 100) * this.invoice.product[index].total_price); 
+
+    //     }
+    //     else{
+
+    //     	return  this.invoice.product[index].discount;
+
+    //     }
+
+    // },
+
+
   }
+
 });
 
 /***/ }),
@@ -33259,14 +33403,38 @@ var render = function() {
         staticClass: "card"
       },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "header" }, [
+          _c("h2", { staticClass: "pull-left" }, [
+            _vm._v(
+              "\n                                Create Invoice\n                          \n                            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "pull-right" }, [
+            _c(
+              "a",
+              {
+                staticClass:
+                  "btn bg-red btn-circle waves-effect waves-circle waves-float",
+                attrs: { href: "" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.showInvoice($event)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "material-icons" }, [_vm._v("close")])]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "body" }, [
           _c("form", [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-4" }, [
                 _c("div", { staticClass: "input-group" }, [
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-line" }, [
                     _c(
@@ -33322,7 +33490,7 @@ var render = function() {
               _vm.invoice.customer_type == 1
                 ? _c("div", { staticClass: "col-md-4" }, [
                     _c("div", { staticClass: "input-group" }, [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-line" }, [
                         _c(
@@ -33382,7 +33550,7 @@ var render = function() {
               ? _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "input-group" }, [
-                      _vm._m(3),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-line" }, [
                         _c("input", {
@@ -33420,7 +33588,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "input-group" }, [
-                      _vm._m(4),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-line" }, [
                         _c("input", {
@@ -33458,7 +33626,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "input-group" }, [
-                      _vm._m(5),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-line" }, [
                         _c("input", {
@@ -33496,7 +33664,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "input-group" }, [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-line" }, [
                         _c("textarea", {
@@ -33531,9 +33699,83 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("p", [_vm._v("Invoice Number")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-line" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.invoice.invoice_no,
+                          expression: "invoice.invoice_no"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", disabled: "", name: "" },
+                      domProps: { value: _vm.invoice.invoice_no },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.invoice,
+                            "invoice_no",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("p", [_vm._v("Invoice Date")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-line" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.invoice.invoice_date,
+                          expression: "invoice.invoice_date"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "" },
+                      domProps: { value: _vm.invoice.invoice_date },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.invoice,
+                            "invoice_date",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-bordered" }, [
-                  _vm._m(7),
+                  _vm._m(8),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -33575,24 +33817,29 @@ var render = function() {
                               ],
                               staticClass: "form-control",
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "category",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.invoice.product[index],
+                                      "category",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    _vm.findProduct(index)
+                                  }
+                                ]
                               }
                             },
                             [
@@ -33620,37 +33867,52 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.invoice.product[index].product,
-                                  expression: "invoice.product[index].product"
+                                  value: _vm.invoice.product[index].product_id,
+                                  expression:
+                                    "invoice.product[index].product_id"
                                 }
                               ],
                               staticClass: "form-control",
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "product",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.invoice.product[index],
+                                      "product_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    _vm.findStock(index)
+                                  }
+                                ]
                               }
                             },
                             [
                               _c("option", { attrs: { value: "" } }, [
                                 _vm._v("Select Product")
-                              ])
-                            ]
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(vl.products, function(pr) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: pr.id } },
+                                  [_vm._v(_vm._s(pr.product_name))]
+                                )
+                              })
+                            ],
+                            2
                           )
                         ]),
                         _vm._v(" "),
@@ -33662,37 +33924,58 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.invoice.product[index].chalan,
-                                  expression: "invoice.product[index].chalan"
+                                  value: _vm.invoice.product[index].chalan_id,
+                                  expression: "invoice.product[index].chalan_id"
                                 }
                               ],
                               staticClass: "form-control",
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "chalan",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.invoice.product[index],
+                                      "chalan_id",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    _vm.findStockDetails(index)
+                                  }
+                                ]
                               }
                             },
                             [
                               _c("option", { attrs: { value: "" } }, [
                                 _vm._v("Select Chalan")
-                              ])
-                            ]
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(vl.stocks, function(ch) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: ch.id } },
+                                  [
+                                    _vm._v(
+                                      _vm._s(ch.chalan_no) +
+                                        ". qty(" +
+                                        _vm._s(ch.current_quantity) +
+                                        ")"
+                                    )
+                                  ]
+                                )
+                              })
+                            ],
+                            2
                           )
                         ]),
                         _vm._v(" "),
@@ -33744,7 +34027,8 @@ var render = function() {
                             attrs: {
                               type: "text",
                               name: "",
-                              placeholder: "price"
+                              placeholder: "price",
+                              value: ""
                             },
                             domProps: {
                               value: _vm.invoice.product[index].price
@@ -33798,7 +34082,80 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _vm._m(8, true)
+                        _c("td", [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value:
+                                    _vm.invoice.product[index].discount_type,
+                                  expression:
+                                    "invoice.product[index].discount_type"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.invoice.product[index],
+                                    "discount_type",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("Amount")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "2" } }, [
+                                _vm._v("%")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: { type: "hidden" },
+                          domProps: {
+                            value: (vl.discount_amount = _vm.discount(
+                              _vm.invoice.product[index].discount_type,
+                              _vm.invoice.product[index].discount,
+                              vl.price
+                            ))
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "",
+                              placeholder: "Total",
+                              disabled: ""
+                            },
+                            domProps: {
+                              value: (vl.total_price =
+                                vl.quantity * vl.price - vl.discount_amount)
+                            }
+                          })
+                        ])
                       ])
                     })
                   )
@@ -33831,18 +34188,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "header" }, [
-      _c("h2", [
-        _vm._v(
-          "\n                                Create Invoice\n                          \n                            "
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -33895,6 +34240,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("person")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "material-icons" }, [_vm._v("person")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-teal" }, [
       _c("tr", [
         _c("th", [_vm._v("#")]),
@@ -33911,19 +34272,10 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Discount")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Discount By")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "", placeholder: "Total" }
-      })
     ])
   }
 ]

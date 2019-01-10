@@ -8,8 +8,15 @@
                           </h2>
                     <div v-show="invoice_state" class="card">
                         <div class="header">
-                           <h2>
+                           <h2 class="pull-left">
                                 Create Invoice
+                          
+                            </h2> 
+
+                            <h2 class="pull-right">
+                                   <a href="" @click.prevent="showInvoice" class="btn bg-red btn-circle waves-effect waves-circle waves-float">
+                                    <i class="material-icons">close</i>
+                                </a> 
                           
                             </h2>
                         </div>
@@ -105,6 +112,36 @@
                         		</div>
                         	</div>
 
+                        	<div class="row">
+                        		
+                        		  		<div class="col-md-4">
+                        			<p>Invoice Number</p>
+                        		  	<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">person</i>
+										</span>
+										<div class="form-line">
+									     <input class="form-control" type="text" disabled name="" v-model="invoice.invoice_no">
+										</div>
+									</div>
+                        		</div>	
+      		
+                        		  		
+
+                        		  <div class="col-md-4">
+                        			<p>Invoice Date</p>
+                        		  	<div class="input-group">
+										<span class="input-group-addon">
+											<i class="material-icons">person</i>
+										</span>
+										<div class="form-line">
+									     <input class="form-control" type="text"  name="" v-model="invoice.invoice_date">
+										</div>
+									</div>
+                        		</div>	
+
+                        	</div>
+
 
                         	<!-- main invoice part  -->
                               
@@ -122,6 +159,7 @@
                               				<th>QTY</th>
                               				<th>Price</th>
                               				<th>Discount</th>
+                              				<th>Discount By</th>
                               				<th>Total</th>
                               			</tr>
                               			</thead>
@@ -135,23 +173,26 @@
                                 </a>       
                                          	</td>
                               				<td>
-                              					<select class="form-control" v-model="invoice.product[index].category">
+                              					<select class="form-control" v-model="invoice.product[index].category" @change="findProduct(index)">
                               						<option value="">Select Category</option>
                               						<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
                               					</select>
                               				</td>	
 
                               				<td>
-                              					<select class="form-control" v-model="invoice.product[index].product">
+                              					<select class="form-control" v-model="invoice.product[index].product_id" @change="findStock(index)">
                               						<option value="">Select Product</option>
-                              					<!-- 	<option v-for="value in categorys" :value="value.id">{{ value.name }}</option> -->
+
+                              						<option v-for="pr in vl.products" :value="pr.id">{{ pr.product_name }}</option>
+              
                               					</select>
                               				</td>
 
                               				<td>
-                              					<select class="form-control" v-model="invoice.product[index].chalan">
-                              						<option value="">Select Chalan</option>
-                              					<!-- 	<option v-for="value in categorys" :value="value.id">{{ value.name }}</option> -->
+                              					<select class="form-control" v-model="invoice.product[index].chalan_id" @change="findStockDetails(index)">
+                              					   <option value="">Select Chalan</option>
+                              					   <option v-for="ch in vl.stocks" :value="ch.id">{{
+                              					   ch.chalan_no  }}. qty({{ ch.current_quantity }})</option>
                               					</select>
                               				</td>		
 
@@ -161,7 +202,7 @@
 
                               				<td>
                               					<input class="form-control" type="text" name="" v-model="invoice.product[index].price"
-                              					placeholder="price" >
+                              					placeholder="price" value="" >
                               				</td>	
 
                               				<td>
@@ -170,7 +211,18 @@
                               				</td>	
 
                               				<td>
-                              					<input class="form-control" type="text" name="" placeholder="Total">
+                              				<select class="form-control" v-model="invoice.product[index].discount_type">
+                              					   <option value="1">Amount</option>
+                              					   <option value="2">%</option>
+                              				</select>
+                              				</td>	
+
+                              				<!-- for getting discount amount  -->
+
+                              				<input type="hidden" :value="vl.discount_amount = discount(invoice.product[index].discount_type,invoice.product[index].discount,vl.price)">
+
+                              				<td>
+                              					<input class="form-control" type="text" name="" placeholder="Total" disabled="" :value="vl.total_price = vl.quantity * vl.price - vl.discount_amount">
                               				</td>
                               				
                               			</tr>
@@ -220,24 +272,35 @@
 			return {
               
               invoice : { 
+               invoice_no : '',
                customer_type : '',
                customer_id : '',
                customer_name : '',
                customer_email: '',
                customer_phone : '',
                customer_address : '',
+               invoice_date : '',
+               total_discount : 0,
+               total_amount : 0,
                
                product : [
                    {
                    	category : '',
-                   	product : '',
+                   	product_id : '',
                    	chalan: '',
+                   	chalan_id: '',
                    	quantity : 0,
                    	price : 0,
                     total_price : 0 ,
                     discount : 0 ,
+                    discount_type : '1',
+                    discount_amount : 0,
+                    products : [],
+                    stocks : [],
                    }
                ],
+
+
 
               },
 
@@ -248,38 +311,110 @@
 
 		},
 
+		created(){
+
+  	      
+        },
+
 		methods : {
+              
+           findProduct(index){ 
+
+		  	 if(this.invoice.product[index].category === ''){
+
+               this.invoice.product[index].products = [];
+
+		  	  }
+		  	  else{
+              
+               axios.get(base_url+'category/product/'+this.invoice.product[index].category)
+              .then(response => {
+               
+                this.invoice.product[index].products = response.data;
+                this.invoice.product[index].stocks = [];
+
+              })
+
+		  	  }
+		  	},
 
 
+		  	findStock(index){
+             
+            if(this.invoice.product[index].product_id === ''){
+
+               this.invoice.product[index].stocks = [];
+
+		  	  }
+		  	  else{
+              
+               axios.get(base_url+'chalan-list/chalan/'+this.invoice.product[index].product_id)
+              .then(response => {
+               
+                this.invoice.product[index].stocks = response.data;
+
+              })
+
+		  	  }
 
 
-			createVendor(){
+		  	},
 
-				axios.post(base_url+'invoice',)
+		  	findStockDetails(index){   
+         
+		    if(this.invoice.product[index].chalan_id === ''){
 
-				.then(response => {
-					EventBus.$emit('invoice-created',response.data);
-					this.successALert(response.data);
-				})
-				.catch(err => {
+                this.invoice.product[index].quantity = 0;
+                this.invoice.product[index].price = 0;
+                this.invoice.product[index].discount = 0;
 
-					if(err.response){
+		  	  }
+		  	  else{
+              
+               axios.get(base_url+'stock/'+this.invoice.product[index].chalan_id)
+              .then(response => {
+               
+                this.invoice.product[index].quantity = 1;
+                this.invoice.product[index].price = response.data.selling_price;
+                this.invoice.product[index].discount = response.data.discount;
 
-						this.errors = err.response.data.errors;
-					}
+              })
 
-				})
-
-			},
+		  	  }		  	
+		  	},
 
 			showInvoice(){
 
 				this.invoice_state = !this.invoice_state;
+               // $("html, body").animate({ scrollTop: 0 }, 800);
+				  
+				  axios.get(base_url+'get/invoice/number')
+				  .then(response => {
+                     
+                     this.invoice.invoice_no = response.data;
+
+				  })
+
+				
+				window.scrollTo(0, top);
 			},
 
 			addmore(){
 
-				this.invoice.product.push({category : '',product : '',chalan: '', quantity : 0, price : 0,total_price : 0 });
+				this.invoice.product.push({ 
+			        category : '',
+                   	product_id : '',
+                   	chalan: '',
+                   	chalan_id: '',
+                   	quantity : 0,
+                   	price : 0,
+                    total_price : 0 ,
+                    discount : 0 ,
+                    discount_type : '1',
+                    discount_amount : 0,
+                    products : [],
+                    stocks : [],
+                     });
 			},
 
 			removeItem(index){
@@ -289,6 +424,30 @@
                     _this.invoice.product.splice(index, 1);
                     // _this.totalPrice(index);
                 }
+
+			},
+
+			resetForm(){
+
+
+			},
+
+			discount(type,discount,main_amount){
+
+
+				if(type === '2'){
+
+					return ((discount/100)*main_amount);
+				}
+
+				else{
+                    
+                    return discount;
+
+				}
+
+
+
 
 			}
 
@@ -301,10 +460,27 @@
   // end of method section 
 
 
-  created(){
+ computed : {
+    
+      // discount(index){
+          
+      //     if(this.invoice.product[index].disount_type == '2'){
+           
+      //      return ((this.invoice.product[index].discount / 100) * this.invoice.product[index].total_price); 
+    
+      //     }
+      //     else{
 
-     console.log('invoice page created');
+      //     	return  this.invoice.product[index].discount;
+
+      //     }
+
+      // },
+
+    
   },
+
+
 
 
 

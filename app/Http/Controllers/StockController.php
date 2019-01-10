@@ -85,7 +85,10 @@ class StockController extends Controller
     public function ChalanList($id){
          
      
-     $chalan = Stock::with(['vendor','user','product'])->where('product_id','=',$id)->orderBy('id','desc')->get();
+     $chalan = Stock::where('product_id','=',$id)
+     ->where('current_quantity','>',0)
+     ->orderBy('current_quantity','asc')
+     ->get();
 
 
      return $chalan;
@@ -170,6 +173,8 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
+
+      return $stock;
        
     }
 

@@ -10,6 +10,8 @@ use App\Stock;
 use App\StockDetails;
 use App\Vendor;
 use App\Customer;
+use App\Sell;
+use App\SellDetails;
 
 class InvoiceController extends Controller
 {
@@ -27,6 +29,23 @@ class InvoiceController extends Controller
         'category'=>$category,
         'customer'=>$customer
         ]);
+    }
+
+
+    public function getLastInvoice(){
+
+            
+            $invoice = Sell::orderBy('id','desc')->first();
+
+            if(count($invoice)>0){
+
+                return $invoice->id + 1;
+            }
+            else{
+
+                return 1;
+            }
+
     }
 
     /**
