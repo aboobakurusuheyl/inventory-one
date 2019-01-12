@@ -2,7 +2,7 @@
 <html>
 <head>
 
-    <title>@yield('title','Belontory')</title>
+   <title>@yield('title','Belontory')</title>
 
  @include('include.header')
 </head>
@@ -273,6 +273,8 @@
         $(document).ready(function(){
 
            $('.select2').select2();
+
+           $('.bs-date').datepicker();
         });
     </script>
 

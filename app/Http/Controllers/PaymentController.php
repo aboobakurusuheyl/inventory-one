@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
 use Illuminate\Http\Request;
 
-use App\Category;
-use App\Product;
-use App\Stock;
-use App\StockDetails;
-use App\Vendor;
-use App\Customer;
-use App\Sell;
-use App\SellDetails;
-
-class InvoiceController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,30 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-       $category = Category::orderBy('name','asc')->get();
-       $customer = Customer::orderBy('customer_name','asc')->get();
-
-       return view('invoice.invoice',[
-        'category'=>$category,
-        'customer'=>$customer
-        ]);
-    }
-
-
-    public function getLastInvoice(){
-
-            
-            $invoice = Sell::orderBy('id','desc')->first();
-
-            if(count($invoice)>0){
-
-                return $invoice->id + 1;
-            }
-            else{
-
-                return 1;
-            }
-
+        //
     }
 
     /**
@@ -66,18 +35,16 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-          'customer_type' => 'required',
-        ]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Payment $payment)
     {
         //
     }
@@ -85,10 +52,10 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Payment $payment)
     {
         //
     }
@@ -97,10 +64,10 @@ class InvoiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Payment $payment)
     {
         //
     }
@@ -108,10 +75,10 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Payment $payment)
     {
         //
     }

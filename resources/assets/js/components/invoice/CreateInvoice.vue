@@ -23,7 +23,7 @@
 
                         <div  class="body">
                         	
-                        	<form>
+                        	<form @submit.prevent="">
                         		
                         	<div class="row">
                         		<div class="col-md-4">
@@ -135,7 +135,7 @@
 											<i class="material-icons">person</i>
 										</span>
 										<div class="form-line">
-									     <input class="form-control" type="text"  name="" v-model="invoice.invoice_date">
+									     <input id="datep" class="form-control" type="text"  name="" v-model="invoice.invoice_date">
 										</div>
 									</div>
                         		</div>	
@@ -159,7 +159,7 @@
                               				<th>QTY</th>
                               				<th>Price</th>
                               				<th>Discount</th>
-                              				<th>Discount By</th>
+                              				<th>Dis Type</th>
                               				<th>Total</th>
                               			</tr>
                               			</thead>
@@ -176,7 +176,9 @@
                               					<select class="form-control" v-model="invoice.product[index].category" @change="findProduct(index)">
                               						<option value="">Select Category</option>
                               						<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
+
                               					</select>
+                                        <!-- <span  class="requiredField">Required</span> -->
                               				</td>	
 
                               				<td>
@@ -197,7 +199,7 @@
                               				</td>		
 
                               				<td>
-                              					<input class="form-control" type="number" name="" v-model="invoice.product[index].quantity" placeholder="QTY">
+                              					<input  class="form-control" type="number" name="" v-model="invoice.product[index].quantity" v-bind:disabled="vl.chalan_id === ''" placeholder="QTY">
                               				</td>
 
                               				<td>
@@ -207,7 +209,7 @@
 
                               				<td>
                               					<input class="form-control" type="text" name="" 
-                              					v-model="invoice.product[index].discount" placeholder="Discount">
+                              					v-model.double="invoice.product[index].discount" placeholder="Discount">
                               				</td>	
 
                               				<td>
@@ -242,6 +244,90 @@
                               </div>
 
                         	<!-- main invoice part  -->
+
+                        	<div class="row">
+                        		<div class="col-md-8">
+                        			
+                        		</div>
+
+                        		<div class="col-md-4">
+                              <div class="form-group">
+                                <label>Total Price: &nbsp;</label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon">$</div>
+<!--                                   <input type="number" class="form-control" name="sub_total"  :value="invoice.total_amount = totalAmount + totalDiscount" placeholder="Subtotal" disabled=""> -->
+                                  <label>{{ invoice.total_amount = totalAmount + totalDiscount }}</label>
+                                </div>
+                              </div>  			
+
+
+                              <div class="form-group">
+                        				<label>Total Discount: &nbsp;</label>
+                        				<div class="input-group focused">
+                        					<div class="input-group-addon">$</div>
+                                   <label>{{ invoice.total_disount = totalDiscount }}</label>
+                        			<!-- 		<input type="number" class="form-control" name="sub_total" :value="invoice.total_disount = totalDiscount" placeholder="Subtotal" disabled=""> -->
+                        				</div>
+                        			</div> 
+
+                              <div class="form-group">
+                                <label>Net Payable Amount: &nbsp;</label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon">$</div>
+                                  <label>{{ invoice.grand_total = totalAmount }}</label>
+                              <!--     <input type="number" class="form-control" name="sub_total"  :value="invoice.grand_total = totalAmount" placeholder="Subtotal" disabled=""> -->
+                                </div>
+                              </div>  
+
+
+                              <div class="form-group">
+                                <label>Pay Now: &nbsp;</label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon"></div>
+                          
+                                  <input type="text"  class="form-control"  v-model.double="invoice.paid_amount" placeholder="Pay Now" style="border-bottom: 1px solid #ccc;">
+                                </div>
+                              </div>    
+
+
+                              <div class="form-group" v-show="invoice.paid_amount > 0">
+                                <label>Paid In : </label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon"></div>
+                          
+                                <select class="form-control" v-model="invoice.payment_in">
+                                    <option :value="'cash'">Cash</option>
+                                    <option :value="'bank'">Bank</option>
+                                </select>
+                                </div>
+                              </div>      
+                             <div class="form-group" v-if="invoice.payment_in === 'bank'">
+                                <label>Payment Info:</label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon"></div>
+                          
+                                  <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Bank Information" v-model="invoice.bank_info" style="border-bottom: 1px solid #ccc;"></textarea>
+                                </div>
+                              </div>      
+
+
+                              <div class="form-group">
+                                <label>Due Amount</label>
+                                <div class="input-group focused">
+                                  <div class="input-group-addon">$</div>
+                                  <label>{{ invoice.grand_total-invoice.paid_amount }}</label>
+                                  
+                                </div>
+                              </div>   
+
+                              <div class="form-group">
+                                <button type="submit" class="btn bg-teal">Submit</button>
+                              </div>
+
+
+                        		</div>
+
+                        	</div>
 
                         	</form>
                         
@@ -282,13 +368,17 @@
                invoice_date : '',
                total_discount : 0,
                total_amount : 0,
-               
+               grand_total : 0,
+               paid_amount : 0,
+               payment_in : 'cash',
+               bank_info : '',
                product : [
                    {
                    	category : '',
                    	product_id : '',
                    	chalan: '',
                    	chalan_id: '',
+                    stoc_quantity : 0,
                    	quantity : 0,
                    	price : 0,
                     total_price : 0 ,
@@ -300,23 +390,37 @@
                    }
                ],
 
-
+              
 
               },
 
               invoice_state : false,
-
-               errors : null
+              errors : {},
 			}
 
 		},
 
 		created(){
+         
 
   	      
         },
 
 		methods : {
+
+
+          store(){
+          
+          axios.post(base_url+'invoice',this.invoice)
+          .then(response => {
+
+
+          })
+          .catch(error => {
+
+          });
+           
+          },
               
            findProduct(index){ 
 
@@ -377,6 +481,7 @@
                 this.invoice.product[index].quantity = 1;
                 this.invoice.product[index].price = response.data.selling_price;
                 this.invoice.product[index].discount = response.data.discount;
+                this.invoice.product[index].stock_quantity = response.data.stock_quantity;
 
               })
 
@@ -402,12 +507,13 @@
 			addmore(){
 
 				this.invoice.product.push({ 
-			        category : '',
-                   	product_id : '',
-                   	chalan: '',
-                   	chalan_id: '',
-                   	quantity : 0,
-                   	price : 0,
+	                  category : '',
+                    product_id : '',
+                    chalan: '',
+                    chalan_id: '',
+                    stoc_quantity : 0,
+                    quantity : 0,
+                    price : 0,
                     total_price : 0 ,
                     discount : 0 ,
                     discount_type : '1',
@@ -442,13 +548,9 @@
 
 				else{
                     
-                    return discount;
+            return discount;
 
-				}
-
-
-
-
+				   }
 			}
 
 
@@ -461,21 +563,26 @@
 
 
  computed : {
-    
-      // discount(index){
-          
-      //     if(this.invoice.product[index].disount_type == '2'){
-           
-      //      return ((this.invoice.product[index].discount / 100) * this.invoice.product[index].total_price); 
-    
-      //     }
-      //     else{
 
-      //     	return  this.invoice.product[index].discount;
+ 	  totalAmount(){
+         let sum = 0;
+      this.invoice.product.forEach(function(item) {
+         sum += item.total_price;
+      });
 
-      //     }
+     return sum;
 
-      // },
+
+ 	    },
+
+ 	  totalDiscount(){
+      let sum = 0;
+      this.invoice.product.forEach(function(item){
+         sum = +sum + +item.discount_amount;
+      });
+
+     return sum;
+ 	  }
 
     
   },
@@ -492,3 +599,10 @@
 
 
 </script>
+
+<style type="text/css">
+  .requiredField{
+
+    color: red;
+  }
+</style>
