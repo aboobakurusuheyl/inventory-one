@@ -21,7 +21,7 @@ class CreateSellsTable extends Migration
             $table->double('total_amount');
             $table->double('paid_amount')->default(0);
             $table->string('sell_date')->nullable();
-            $table->double('disount_amount')->default(0);
+            $table->double('discount_amount')->default(0);
             $table->tinyInteger('payment_method')->default(0);
             $table->tinyInteger('payment_status')->default(0);
             $table->timestamps();

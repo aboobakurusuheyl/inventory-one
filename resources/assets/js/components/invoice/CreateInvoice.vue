@@ -23,23 +23,24 @@
 
                         <div  class="body">
                         	
-                        	<form @submit.prevent="">
+                        	<form @submit.prevent="store()">
                         		
                         	<div class="row">
                         		<div class="col-md-4">
                         			<!-- <p>Customer</p> -->
                         		  	<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">person</i>
-										</span>
-										<div class="form-line">
-											<select class="form-control" v-model="invoice.customer_type">
-												<option value="">Select Customer</option>
-												<option value="1">From Database</option>
-												<option value="2">New Customer</option>
-											</select>
-										</div>
-									</div>
+                                  <span class="input-group-addon">
+                                    <i class="material-icons">person</i>
+                                  </span>
+                                  <div class="form-line">
+                                    <select class="form-control" v-model="invoice.customer_type">
+                                      <option value="">Select Customer</option>
+                                      <option :value="1">From Database</option>
+                                      <option :value="2">New Customer</option>
+                                    </select>
+                                      <span class="requiredField" v-if="(errors.hasOwnProperty('customer_type'))">{{ (errors.hasOwnProperty('customer_type')) ? errors.customer_type[0] :'' }}</span>
+                                  </div>
+                                </div>
                         		</div>	
 
 
@@ -56,6 +57,7 @@
 												<option v-for="customer in customers" :value="customer.id">{{ customer.customer_name }}</option>
 								                
 											</select>
+                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_id'))">{{ (errors.hasOwnProperty('customer_id')) ? errors.customer_id[0] :'' }}</span>
 										</div>
 									</div>
                         		</div>
@@ -69,7 +71,8 @@
 										<i class="material-icons">person</i>
 									</span>
 										<div class="form-line">
-									     <input type="text" name="" class="form-control" placeholder="Customer Name" v-model="invoice.customer_name">
+									     <input type="text" name="" class="form-control" placeholder="Customer Name" v-model="invoice.customer_name" >
+                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_name'))">{{ (errors.hasOwnProperty('customer_name')) ? errors.customer_name[0] :'' }}</span>
 										</div>
                         			</div>
                         		
@@ -82,6 +85,7 @@
 									</span>
 										<div class="form-line">
 									     <input type="text" name="" class="form-control" placeholder="Customer Email" v-model="invoice.customer_email">
+                            <span class="requiredField" v-if="(errors.hasOwnProperty('customer_email'))">{{ (errors.hasOwnProperty('customer_email')) ? errors.customer_email[0] :'' }}</span>
 										</div>
                         			</div>
                         	
@@ -94,6 +98,7 @@
 									</span>
 										<div class="form-line">
 									     <input type="text" name="" class="form-control" placeholder="Customer Phone No:" v-model="invoice.customer_phone">
+                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_phone'))">{{ (errors.hasOwnProperty('customer_phone')) ? errors.customer_phone[0] :'' }}</span>
 										</div>
                         			</div>
                         	
@@ -136,6 +141,7 @@
 										</span>
 										<div class="form-line">
 									     <input id="datep" class="form-control" type="text"  name="" v-model="invoice.invoice_date">
+                          <span class="requiredField" v-if="(errors.hasOwnProperty('invoice_date'))">{{ (errors.hasOwnProperty('invoice_date')) ? errors.invoice_date[0] :'' }}</span>
 										</div>
 									</div>
                         		</div>	
@@ -178,7 +184,7 @@
                               						<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
 
                               					</select>
-                                        <!-- <span  class="requiredField">Required</span> -->
+                                        <span v-if="errors['product.'+index+'.category']" class="requiredField">{{ errors['product.'+index+'.category'][0] }}</span>
                               				</td>	
 
                               				<td>
@@ -188,6 +194,7 @@
                               						<option v-for="pr in vl.products" :value="pr.id">{{ pr.product_name }}</option>
               
                               					</select>
+                                          <span v-if="errors['product.'+index+'.product_id']" class="requiredField">{{ errors['product.'+index+'.product_id'][0] }}</span>
                               				</td>
 
                               				<td>
@@ -196,20 +203,28 @@
                               					   <option v-for="ch in vl.stocks" :value="ch.id">{{
                               					   ch.chalan_no  }}. qty({{ ch.current_quantity }})</option>
                               					</select>
+
+                                              <span v-if="errors['product.'+index+'.chalan_id']" class="requiredField">{{ errors['product.'+index+'.chalan_id'][0] }}</span>
                               				</td>		
 
                               				<td>
                               					<input  class="form-control" type="number" name="" v-model="invoice.product[index].quantity" v-bind:disabled="vl.chalan_id === ''" placeholder="QTY">
+
+                                             <span v-if="errors['product.'+index+'.quantity']" class="requiredField">{{ errors['product.'+index+'.quantity'][0] }}</span>
                               				</td>
 
                               				<td>
                               					<input class="form-control" type="text" name="" v-model="invoice.product[index].price"
                               					placeholder="price" value="" >
+
+                                         <span v-if="errors['product.'+index+'.price']" class="requiredField">{{ errors['product.'+index+'.price'][0] }}</span>
                               				</td>	
 
                               				<td>
                               					<input class="form-control" type="text" name="" 
                               					v-model.double="invoice.product[index].discount" placeholder="Discount">
+
+                                          <span v-if="errors['product.'+index+'.discount']" class="requiredField">{{ errors['product.'+index+'.discount'][0] }}</span>
                               				</td>	
 
                               				<td>
@@ -350,7 +365,7 @@
 
 	export default {
 
-        props: ['categorys','customers'], 
+    props: ['categorys','customers'], 
 		mixins : [mixin],
 
 		data(){
@@ -410,13 +425,25 @@
 
 
           store(){
+
+            // alert('clicked');
           
           axios.post(base_url+'invoice',this.invoice)
           .then(response => {
-
-
+              this.successALert(response.data);
+              this.resetForm();
+              EventBus.$emit('invoice-created',1);
+              this.invoice_state = !this.invoice_state;
           })
-          .catch(error => {
+          .catch(error => {  
+           if(error.response.status == 422){
+            this.errors = error.response.data.errors;
+
+           Swal( "Oops" ,  "please fill the form by correct data!" ,  "error" );
+
+          }else{
+            this.successAlert(error);
+          }
 
           });
            
@@ -534,7 +561,26 @@
 			},
 
 			resetForm(){
+       
+       this.invoice = {       
+               'invoice_no' : '',
+               'customer_type' : '',
+               'customer_id' : '',
+               'customer_name' : '',
+               'customer_email': '',
+               'customer_phone' : '',
+               'customer_address' : '',
+               'invoice_date ': '',
+                'total_discount' : 0,
+               'total_amount' : 0,
+               'grand_total' : 0,
+               'paid_amount' : 0,
+               'payment_in' : 'cash',
+               'bank_info' : '',};
 
+        this.invoice.product.slice(1);
+
+        this.addmore();       
 
 			},
 
