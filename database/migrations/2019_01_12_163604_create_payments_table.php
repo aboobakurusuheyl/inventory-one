@@ -19,7 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('customer_id');
             $table->string('date');
             $table->string('paid_in');
-            $table->text('bank_information');
+            $table->text('bank_information')->nullable();
             $table->double('amount');
             $table->timestamps();
         });

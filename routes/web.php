@@ -54,6 +54,10 @@ Route::post('stock-update','StockController@StockUpdate');
 
 Route::resource('invoice','InvoiceController');
 
+Route::get('invoice-list','InvoiceController@InvoiceList');
+
+
+
 Route::get('get/invoice/number','InvoiceController@getLastInvoice');
 
 

@@ -300,7 +300,7 @@
                                 <div class="input-group focused">
                                   <div class="input-group-addon"></div>
                           
-                                  <input type="text"  class="form-control"  v-model.double="invoice.paid_amount" placeholder="Pay Now" style="border-bottom: 1px solid #ccc;">
+                                  <input type="text"  class="form-control"  v-model="invoice.paid_amount" placeholder="Pay Now" style="border-bottom: 1px solid #ccc;">
                                 </div>
                               </div>    
 

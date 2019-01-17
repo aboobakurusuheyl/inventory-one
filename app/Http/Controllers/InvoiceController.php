@@ -51,6 +51,42 @@ class InvoiceController extends Controller
 
     }
 
+
+    public function InvoiceList(Request $request){
+
+         $invoice = Sell::with([
+
+        'customer'=>function($query){
+
+            $query->select('customer_name','id');
+         },    
+
+         'user'=>function($query){
+
+            $query->select('name','id');
+         }])->
+             orderBy('sell_date','desc');
+
+          if($request->invoice_id != ''){
+      
+             $invoice->where('id','=',$request->invoice_id);
+          }
+
+          if ($request->customer_id != ''){
+             
+             $invoice->where('customer_id','=',$request->customer_id);
+          }  
+
+          if ($request->start_date != '' && $request->end_date != ''){
+             
+             $invoice->whereBetween('sell_date',[$request->start_date,$request->end_date]);
+          }
+          $invoice = $invoice->paginate(10);
+
+
+         return $invoice;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -100,6 +136,7 @@ class InvoiceController extends Controller
           'product.*.total_price.required' => 'required',
           'product.*.discount.regex' => 'invalid format',  
         ]);
+          
 
 
         try{
@@ -140,12 +177,12 @@ class InvoiceController extends Controller
             $invoice->paid_amount = $request->paid_amount;  
             $invoice->sell_date = $request->invoice_date;  
             $invoice->payment_method = $request->payment_info == 'cash' ? 1 : 2;
-            if($request->paid_amount >= $request->grand_amount){
+            if($request->paid_amount >= $request->grand_total){
              $invoice->payment_status = 1; 
-            } 
+              } 
             else{
             $invoice->payment_status = 0;    
-            }
+              }
             $invoice->save();
 
 
@@ -173,7 +210,7 @@ class InvoiceController extends Controller
                $inv_details->sold_quantity = $value['quantity'];
                $inv_details->buy_price = $stock->buying_price;
                $inv_details->sold_price = $value['price'];
-               $inv_details->total_buy_price = $stock->price*$value['quantity'];
+               $inv_details->total_buy_price = $stock->buying_price*$value['quantity'];
                $inv_details->total_sold_price = $value['total_price'];
                $inv_details->discount = $value['discount'];
                $inv_details->discount_type = $value['discount_type'];
@@ -206,10 +243,6 @@ class InvoiceController extends Controller
 
             }
              
-
-
-
-
              DB::commit();
 
             return response()->json(['status' => 'success', 'message' => 'Invoice Created !']);
@@ -233,7 +266,17 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice = Sell::find($id);
+
+        $invoice_details = SellDetails::where('sell_id','=',$id)->get();
+
+        $payment = Payment::where('sell_id','=',$id)->get();
+
+        return view('invoice.print_invoice',[
+           'invoice' => $invoice,
+           'invoice_details' => $invoice_details,
+           'payment' => $payment,
+        ]);
     }
 
     /**

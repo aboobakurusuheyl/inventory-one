@@ -32,9 +32,9 @@
                              </button>
                           </h2> -->
                         </div>
-<!-- 
+
                         <view-invoice  :categorys="{{ $category }}" :customers="{{ $customer }}"></view-invoice>
- -->
+
                     </div>
                 </div>
             </div>
