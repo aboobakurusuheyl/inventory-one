@@ -154,7 +154,7 @@
                               <div class="row">
                               	<div class="table-responsive">
                               		
-                              		<table class="table table-bordered">
+                              		<table class="table table-bordered table-condensed">
 
                               			<thead class="bg-teal">
                               			 <tr>
@@ -174,7 +174,7 @@
                                          
                                          <tr v-for="(vl,index) in invoice.product">
                                          	<td>
-                                 <a href="" @click.prevent="removeItem(index)" class="btn bg-red btn-circle waves-effect waves-circle waves-float">
+                                 <a href="" @click.prevent="removeItem(index)" style="color: red">
                                     <i class="material-icons">delete</i>
                                 </a>       
                                          	</td>
@@ -236,7 +236,7 @@
 
                               				<!-- for getting discount amount  -->
 
-                              				<input type="hidden" :value="vl.discount_amount = discount(invoice.product[index].discount_type,invoice.product[index].discount,vl.price)">
+                              				<input type="hidden" :value="vl.discount_amount = discount(invoice.product[index].discount_type,invoice.product[index].discount,vl.total_price)">
 
                               				<td>
                               					<input class="form-control" type="text" name="" placeholder="Total" disabled="" :value="vl.total_price = vl.quantity * vl.price - vl.discount_amount">
@@ -271,7 +271,7 @@
                                 <div class="input-group focused">
                                   <div class="input-group-addon">$</div>
 <!--                                   <input type="number" class="form-control" name="sub_total"  :value="invoice.total_amount = totalAmount + totalDiscount" placeholder="Subtotal" disabled=""> -->
-                                  <label>{{ invoice.total_amount = totalAmount + totalDiscount }}</label>
+                                  <label>{{ invoice.total_amount = totalAmount + totalDiscount  }}</label>
                                 </div>
                               </div>  			
 
@@ -589,12 +589,12 @@
 
 				if(type === '2'){
 
-					return ((discount/100)*main_amount);
+					return ((discount/100)*main_amount).toFixed(2);
 				}
 
 				else{
                     
-            return discount;
+            return discount.toFixed(2);
 
 				   }
 			}

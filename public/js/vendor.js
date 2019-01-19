@@ -5201,6 +5201,7 @@ module.exports = function normalizeComponent (
       moment: function moment(date, format) {
          return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
       }
+
    }
 
 });

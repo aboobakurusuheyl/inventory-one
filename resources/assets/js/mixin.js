@@ -29,6 +29,7 @@ export default{
   moment: function (date,format) {
     return moment(date).format(format);
   }
+
 }
 
 }

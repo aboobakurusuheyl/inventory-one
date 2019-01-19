@@ -5201,6 +5201,7 @@ module.exports = function normalizeComponent (
       moment: function moment(date, format) {
          return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
       }
+
    }
 
 });
@@ -33864,10 +33865,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (type === '2') {
 
-        return _discount / 100 * main_amount;
+        return (_discount / 100 * main_amount).toFixed(2);
       } else {
 
-        return _discount;
+        return _discount.toFixed(2);
       }
     }
   },
@@ -34393,475 +34394,485 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-bordered" }, [
-                    _vm._m(8),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.invoice.product, function(vl, index) {
-                        return _c("tr", [
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn bg-red btn-circle waves-effect waves-circle waves-float",
-                                attrs: { href: "" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.removeItem(index)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "material-icons" }, [
-                                  _vm._v("delete")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.invoice.product[index].category,
-                                    expression:
-                                      "invoice.product[index].category"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        _vm.invoice.product[index],
-                                        "category",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    },
-                                    function($event) {
-                                      _vm.findProduct(index)
+                  _c(
+                    "table",
+                    { staticClass: "table table-bordered table-condensed" },
+                    [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.invoice.product, function(vl, index) {
+                          return _c("tr", [
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticStyle: { color: "red" },
+                                  attrs: { href: "" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.removeItem(index)
                                     }
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("Select Category")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(_vm.categorys, function(value, index) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: value.id } },
-                                    [_vm._v(_vm._s(value.name))]
-                                  )
-                                })
-                              ],
-                              2
-                            ),
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "material-icons" }, [
+                                    _vm._v("delete")
+                                  ])
+                                ]
+                              )
+                            ]),
                             _vm._v(" "),
-                            _vm.errors["product." + index + ".category"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".category"
-                                      ][0]
-                                    )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value:
-                                      _vm.invoice.product[index].product_id,
-                                    expression:
-                                      "invoice.product[index].product_id"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        _vm.invoice.product[index],
-                                        "product_id",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    },
-                                    function($event) {
-                                      _vm.findStock(index)
+                            _c("td", [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.invoice.product[index].category,
+                                      expression:
+                                        "invoice.product[index].category"
                                     }
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("Select Product")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(vl.products, function(pr) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: pr.id } },
-                                    [_vm._v(_vm._s(pr.product_name))]
-                                  )
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _vm.errors["product." + index + ".product_id"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".product_id"
-                                      ][0]
-                                    )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.invoice.product[index].chalan_id,
-                                    expression:
-                                      "invoice.product[index].chalan_id"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        _vm.invoice.product[index],
-                                        "chalan_id",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    },
-                                    function($event) {
-                                      _vm.findStockDetails(index)
-                                    }
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("Select Chalan")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(vl.stocks, function(ch) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: ch.id } },
-                                    [
-                                      _vm._v(
-                                        _vm._s(ch.chalan_no) +
-                                          ". qty(" +
-                                          _vm._s(ch.current_quantity) +
-                                          ")"
-                                      )
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.invoice.product[index],
+                                          "category",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      function($event) {
+                                        _vm.findProduct(index)
+                                      }
                                     ]
-                                  )
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _vm.errors["product." + index + ".chalan_id"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".chalan_id"
-                                      ][0]
-                                    )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.invoice.product[index].quantity,
-                                  expression: "invoice.product[index].quantity"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                name: "",
-                                disabled: vl.chalan_id === "",
-                                placeholder: "QTY"
-                              },
-                              domProps: {
-                                value: _vm.invoice.product[index].quantity
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
                                   }
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "quantity",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors["product." + index + ".quantity"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".quantity"
-                                      ][0]
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("Select Category")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.categorys, function(value, index) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: value.id } },
+                                      [_vm._v(_vm._s(value.name))]
                                     )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("input", {
-                              directives: [
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".category"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".category"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "select",
                                 {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.invoice.product[index].price,
-                                  expression: "invoice.product[index].price"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                placeholder: "price",
-                                value: ""
-                              },
-                              domProps: {
-                                value: _vm.invoice.product[index].price
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.invoice.product[index].product_id,
+                                      expression:
+                                        "invoice.product[index].product_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.invoice.product[index],
+                                          "product_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      function($event) {
+                                        _vm.findStock(index)
+                                      }
+                                    ]
                                   }
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "price",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors["product." + index + ".price"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".price"
-                                      ][0]
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("Select Product")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(vl.products, function(pr) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: pr.id } },
+                                      [_vm._v(_vm._s(pr.product_name))]
                                     )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("input", {
-                              directives: [
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".product_id"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".product_id"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "select",
                                 {
-                                  name: "model",
-                                  rawName: "v-model.double",
-                                  value: _vm.invoice.product[index].discount,
-                                  expression: "invoice.product[index].discount",
-                                  modifiers: { double: true }
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                placeholder: "Discount"
-                              },
-                              domProps: {
-                                value: _vm.invoice.product[index].discount
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.invoice.product[index].chalan_id,
+                                      expression:
+                                        "invoice.product[index].chalan_id"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.invoice.product[index],
+                                          "chalan_id",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      function($event) {
+                                        _vm.findStockDetails(index)
+                                      }
+                                    ]
                                   }
-                                  _vm.$set(
-                                    _vm.invoice.product[index],
-                                    "discount",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors["product." + index + ".discount"]
-                              ? _c("span", { staticClass: "requiredField" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errors[
-                                        "product." + index + ".discount"
-                                      ][0]
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("Select Chalan")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(vl.stocks, function(ch) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: ch.id } },
+                                      [
+                                        _vm._v(
+                                          _vm._s(ch.chalan_no) +
+                                            ". qty(" +
+                                            _vm._s(ch.current_quantity) +
+                                            ")"
+                                        )
+                                      ]
                                     )
-                                  )
-                                ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "select",
-                              {
+                                  })
+                                ],
+                                2
+                              ),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".chalan_id"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".chalan_id"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
                                 directives: [
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value:
-                                      _vm.invoice.product[index].discount_type,
+                                    value: _vm.invoice.product[index].quantity,
                                     expression:
-                                      "invoice.product[index].discount_type"
+                                      "invoice.product[index].quantity"
                                   }
                                 ],
                                 staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  name: "",
+                                  disabled: vl.chalan_id === "",
+                                  placeholder: "QTY"
+                                },
+                                domProps: {
+                                  value: _vm.invoice.product[index].quantity
+                                },
                                 on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
                                     _vm.$set(
                                       _vm.invoice.product[index],
-                                      "discount_type",
-                                      $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
+                                      "quantity",
+                                      $event.target.value
                                     )
                                   }
                                 }
-                              },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("Amount")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("%")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            attrs: { type: "hidden" },
-                            domProps: {
-                              value: (vl.discount_amount = _vm.discount(
-                                _vm.invoice.product[index].discount_type,
-                                _vm.invoice.product[index].discount,
-                                vl.price
-                              ))
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("td", [
+                              }),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".quantity"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".quantity"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.invoice.product[index].price,
+                                    expression: "invoice.product[index].price"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  name: "",
+                                  placeholder: "price",
+                                  value: ""
+                                },
+                                domProps: {
+                                  value: _vm.invoice.product[index].price
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.invoice.product[index],
+                                      "price",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".price"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".price"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model.double",
+                                    value: _vm.invoice.product[index].discount,
+                                    expression:
+                                      "invoice.product[index].discount",
+                                    modifiers: { double: true }
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  name: "",
+                                  placeholder: "Discount"
+                                },
+                                domProps: {
+                                  value: _vm.invoice.product[index].discount
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.invoice.product[index],
+                                      "discount",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors["product." + index + ".discount"]
+                                ? _c("span", { staticClass: "requiredField" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errors[
+                                          "product." + index + ".discount"
+                                        ][0]
+                                      )
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.invoice.product[index]
+                                          .discount_type,
+                                      expression:
+                                        "invoice.product[index].discount_type"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.invoice.product[index],
+                                        "discount_type",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "1" } }, [
+                                    _vm._v("Amount")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "2" } }, [
+                                    _vm._v("%")
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
                             _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "",
-                                placeholder: "Total",
-                                disabled: ""
-                              },
+                              attrs: { type: "hidden" },
                               domProps: {
-                                value: (vl.total_price =
-                                  vl.quantity * vl.price - vl.discount_amount)
+                                value: (vl.discount_amount = _vm.discount(
+                                  _vm.invoice.product[index].discount_type,
+                                  _vm.invoice.product[index].discount,
+                                  vl.total_price
+                                ))
                               }
-                            })
+                            }),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  name: "",
+                                  placeholder: "Total",
+                                  disabled: ""
+                                },
+                                domProps: {
+                                  value: (vl.total_price =
+                                    vl.quantity * vl.price - vl.discount_amount)
+                                }
+                              })
+                            ])
                           ])
-                        ])
-                      })
-                    )
-                  ])
+                        })
+                      )
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
