@@ -46,105 +46,113 @@
 
                         		<div class="col-md-4" v-if="invoice.customer_type == 1">
                         			<!-- <p>Customer</p> -->
-                        		  	<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">person</i>
-										</span>
-										<div class="form-line">
-											<select class="form-control" v-model="invoice.customer_id">
-												<option value="">Customer List</option>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                                </span>
+                                <div class="form-line">
+                                  <select class="form-control" v-model="invoice.customer_id">
+                                    <option value="">Customer List</option>
 
-												<option v-for="customer in customers" :value="customer.id">{{ customer.customer_name }}</option>
-								                
-											</select>
-                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_id'))">{{ (errors.hasOwnProperty('customer_id')) ? errors.customer_id[0] :'' }}</span>
-										</div>
-									</div>
+                                    <option v-for="customer in customers" :value="customer.id">
+                                    {{ customer.customer_name }}
+                                    </option>
+
+                                  </select>
+                                  <span class="requiredField" 
+                                  v-if="(errors.hasOwnProperty('customer_id'))">
+                                {{ (errors.hasOwnProperty('customer_id')) ? errors.customer_id[0] :'' }}
+                                  </span>
+                                </div>
+                              </div>
                         		</div>
                         	</div>
 
                         	<div class="row" v-if="invoice.customer_type == 2">
                         		<div class="col-md-6">
-
                         			<div class="input-group">
-                        					<span class="input-group-addon">
-										<i class="material-icons">person</i>
-									</span>
-										<div class="form-line">
-									     <input type="text" name="" class="form-control" placeholder="Customer Name" v-model="invoice.customer_name" >
-                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_name'))">{{ (errors.hasOwnProperty('customer_name')) ? errors.customer_name[0] :'' }}</span>
-										</div>
-                        			</div>
-                        		
-                        		</div>	
+                                <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                                </span>
+                                <div class="form-line">
+                                  <input type="text" name=""
+                                   class="form-control" placeholder="Customer Name" 
+                                   v-model="invoice.customer_name" >
+                                  <span class="requiredField" 
+                                  v-if="(errors.hasOwnProperty('customer_name'))">
+                                {{ (errors.hasOwnProperty('customer_name')) ? errors.customer_name[0] :'' }}</span>
+                                </div>
+                              </div>
+                            </div>	
 
-                        		<div class="col-md-6">
-                        			<div class="input-group">
-                        						<span class="input-group-addon">
-										<i class="material-icons">email</i>
-									</span>
-										<div class="form-line">
-									     <input type="text" name="" class="form-control" placeholder="Customer Email" v-model="invoice.customer_email">
-                            <span class="requiredField" v-if="(errors.hasOwnProperty('customer_email'))">{{ (errors.hasOwnProperty('customer_email')) ? errors.customer_email[0] :'' }}</span>
-										</div>
-                        			</div>
-                        	
-                        		</div>		
+                            <div class="col-md-6">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">email</i>
+                                </span>
+                                <div class="form-line">
+                                  <input type="text" name="" class="form-control" placeholder="Customer Email" v-model="invoice.customer_email">
+                                  <span class="requiredField" v-if="(errors.hasOwnProperty('customer_email'))">{{ (errors.hasOwnProperty('customer_email')) ? errors.customer_email[0] :'' }}</span>
+                                </div>
+                              </div>
+                            </div>		
 
-                        		<div class="col-md-6">
-                        			<div class="input-group">
-                        						<span class="input-group-addon">
-										<i class="material-icons">phone</i>
-									</span>
-										<div class="form-line">
-									     <input type="text" name="" class="form-control" placeholder="Customer Phone No:" v-model="invoice.customer_phone">
-                       <span class="requiredField" v-if="(errors.hasOwnProperty('customer_phone'))">{{ (errors.hasOwnProperty('customer_phone')) ? errors.customer_phone[0] :'' }}</span>
-										</div>
-                        			</div>
-                        	
-                        		</div>		
+                            <div class="col-md-6">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">phone</i>
+                                </span>
+                                <div class="form-line">
+                                  <input type="text" name="" class="form-control" placeholder="Customer Phone No:" v-model="invoice.customer_phone">
+                                  <span class="requiredField" v-if="(errors.hasOwnProperty('customer_phone'))">{{ (errors.hasOwnProperty('customer_phone')) ? errors.customer_phone[0] :'' }}</span>
+                                </div>
+                              </div>
+                            </div>		
 
-                        		<div class="col-md-6">
-                        			<div class="input-group">
-                        			<span class="input-group-addon">
-										<i class="material-icons">note</i>
-									</span>
-										<div class="form-line">
-									    <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Customer Address" v-model="invoice.customer_address"></textarea>
-										</div>
-                        			</div>
-                        		
-                        		</div>
-                        	</div>
+                            <div class="col-md-6">
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">note</i>
+                                </span>
+                                <div class="form-line">
+                                  <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Customer Address" v-model="invoice.customer_address"></textarea>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
 
                         	<div class="row">
                         		
-                        		  		<div class="col-md-4">
-                        			<p>Invoice Number</p>
-                        		  	<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">person</i>
-										</span>
-										<div class="form-line">
-									     <input class="form-control" type="text" disabled name="" v-model="invoice.invoice_no">
-										</div>
-									</div>
-                        		</div>	
+                            <div class="col-md-4">
+                              <p>Invoice Number</p>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                                </span>
+                                <div class="form-line">
+                                  <input class="form-control" type="text"
+                                   disabled name="" v-model="invoice.invoice_no">
+                                </div>
+                              </div>
+                            </div>	
       		
-                        		  		
-
-                        		  <div class="col-md-4">
-                        			<p>Invoice Date</p>
-                        		  	<div class="input-group">
-										<span class="input-group-addon">
-											<i class="material-icons">person</i>
-										</span>
-										<div class="form-line">
-									     <input id="datep" class="form-control" type="text"  name="" v-model="invoice.invoice_date">
-                          <span class="requiredField" v-if="(errors.hasOwnProperty('invoice_date'))">{{ (errors.hasOwnProperty('invoice_date')) ? errors.invoice_date[0] :'' }}</span>
-										</div>
-									</div>
-                        		</div>	
+                            <div class="col-md-4">
+                              <p>Invoice Date</p>
+                              <div class="input-group">
+                                <span class="input-group-addon">
+                                  <i class="material-icons">person</i>
+                                </span>
+                                <div class="form-line">
+                                  <input id="datep" class="form-control" 
+                                  type="text"  name="" v-model="invoice.invoice_date">
+                                  <span class="requiredField"
+                                   v-if="(errors.hasOwnProperty('invoice_date'))">
+                                 {{ (errors.hasOwnProperty('invoice_date')) ? errors.invoice_date[0] :'' }}
+                                 </span>
+                                </div>
+                              </div>
+                            </div>	
 
                         	</div>
 
