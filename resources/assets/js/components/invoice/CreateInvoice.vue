@@ -438,22 +438,29 @@
           
           axios.post(base_url+'invoice',this.invoice)
           .then(response => {
+
               this.successALert(response.data);
+
               this.resetForm();
+
+              this.invoice_state = false;
+
               EventBus.$emit('invoice-created',1);
-              this.invoice_state = !this.invoice_state;
+
+              
+
           })
           .catch(error => {  
            if(error.response.status == 422){
             this.errors = error.response.data.errors;
 
            Swal( "Oops" ,  "please fill the form by correct data!" ,  "error" );
-
-          }else{
+            }
+          else{
             this.successAlert(error);
-          }
+           }
 
-          });
+            });
            
           },
               
@@ -570,25 +577,42 @@
 
 			resetForm(){
        
-       this.invoice = {       
-               'invoice_no' : '',
-               'customer_type' : '',
-               'customer_id' : '',
-               'customer_name' : '',
-               'customer_email': '',
-               'customer_phone' : '',
-               'customer_address' : '',
-               'invoice_date ': '',
-                'total_discount' : 0,
-               'total_amount' : 0,
-               'grand_total' : 0,
-               'paid_amount' : 0,
-               'payment_in' : 'cash',
-               'bank_info' : '',};
+        this.invoice = { 
+               invoice_no : '',
+               customer_type : '',
+               customer_id : '',
+               customer_name : '',
+               customer_email: '',
+               customer_phone : '',
+               customer_address : '',
+               invoice_date : '',
+               total_discount : 0,
+               total_amount : 0,
+               grand_total : 0,
+               paid_amount : 0,
+               payment_in : 'cash',
+               bank_info : '',
+               product : [
+                   {
+                    category : '',
+                    product_id : '',
+                    chalan: '',
+                    chalan_id: '',
+                    stoc_quantity : 0,
+                    quantity : 0,
+                    price : 0,
+                    total_price : 0 ,
+                    discount : 0 ,
+                    discount_type : '1',
+                    discount_amount : 0,
+                    products : [],
+                    stocks : [],
+                   }
+               ],
 
-        this.invoice.product.slice(1);
+              
 
-        this.addmore();       
+              }      
 
 			},
 

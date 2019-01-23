@@ -287,7 +287,55 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sell = Sell::find($id);
+
+        
+         $invoice_details = SellDetails::where('sell_details.sell_id','=',$id)
+                                   ->get();
+
+                                   
+
+        $arr = [
+          
+          'invoice_no' => $sell->id,
+          'customer_id' => $sell->customer_id,
+          'total_discount' => $sell->discount_amount,
+          'total_amount' => $sell->total_amount+$sell->discount_amount,
+          'invoice_date' => $sell->sell_date,
+          'grand_total' => $sell->total_amount,
+          'paid_amount' => $sell->paid_amount,
+           
+           'product' => []
+
+        ];
+       
+       $product = [];
+       foreach ($invoice_details as $key => $value) {
+           
+           $products = Product::where('category_id','=',$value->category_id)->get();
+           $stocks = Stock::where('product_id','=',$value->product_id)->get();
+           $product['id'] = $value->id; 
+           $product['category'] = $value->product_id; 
+           $product['product_id'] = $value->category_id; 
+           $product['chalan_id'] = $value->stock_id; 
+           $product['stock_quantity'] = 0; 
+           $product['price'] = $value->selling_price; 
+           $product['total_price'] = $value->total_selling_price; 
+           $product['discount'] = $value->discount; 
+           $product['discount_type'] = $value->discount_type; 
+           $product['discount_amount'] = $value->discount_amount; 
+           $product['products'] = $products; 
+           $product['stocks'] = $stocks; 
+
+          array_push($arr['product'],$product);
+       }
+
+       // array_push($arr['product'],$product);
+     
+
+
+
+        return $arr;
     }
 
     /**

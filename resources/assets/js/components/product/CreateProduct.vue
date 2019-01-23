@@ -91,7 +91,7 @@
 
 				product : {
 
-					cateogry : '',
+					category : '',
 					name : '',
 					details : '',
 
@@ -115,7 +115,7 @@
 
 					$('#create-product').modal('hide');
 
-					this.product = {'name':'','details':''};
+					this.product = {'name':'','details':'','category':''};
 					this.errors = null;
 					EventBus.$emit('product-created',response.data);
 
