@@ -27,4 +27,12 @@ class Stock extends Model
 
     	return $this->belongsTo('App\Vendor');
     }
+
+    // relation with sell_details 
+
+
+    public function sell_details(){
+
+        return $this->hasMany('App\SellDetails');
+    }
 }

@@ -301,7 +301,7 @@
             product_id : '',
             chalan: '',
             chalan_id: '',
-            stoc_quantity : 0,
+            stock_quantity : 0,
             quantity : 0,
             price : 0,
             total_price : 0 ,
@@ -330,10 +330,8 @@
 
         _this.editData(id);
         _this.invoice_state = true;
-
-
-
-        console.log(id);
+        
+        window.scrollTo(0,0);
 
       });
 
@@ -347,14 +345,9 @@
         axios.get(base_url+'invoice/'+id+'/edit')
 
         .then(response => {
-        
+       
 
-        console.log(response.data);
-
-          // this.category = {
-          //   id:response.data.id,
-          //   name:response.data.name,
-          // }
+          this.invoice = response.data;
 
         })
 

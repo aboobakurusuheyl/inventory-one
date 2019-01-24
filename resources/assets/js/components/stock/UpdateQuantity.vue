@@ -22,9 +22,9 @@
 										</span>
 										<div class="form-line">
 											<select class="form-control" v-model="product.state">
-												<option value="" selected>You Want To ?</option>
-												<option value="+">+</option>
-												<option value="-">-</option>
+												<option :value="''">You Want To ?</option>
+												<option :value="'+'">+</option>
+												<option :value="'-'">-</option>
 											</select>
 										</div>
 									</div>

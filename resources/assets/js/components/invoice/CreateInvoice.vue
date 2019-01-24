@@ -533,7 +533,7 @@
 			showInvoice(){
 
 				this.invoice_state = !this.invoice_state;
-               // $("html, body").animate({ scrollTop: 0 }, 800);
+               
 				  
 				  axios.get(base_url+'get/invoice/number')
 				  .then(response => {

@@ -9,6 +9,7 @@ use App\SellDetails;
 use App\Category;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class StockController extends Controller
 {
@@ -45,8 +46,16 @@ class StockController extends Controller
        'user'=> function($query){
 
             $query->select('id','name');
-       }
-       ])->orderBy('updated_at','desc');
+       },
+       // 'sell_details' => function($query){
+          
+       //    $query->sum('sold_quantity');
+
+       // }
+       ]
+     )
+       // ->select('stocks.*',DB::raw(''))
+       ->orderBy('updated_at','desc');
           
 
           if($request->category != ''){

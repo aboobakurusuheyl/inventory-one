@@ -33816,7 +33816,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this6 = this;
 
       this.invoice_state = !this.invoice_state;
-      // $("html, body").animate({ scrollTop: 0 }, 800);
 
       axios.get(base_url + 'get/invoice/number').then(function (response) {
 
@@ -35981,7 +35980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           product_id: '',
           chalan: '',
           chalan_id: '',
-          stoc_quantity: 0,
+          stock_quantity: 0,
           quantity: 0,
           price: 0,
           total_price: 0,
@@ -36005,48 +36004,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       _this.editData(id);
       _this.invoice_state = true;
 
-      console.log(id);
+      window.scrollTo(0, 0);
     });
   },
 
 
   methods: {
     editData: function editData(id) {
+      var _this2 = this;
 
       axios.get(base_url + 'invoice/' + id + '/edit').then(function (response) {
 
-        console.log(response.data);
-
-        // this.category = {
-        //   id:response.data.id,
-        //   name:response.data.name,
-        // }
+        _this2.invoice = response.data;
       });
     },
     store: function store() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post(base_url + 'invoice', this.invoice).then(function (response) {
 
-        _this2.successALert(response.data);
+        _this3.successALert(response.data);
 
-        _this2.resetForm();
+        _this3.resetForm();
 
-        _this2.invoice_state = false;
+        _this3.invoice_state = false;
 
         __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('invoice-created', 1);
       }).catch(function (error) {
         if (error.response.status == 422) {
-          _this2.errors = error.response.data.errors;
+          _this3.errors = error.response.data.errors;
 
           Swal("Oops", "please fill the form by correct data!", "error");
         } else {
-          _this2.successAlert(error);
+          _this3.successAlert(error);
         }
       });
     },
     findProduct: function findProduct(index) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.invoice.product[index].category === '') {
 
@@ -36055,13 +36050,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get(base_url + 'category/product/' + this.invoice.product[index].category).then(function (response) {
 
-          _this3.invoice.product[index].products = response.data;
-          _this3.invoice.product[index].stocks = [];
+          _this4.invoice.product[index].products = response.data;
+          _this4.invoice.product[index].stocks = [];
         });
       }
     },
     findStock: function findStock(index) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.invoice.product[index].product_id === '') {
 
@@ -36069,12 +36064,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
 
         axios.get(base_url + 'chalan-list/chalan/' + this.invoice.product[index].product_id).then(function (response) {
-          _this4.invoice.product[index].stocks = response.data;
+          _this5.invoice.product[index].stocks = response.data;
         });
       }
     },
     findStockDetails: function findStockDetails(index) {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.invoice.product[index].chalan_id === '') {
 
@@ -36085,22 +36080,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get(base_url + 'stock/' + this.invoice.product[index].chalan_id).then(function (response) {
 
-          _this5.invoice.product[index].quantity = 1;
-          _this5.invoice.product[index].price = response.data.selling_price;
-          _this5.invoice.product[index].discount = response.data.discount;
-          _this5.invoice.product[index].stock_quantity = response.data.stock_quantity;
+          _this6.invoice.product[index].quantity = 1;
+          _this6.invoice.product[index].price = response.data.selling_price;
+          _this6.invoice.product[index].discount = response.data.discount;
+          _this6.invoice.product[index].stock_quantity = response.data.stock_quantity;
         });
       }
     },
     showInvoice: function showInvoice() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.invoice_state = !this.invoice_state;
       // $("html, body").animate({ scrollTop: 0 }, 800);
 
       axios.get(base_url + 'get/invoice/number').then(function (response) {
 
-        _this6.invoice.invoice_no = response.data;
+        _this7.invoice.invoice_no = response.data;
       });
 
       window.scrollTo(0, top);

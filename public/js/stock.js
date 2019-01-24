@@ -35194,17 +35194,15 @@ var render = function() {
                               }
                             },
                             [
-                              _c(
-                                "option",
-                                { attrs: { value: "", selected: "" } },
-                                [_vm._v("You Want To ?")]
-                              ),
+                              _c("option", { domProps: { value: "" } }, [
+                                _vm._v("You Want To ?")
+                              ]),
                               _vm._v(" "),
-                              _c("option", { attrs: { value: "+" } }, [
+                              _c("option", { domProps: { value: "+" } }, [
                                 _vm._v("+")
                               ]),
                               _vm._v(" "),
-                              _c("option", { attrs: { value: "-" } }, [
+                              _c("option", { domProps: { value: "-" } }, [
                                 _vm._v("-")
                               ])
                             ]
