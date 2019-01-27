@@ -43,22 +43,22 @@ Route::resource('customer','CustomerController');
 //Stock
 
 Route::resource('stock','StockController');
-
 Route::get('stock-list','StockController@StockList');
 Route::get('chalan-list/chalan/{id}','StockController@ChalanList');
-
 Route::get('stock-asset','StockController@StockAsset');
-
 Route::post('stock-update','StockController@StockUpdate');
 
-
+// invoice 
 Route::resource('invoice','InvoiceController');
-
 Route::get('invoice-list','InvoiceController@InvoiceList');
-
-
-
 Route::get('get/invoice/number','InvoiceController@getLastInvoice');
+
+
+// Report 
+
+
+Route::get('report','ReportingController@index');
+Route::get('get-report','ReportingController@store');
 
 
 Route::get('logout','UserController@logout');

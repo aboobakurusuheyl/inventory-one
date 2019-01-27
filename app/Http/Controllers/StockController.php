@@ -47,14 +47,14 @@ class StockController extends Controller
 
             $query->select('id','name');
        },
-       // 'sell_details' => function($query){
+       'sell_details' => function($query){
           
-       //    $query->sum('sold_quantity');
+          $query->select(DB::raw('sum(sold_quantity) as qty'));
 
-       // }
+       }
        ]
      )
-       // ->select('stocks.*',DB::raw(''))
+
        ->orderBy('updated_at','desc');
           
 
@@ -76,15 +76,7 @@ class StockController extends Controller
 
             }
 
-            // if($request->start_date != '' && $request->end_date != ''){
-
-            //      $start_date = $request->start_date.' 12:01:01';
-            //      $end_date = $request->end_date.' 23:59:59';
-
-            //    $stock->whereBetween('created_at',[$start_date,$end_date]);
-            //   } 
-
-               $stock = $stock->paginate(10);
+            $stock = $stock->paginate(10);
 
              return $stock;            
 

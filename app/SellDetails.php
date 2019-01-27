@@ -12,6 +12,9 @@ class SellDetails extends Model
 
 	public function stock(){
 
-		return $this->belongsTo('App\Stock');
+		return $this->belongsTo('App\Stock','stock_id');
 	}
+
+
+
 }

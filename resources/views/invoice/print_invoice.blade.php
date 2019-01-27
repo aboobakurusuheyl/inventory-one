@@ -77,8 +77,8 @@
               @endphp
               @foreach($invoice_details as $value)
             <tr>
-              <td><a href="">{{ $value->category_id }}</a></td>
-              <td>{{ $value->product_id }}</td>
+              <td>{{ $value->stock->category->name }}</td>
+              <td>{{ $value->stock->product->product_name }}</td>
               <td>{{ $value->chalan_no }}</td>
               <td>{{ $value->sold_quantity }}</td>
               <td>{{ $value->sold_price }}</td>
@@ -141,5 +141,8 @@
 
 
     </div>
+    <script >
+      window.print();
+    </script>
 </body>
 </html>

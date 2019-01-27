@@ -268,7 +268,7 @@ class InvoiceController extends Controller
     {
         $invoice = Sell::find($id);
 
-        $invoice_details = SellDetails::where('sell_id','=',$id)->get();
+        $invoice_details = SellDetails::with(['stock.category:id,name','stock.product:id,product_name'])->where('sell_id','=',$id)->get();
 
         $payment = Payment::where('sell_id','=',$id)->get();
 

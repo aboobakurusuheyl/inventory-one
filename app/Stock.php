@@ -10,7 +10,13 @@ class Stock extends Model
     // relation with product 
     public function product(){
 
-    	return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product');
+    } 
+
+
+    public function category(){
+
+    	return $this->belongsTo('App\Category');
     }
 
     // relation with user 
@@ -33,6 +39,6 @@ class Stock extends Model
 
     public function sell_details(){
 
-        return $this->hasMany('App\SellDetails');
+        return $this->hasMany('App\SellDetails','stock_id');
     }
 }
