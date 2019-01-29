@@ -36023,7 +36023,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     store: function store() {
       var _this3 = this;
 
-      axios.post(base_url + 'invoice', this.invoice).then(function (response) {
+      axios.put(base_url + 'invoice', this.invoice).then(function (response) {
 
         _this3.successALert(response.data);
 

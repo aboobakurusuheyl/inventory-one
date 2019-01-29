@@ -357,7 +357,7 @@
 
       store(){
 
-        axios.post(base_url+'invoice',this.invoice)
+        axios.put(base_url+'invoice',this.invoice)
         .then(response => {
 
           this.successALert(response.data);
