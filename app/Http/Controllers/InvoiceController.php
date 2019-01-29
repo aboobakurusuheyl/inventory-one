@@ -64,8 +64,8 @@ class InvoiceController extends Controller
          'user'=>function($query){
 
             $query->select('name','id');
-         }])->
-             orderBy('sell_date','desc');
+         }])
+         ->orderBy('updated_at','desc');
 
           if($request->invoice_id != ''){
       
@@ -170,7 +170,6 @@ class InvoiceController extends Controller
 
             $invoice->user_id = Auth::user()->id;  
             $invoice->customer_id = $customer_id;  
-            $invoice->branch_id = Auth::user()->branch_id;  
             $invoice->branch_id = Auth::user()->branch_id;  
             $invoice->total_amount = $request->grand_total;  
             $invoice->discount_amount = $request->total_discount;  
@@ -344,13 +343,8 @@ class InvoiceController extends Controller
     public function update(Request $request, $id)
     {
             $request->validate([
-          'customer_type' => 'required',
-          'customer_id' => 'required_if:customer_type,1',
-          'customer_name' => 'required_if:customer_type,2',
-          'customer_email' => 'nullable|unique:customers,email',
-          'customer_phone' => 'nullable|unique:customers,phone',
+          'customer_id' => 'required',
           'invoice_date' => 'required',
-          'paid_amount' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
 
 
           'product.*.category' => 'required',
@@ -362,8 +356,7 @@ class InvoiceController extends Controller
           'product.*.discount' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
         ],[
            
-          'customer_id.required_if' => 'required',
-          'customer_name.required_if' => 'required',
+          'customer_id' => 'required',
 
           'product.*.category.required' => 'required field',
           'product.*.product_id.required' => 'required field',
@@ -382,31 +375,17 @@ class InvoiceController extends Controller
             DB::beginTransaction();
   
 
-            $invoice = new Sell;
+            $invoice = Sell::find($id);
 
-            $invoice->user_id = Auth::user()->id;  
-            $invoice->customer_id = $customer_id;  
-            $invoice->branch_id = Auth::user()->branch_id;  
-            $invoice->branch_id = Auth::user()->branch_id;  
+            $invoice->customer_id = $customer_id;   
             $invoice->total_amount = $request->grand_total;  
             $invoice->discount_amount = $request->total_discount;  
             $invoice->paid_amount = $request->paid_amount;  
             $invoice->sell_date = $request->invoice_date;  
-            $invoice->payment_method = $request->payment_info == 'cash' ? 1 : 2;
-            if($request->paid_amount >= $request->grand_total){
-             $invoice->payment_status = 1; 
-              } 
-            else{
-            $invoice->payment_status = 0;    
-              }
-            $invoice->save();
+            
+            $invoice->update();
 
-
-            // invoice details 
-
-            // n $request->product;
-            // return $stock = Stock::find($request->product[1]['chalan_id']);
-            // exit();
+             SellDetails::where('sell_id','=',$id)->delete();
 
             foreach ($request->product as  $value) {
                 
@@ -434,34 +413,18 @@ class InvoiceController extends Controller
 
                $inv_details->save();
 
-               $stock->current_quantity = $stock->current_quantity - $value['quantity'];
+               // $stock->current_quantity = $stock->current_quantity - $value['quantity'];
 
-               $stock->update();
+               // $stock->update();
 
                
             
             }
 
-
-            // payment history 
-
-            if($request->paid_amount > 0){
-
-                $payment = new Payment;
-
-                $payment->sell_id = $invoice->id;
-                $payment->customer_id = $customer_id;
-                $payment->date = $request->invoice_date;
-                $payment->paid_in = $request->payment_in;
-                $payment->bank_information = $request->bank_info;
-                $payment->amount = $request->paid_amount;
-                $payment->save();
-
-            }
              
              DB::commit();
 
-            return response()->json(['status' => 'success', 'message' => 'Invoice Created !']);
+            return response()->json(['status' => 'success', 'message' => 'Invoice updated !']);
             }
                catch(\Exception $e){
              

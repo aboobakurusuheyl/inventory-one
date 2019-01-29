@@ -52,6 +52,7 @@
                                         <th>Selling Price</th>
                                         <th>Entry By</th>
                                         <th>Entry Date</th>
+                                        <th>Entry Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -66,6 +67,7 @@
                                         <td>{{ value.selling_price }}</td>
                                         <td>{{ value.user.name }}</td>
                                         <td>{{ value.created_at | moment('LL') }}</td>
+                                        <td>{{ value.stock_quantity-value.sold_qty }}</td>
                                         <td>
                               
                                 <button @click="editQty(value.id,value.category_id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
@@ -268,6 +270,7 @@
             
          },
 
+ 
          range(start, count) {
         return Array.apply(0, Array(count))
             .map(function (element, index){

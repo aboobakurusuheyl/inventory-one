@@ -33854,6 +33854,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -35135,7 +35137,7 @@ var render = function() {
                       "Update Qunatity OF " +
                         _vm._s(_vm.product.product_name) +
                         "- " +
-                        _vm._s(_vm.chalan_no)
+                        _vm._s(_vm.product.chalan_no)
                     )
                   ]
                 )
@@ -35517,6 +35519,10 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
+                    _vm._v(_vm._s(value.stock_quantity - value.sold_qty))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
                     _c(
                       "button",
                       {
@@ -35719,6 +35725,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Selling Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Entry By")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Entry Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Entry Date")]),
         _vm._v(" "),

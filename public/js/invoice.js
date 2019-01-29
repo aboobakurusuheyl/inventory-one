@@ -34660,7 +34660,9 @@ var render = function() {
                                         _vm._v(
                                           _vm._s(ch.chalan_no) +
                                             ". qty(" +
-                                            _vm._s(ch.current_quantity) +
+                                            _vm._s(
+                                              ch.stock_quantity - ch.sold_qty
+                                            ) +
                                             ")"
                                         )
                                       ]
@@ -36130,25 +36132,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.invoice = {
         invoice_no: '',
-        customer_type: '',
         customer_id: '',
-        customer_name: '',
-        customer_email: '',
-        customer_phone: '',
-        customer_address: '',
         invoice_date: '',
         total_discount: 0,
         total_amount: 0,
         grand_total: 0,
         paid_amount: 0,
-        payment_in: 'cash',
-        bank_info: '',
         product: [{
           category: '',
           product_id: '',
           chalan: '',
           chalan_id: '',
-          stoc_quantity: 0,
+          stock_quantity: 0,
           quantity: 0,
           price: 0,
           total_price: 0,

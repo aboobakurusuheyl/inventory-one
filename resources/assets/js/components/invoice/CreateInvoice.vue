@@ -209,7 +209,7 @@
                               					<select class="form-control" v-model="invoice.product[index].chalan_id" @change="findStockDetails(index)">
                               					   <option value="">Select Chalan</option>
                               					   <option v-for="ch in vl.stocks" :value="ch.id">{{
-                              					   ch.chalan_no  }}. qty({{ ch.current_quantity }})</option>
+                              					   ch.chalan_no  }}. qty({{ ch.stock_quantity-ch.sold_qty }})</option>
                               					</select>
 
                                               <span v-if="errors['product.'+index+'.chalan_id']" class="requiredField">{{ errors['product.'+index+'.chalan_id'][0] }}</span>

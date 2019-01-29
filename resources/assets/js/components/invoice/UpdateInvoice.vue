@@ -501,26 +501,19 @@
 
                   this.invoice = { 
                     invoice_no : '',
-                    customer_type : '',
                     customer_id : '',
-                    customer_name : '',
-                    customer_email: '',
-                    customer_phone : '',
-                    customer_address : '',
                     invoice_date : '',
                     total_discount : 0,
                     total_amount : 0,
                     grand_total : 0,
                     paid_amount : 0,
-                    payment_in : 'cash',
-                    bank_info : '',
                     product : [
                     {
                       category : '',
                       product_id : '',
                       chalan: '',
                       chalan_id: '',
-                      stoc_quantity : 0,
+                      stock_quantity : 0,
                       quantity : 0,
                       price : 0,
                       total_price : 0 ,
@@ -531,7 +524,6 @@
                       stocks : [],
                     }
                     ],
-
 
 
                   }      

@@ -5,7 +5,7 @@
 			<div class="modal-dialog modal-sm" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="defaultModalLabel">Update Qunatity OF {{ product.product_name }}- {{ chalan_no }}</h4>
+						<h4 class="modal-title" id="defaultModalLabel">Update Qunatity OF {{ product.product_name }}- {{ product.chalan_no }}</h4>
 					</div>
 					<div class="modal-body">
 						<div class="alert alert-danger" v-if="errors">
