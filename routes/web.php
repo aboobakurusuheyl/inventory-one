@@ -53,7 +53,7 @@ Route::resource('invoice','InvoiceController');
 Route::get('invoice-list','InvoiceController@InvoiceList');
 Route::get('get/invoice/number','InvoiceController@getLastInvoice');
 
-
+Route::resource('payment','PaymentController');
 // Report 
 
 

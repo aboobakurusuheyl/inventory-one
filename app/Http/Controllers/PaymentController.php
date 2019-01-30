@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use App\Sell;
+use App\SellDetails;
+use Auth;
 
 class PaymentController extends Controller
 {
@@ -35,7 +38,51 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+          'payment_date' => 'required',
+          'payment_amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',          
+          'payment_in' => 'required',                 
+        ]);
+
+        try{
+          
+          $sell = Sell::find($request->id);
+
+          $payment = new Payment;
+
+          $payment->sell_id = $request->id;
+          $payment->customer_id = $sell->customer_id;
+          $payment->user_id = Auth::user()->id;
+          $payment->date = $request->payment_date;
+          $payment->amount = $request->payment_amount;
+          $payment->paid_in = $request->payment_in;
+          $payment->bank_information = $request->bank_info;
+
+          $payment->save();
+
+          $paid_amount = $sell->paid_amount+$request->payment_amount;
+
+          if($paid_amount>=$sell->total_amount){
+            
+            $sell->payment_status = 1;
+          }
+
+          $sell->paid_amount = $paid_amount;
+
+          $sell->save();
+
+          return response()->json(['status'=>'success','message'=>'Payment Success']);
+
+
+
+        }
+        catch(\Exception $e){
+          
+          return response()->json(['status'=>'error','message'=>'Something Went Wrong']);
+
+        
+
+        }
     }
 
     /**

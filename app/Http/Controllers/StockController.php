@@ -85,16 +85,20 @@ class StockController extends Controller
 
   public function ChalanList($id){
 
-
+  // raw query for that 
+   // $chalan = DB::select("select `stocks`.*,(select COALESCE(SUM(sold_quantity),0) from `sell_details` where `stocks`.`id` = `sell_details`.`stock_id`) as sold_qty from `stocks` where `product_id` = '$id' and `stock_quantity` > (select COALESCE(SUM(sold_quantity),0) from `sell_details` where `stocks`.`id` = `sell_details`.`stock_id`)  order by `updated_at` desc");
    $chalan = Stock::where('product_id','=',$id)
     ->withCount([
       'sell_details AS sold_qty' => function ($query) use ($id){
 
-        $query->select(DB::raw("SUM(sold_quantity) as sold_qty"))->where('product_id','=',$id);
+        $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
         
       }])
-   ->where('current_quantity','>','sold_qty')
-   ->orderBy('current_quantity','asc')
+   ->where('stock_quantity','>',
+    DB::raw('(select COALESCE(SUM(sold_quantity),0) 
+      from `sell_details`
+      where `stocks`.`id` = `sell_details`.`stock_id`)'))
+   ->orderBy('updated_at','desc')
    ->get();
 
 

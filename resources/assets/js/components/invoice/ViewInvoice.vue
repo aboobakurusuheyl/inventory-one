@@ -12,6 +12,7 @@
               </div> -->
 
               <update-invoice :categorys="categorys" :customers="customers"></update-invoice>
+              <create-payment></create-payment>
 
               <div class="row">
                   <div class="col-md-4">
@@ -48,7 +49,9 @@
                                  <th>Paid</th>
                                  <th>Due</th>
                                  <th>Sold By</th>
+                                 <th>payment</th>
                                  <th>Action</th>
+                                
                              </tr>
                          </thead>
                          <tbody>
@@ -60,6 +63,11 @@
                                  <td>{{ value.paid_amount }}</td>
                                  <td>{{ value.total_amount - value.paid_amount }}</td>
                                  <td>{{ value.user.name }}</td>
+
+                                 
+                                 <td><a @click.prevent="CreatePayment(value.id)" href=""  data-toggle="modal" data-target="#smallModal" class="btn bg-green btn-circle waves-effect waves-circle waves-float"><i class="material-icons">attach_money</i></a>
+                             
+                                 </td>
 
                                  <td>
 
@@ -76,6 +84,7 @@
                                      </button>       
 
                                  </td>
+
 
                              </tr>
 
@@ -123,11 +132,12 @@
 
  <script>
 
-     import {EventBus} from '../../vue-asset';
-     import mixin from '../../mixin.js';
+    import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin.js';
 
     import UpdateInvoice from './UpdateInvoice.vue';
-    // import UpdateQuantity from './UpdateQuantity.vue';
+    import CreatePayment from './CreatePayment.vue';
+
     
 
     export default{
@@ -140,6 +150,7 @@
 
         //     'edit-stock' : editStock,
             'update-invoice' : UpdateInvoice,
+            'create-payment' : CreatePayment,
 
         },
 
@@ -234,6 +245,12 @@
 
          },
 
+         CreatePayment(id){
+              
+              EventBus.$emit('create-payment',id);
+
+         },
+
          range(start, count) {
              return Array.apply(0, Array(count))
              .map(function (element, index){
@@ -246,6 +263,9 @@
              var vm = this;
              vm.getData(pageNo);
          },
+
+
+
 
      },
 

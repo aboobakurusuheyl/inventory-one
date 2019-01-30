@@ -342,7 +342,9 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $request->validate([
+
+
+           $request->validate([
           'customer_id' => 'required',
           'invoice_date' => 'required',
 
@@ -377,7 +379,7 @@ class InvoiceController extends Controller
 
             $invoice = Sell::find($id);
 
-            $invoice->customer_id = $customer_id;   
+            $invoice->customer_id = $request->customer_id;   
             $invoice->total_amount = $request->grand_total;  
             $invoice->discount_amount = $request->total_discount;  
             $invoice->paid_amount = $request->paid_amount;  
@@ -397,7 +399,7 @@ class InvoiceController extends Controller
                $inv_details->sell_id = $invoice->id;
                $inv_details->product_id = $value['product_id'];
                $inv_details->category_id = $value['category'];
-               $inv_details->customer_id = $customer_id;
+               $inv_details->customer_id = $request->customer_id;
                $inv_details->vendor_id = $stock->vendor_id;
                $inv_details->user_id = Auth::user()->id;
                $inv_details->chalan_no = $stock->chalan_no;
@@ -443,6 +445,35 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        try{
+           DB::beginTransaction();
+
+           // delete sell 
+             
+            $sell = Sell::find($id);
+
+            $sell->delete();
+
+           // delete Sell details 
+
+            SellDetails::where('sell_id','=',$id)->delete();
+           //delete payment
+
+            Payment::where('sell_id','=',$id)->delete();
+
+            DB::commit();
+
+           return response()->json(['status' => 'success', 'message' => 'Invoice Deleted !']);
+  
+        }
+        catch(\Exception $e){
+             
+             DB::rollback();
+
+             return $e;
+             return response()->json(['status'=>'error','message'=>'Something Went Wrong!']);
+        }
+
     }
 }

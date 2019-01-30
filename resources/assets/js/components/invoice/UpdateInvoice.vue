@@ -231,11 +231,11 @@
 
 
         <div class="form-group">
-          <label>Pay Now: &nbsp;</label>
+          <label>Paid Amount: &nbsp;</label>
           <div class="input-group focused">
             <div class="input-group-addon"></div>
 
-            <input type="text"  class="form-control"  v-model="invoice.paid_amount" placeholder="Pay Now" style="border-bottom: 1px solid #ccc;">
+            <input type="text"   class="form-control"  v-model="invoice.paid_amount" placeholder="Pay Now" style="border-bottom: 1px solid #ccc;" disabled="">
           </div>
         </div>    
      
@@ -357,7 +357,7 @@
 
       store(){
 
-        axios.put(base_url+'invoice',this.invoice)
+        axios.put(base_url+'invoice/'+this.invoice.invoice_no,this.invoice)
         .then(response => {
 
           this.successALert(response.data);
