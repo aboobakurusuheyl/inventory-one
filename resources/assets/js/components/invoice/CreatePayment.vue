@@ -56,11 +56,14 @@
 </template>
 
 <script type="text/javascript">
- import {EventBus} from '../../vue-asset';
- import mixin from '../../mixin.js';
-  export default {
+   
+    import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin.js';
+
+  export default{
      
      name : 'create-payment',
+     mixins : [mixin],
 
      data() {
 
@@ -104,11 +107,12 @@
           axios.post(base_url+'payment',this.payment)
           .then(response => {
             
-            this.successAlert(response.data);
+            this.successALert(response.data);
+            this.resetForm();
 
            $('#smallModal').modal('hide');
            
-            EventBus.$emit('invoice-created');
+            EventBus.$emit('invoice-created',1);
 
           })
           .catch(error => {
@@ -119,13 +123,26 @@
            Swal( "Oops" ,  "please fill the form by correct data!" ,  "error" );
             }
           else{
-            this.successAlert(error);
+            this.successALert(error);
            }
 
 
           });
 
-     	}
+     	},
+
+     	resetForm(){
+
+              
+          this.payment = {
+
+          	 id : '',
+          	 payment_amount : 0,
+          	 payment_date : '',
+          	 payment_in : 'cash',
+          	 bank_info : '',
+          }
+     	},
 
 
      }

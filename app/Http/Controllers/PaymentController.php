@@ -91,9 +91,9 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
-        //
+        return Payment::where('sell_id','=',$id)->get();
     }
 
     /**

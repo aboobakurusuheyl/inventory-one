@@ -13,6 +13,7 @@
 
               <update-invoice :categorys="categorys" :customers="customers"></update-invoice>
               <create-payment></create-payment>
+              <view-payment></view-payment>
 
               <div class="row">
                   <div class="col-md-4">
@@ -65,13 +66,16 @@
                                  <td>{{ value.user.name }}</td>
 
                                  
-                                 <td><a @click.prevent="CreatePayment(value.id)" href=""  data-toggle="modal" data-target="#smallModal" class="btn bg-green btn-circle waves-effect waves-circle waves-float"><i class="material-icons">attach_money</i></a>
+                                 <td>
+                                     <a @click.prevent="CreatePayment(value.id)" href=""  data-toggle="modal" data-target="#smallModal" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">attach_money</i></a>
+                                     
+                                      <a @click.prevent="ViewPayment(value.id)" href=""  data-toggle="modal" data-target="#viewPayment" class="btn bg-cyan btn-circle waves-effect waves-circle waves-float"><i class="material-icons">remove_red_eye</i></a>
                              
                                  </td>
 
                                  <td>
 
-                                     <a :href="url+value.id" target="_blank" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                                     <a :href="url+value.id" target="_blank" type="button" class="btn bg-orange btn-circle waves-effect waves-circle waves-float">
                                          <i class="material-icons">print</i>
                                      </a>
 
@@ -137,6 +141,7 @@
 
     import UpdateInvoice from './UpdateInvoice.vue';
     import CreatePayment from './CreatePayment.vue';
+    import ViewPayment from './ViewPayment.vue';
 
     
 
@@ -151,6 +156,7 @@
         //     'edit-stock' : editStock,
             'update-invoice' : UpdateInvoice,
             'create-payment' : CreatePayment,
+            'view-payment' : ViewPayment,
 
         },
 
@@ -248,6 +254,12 @@
          CreatePayment(id){
               
               EventBus.$emit('create-payment',id);
+
+         },
+
+         ViewPayment(id){
+           
+           EventBus.$emit('view-payment',id);
 
          },
 
