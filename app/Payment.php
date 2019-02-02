@@ -13,4 +13,13 @@ class Payment extends Model
 
     	return $this->belongsTo('App\Customer');
     }
+
+    // relation with user 
+
+
+    public function user(){
+     
+     return $this->belongsTo('App\User');
+
+    }
 }

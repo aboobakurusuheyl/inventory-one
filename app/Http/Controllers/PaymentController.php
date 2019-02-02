@@ -8,6 +8,8 @@ use App\Sell;
 use App\SellDetails;
 use Auth;
 
+use DB;
+
 class PaymentController extends Controller
 {
     /**
@@ -93,7 +95,13 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        return Payment::where('sell_id','=',$id)->get();
+       
+        $sell = Sell::with('customer')->find($id);
+
+        $payment = Payment::with('user')->where('sell_id','=',$id)->get();
+
+
+        return ['payment' => $payment,'invoice' => $sell];
     }
 
     /**
@@ -125,8 +133,37 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy($id)
     {
-        //
+        
+    try{
+
+         DB::beginTransaction();
+
+        $payment = Payment::find($id);
+
+        $sell = Sell::find($payment->sell_id);
+
+        $sell->paid_amount = $sell->paid_amount - $payment->amount;
+
+        $sell->update();
+
+        $payment->delete();
+
+        DB::commit();
+
+        return response()->json(['status'=>'success','message'=>'Delete Success']);
+
+
+
+     }
+    catch(\Exception $e)
+    {
+        DB::rollback();
+
+        return response()->json(['status'=>'error','message'=>'Something Went Wrong !']);
+
+    }
+
     }
 }

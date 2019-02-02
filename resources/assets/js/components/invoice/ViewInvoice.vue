@@ -17,7 +17,7 @@
 
               <div class="row">
                   <div class="col-md-4">
-                      <input type="text" class="form-control" v-on:keyup="getData(1)"  v-model="invoice_id" placeholder="Search By Invoice Number">
+                      <input type="text" class="form-control " v-on:keyup="getData(1)"  v-model="invoice_id" placeholder="Search By Invoice Number">
                   </div>
                   <div class="col-md-4">
                       <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="customer_id">
@@ -32,6 +32,11 @@
 
                              <option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name  }}</option>
                          </select> -->
+                        <div class="form-group">
+                                        <div class="form-line" id="bs_datepicker_container">
+                                            <input type="text" class="form-control" placeholder="Please choose a date...">
+                                        </div>
+                                    </div>
                      </div>
 
 

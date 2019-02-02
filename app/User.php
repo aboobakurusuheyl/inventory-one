@@ -27,6 +27,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Sell');
     } 
 
+    // relation with payment 
+
+
+    public function payment(){
+
+        return $this->hasMany('App\Payment');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -275,7 +275,15 @@
            $('.select2').select2();
 
            $('.bs-date').datepicker();
+
+
+    
         });
+
+    //        $(window).load(function(){
+
+    // console.log( moment() );
+    //         });
     </script>
 
 

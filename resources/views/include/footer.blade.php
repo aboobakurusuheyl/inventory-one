@@ -1,6 +1,7 @@
     <!-- Jquery Core Js -->
     <script src="{{ url('plugins/jquery/jquery.min.js') }}"></script>
 
+     <script src="{{ url('plugins/momentjs/moment.js') }}"></script>
     <!-- Bootstrap Core Js -->
     <script src="{{ url('plugins/bootstrap/js/bootstrap.js') }}"></script>
 
@@ -48,6 +49,7 @@
     <script src="{{ url('plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 
     <script src="{{ url('js/pages/forms/basic-form-elements.js') }}"></script>
+        <script src="{{ url('js/admin.js') }}"></script>
     <script src="{{ url('js/select2.min.js') }}"></script>
 
 
