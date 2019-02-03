@@ -136,7 +136,6 @@ class InvoiceController extends Controller
           'product.*.total_price.required' => 'required',
           'product.*.discount.regex' => 'invalid format',  
         ]);
-          
 
 
         try{
@@ -174,7 +173,7 @@ class InvoiceController extends Controller
             $invoice->total_amount = $request->grand_total;  
             $invoice->discount_amount = $request->total_discount;  
             $invoice->paid_amount = $request->paid_amount;  
-            $invoice->sell_date = $request->invoice_date;  
+            $invoice->sell_date = date("Y-m-d", strtotime($request->invoice_date));  
             $invoice->payment_method = $request->payment_info == 'cash' ? 1 : 2;
             if($request->paid_amount >= $request->grand_total){
              $invoice->payment_status = 1; 
@@ -205,7 +204,7 @@ class InvoiceController extends Controller
                $inv_details->vendor_id = $stock->vendor_id;
                $inv_details->user_id = Auth::user()->id;
                $inv_details->chalan_no = $stock->chalan_no;
-               $inv_details->selling_date = $request->invoice_date;
+               $inv_details->selling_date = date("Y-m-d", strtotime($request->invoice_date));
                $inv_details->sold_quantity = $value['quantity'];
                $inv_details->buy_price = $stock->buying_price;
                $inv_details->sold_price = $value['price'];
@@ -234,7 +233,7 @@ class InvoiceController extends Controller
 
                 $payment->sell_id = $invoice->id;
                 $payment->customer_id = $customer_id;
-                $payment->date = $request->invoice_date;
+                $payment->date = date("Y-m-d", strtotime($request->invoice_date));
                 $payment->paid_in = $request->payment_in;
                 $payment->bank_information = $request->bank_info;
                 $payment->amount = $request->paid_amount;
@@ -383,7 +382,7 @@ class InvoiceController extends Controller
             $invoice->total_amount = $request->grand_total;  
             $invoice->discount_amount = $request->total_discount;  
             $invoice->paid_amount = $request->paid_amount;  
-            $invoice->sell_date = $request->invoice_date;  
+            $invoice->sell_date = date("Y-m-d", strtotime($request->invoice_date));  
             
             $invoice->update();
 
@@ -403,7 +402,7 @@ class InvoiceController extends Controller
                $inv_details->vendor_id = $stock->vendor_id;
                $inv_details->user_id = Auth::user()->id;
                $inv_details->chalan_no = $stock->chalan_no;
-               $inv_details->selling_date = $request->invoice_date;
+               $inv_details->selling_date = date("Y-m-d", strtotime($request->invoice_date));
                $inv_details->sold_quantity = $value['quantity'];
                $inv_details->buy_price = $stock->buying_price;
                $inv_details->sold_price = $value['price'];

@@ -27,16 +27,10 @@
                       </select>
                   </div>
                   <div class="col-md-4">
-                     <!--      <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="vendor">
-                                <option value="">All Vendor</option>
+      
+                 <!--  <vuejs-datepicker :input-class="'form-control'" :format="'yyyy-MM-dd'" value-format="yyyy-MM-dd" :value="start_date"></vuejs-datepicker> -->
 
-                             <option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name  }}</option>
-                         </select> -->
-                        <div class="form-group">
-                                        <div class="form-line" id="bs_datepicker_container">
-                                            <input type="text" class="form-control" placeholder="Please choose a date...">
-                                        </div>
-                                    </div>
+                  
                      </div>
 
 
@@ -67,7 +61,10 @@
                                  <td>{{ value.customer.customer_name }}</td>
                                  <td>{{ value.total_amount }}</td>
                                  <td>{{ value.paid_amount }}</td>
-                                 <td>{{ value.total_amount - value.paid_amount }}</td>
+                                 <td  v-bind:class="{ 'text-success': value.payment_status === 1,
+                                  'text-danger': value.payment_status === 0}" >
+                                  {{ value.total_amount - value.paid_amount }}
+                                 </td>
                                  <td>{{ value.user.name }}</td>
 
                                  
@@ -144,6 +141,7 @@
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
 
+    import Datepicker from 'vuejs-datepicker';
     import UpdateInvoice from './UpdateInvoice.vue';
     import CreatePayment from './CreatePayment.vue';
     import ViewPayment from './ViewPayment.vue';
@@ -162,6 +160,7 @@
             'update-invoice' : UpdateInvoice,
             'create-payment' : CreatePayment,
             'view-payment' : ViewPayment,
+            'vuejs-datepicker' :  Datepicker,
 
         },
 
@@ -171,9 +170,11 @@
 
                 invoice_id : '',
                 customer_id : '',
-                start_date : '',
+                start_date : new Date('2019-02-03'),
                 end_date : '',
                 invoices : [],
+                format : 'yyyy-MM-dd',
+
 
                 url : base_url+'invoice/',
 
@@ -215,13 +216,10 @@
 
            editInvoice(id){
 
-             EventBus.$emit('edit-invoice',id);
+           EventBus.$emit('edit-invoice',id);
 
-                          },
-
-
+                         },
          // delete vendor 
-
 
          deleteInvoice(id){
 
@@ -234,8 +232,6 @@
                  cancelButtonColor: '#d33',
                  confirmButtonText: 'Yes, delete it!'
              },() => {
-
-
 
              }).then((result) => {
                  if (result.value) {
@@ -259,7 +255,6 @@
          CreatePayment(id){
               
               EventBus.$emit('create-payment',id);
-
          },
 
          ViewPayment(id){

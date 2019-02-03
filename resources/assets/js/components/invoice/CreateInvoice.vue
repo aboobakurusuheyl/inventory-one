@@ -144,8 +144,9 @@
                                   <i class="material-icons">person</i>
                                 </span>
                                 <div class="form-line">
-                                  <input id="datep" class="form-control" 
-                                  type="text"  name="" v-model="invoice.invoice_date">
+                                  <vuejs-datepicker :input-class="'form-control'" :format="'yyyy-MM-dd'" value-format="yyyy-MM-dd" v-model="invoice.invoice_date"></vuejs-datepicker>
+                            <!--       <input id="datep" class="form-control" 
+                                  type="text"  name="" v-model="invoice.invoice_date"> -->
                                   <span class="requiredField"
                                    v-if="(errors.hasOwnProperty('invoice_date'))">
                                  {{ (errors.hasOwnProperty('invoice_date')) ? errors.invoice_date[0] :'' }}
@@ -370,11 +371,18 @@
 
 	import mixin from '../../mixin';
 
+  import Datepicker from 'vuejs-datepicker';
 
 	export default {
 
     props: ['categorys','customers'], 
 		mixins : [mixin],
+
+    components : {
+        
+        'vuejs-datepicker' :  Datepicker,
+        
+    },
 
 		data(){
 

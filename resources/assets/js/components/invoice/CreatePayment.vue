@@ -20,7 +20,8 @@
                       
                            	  <div class="form-inline">
                            	  	<p>Date</p>
-                           	  	<input style="width: 100%;" type="text" class="form-control" name="" placeholder="Date:YYYY-MM-DD" v-model="payment.payment_date">
+
+                           	  	<vuejs-datepicker :input-class="'form-control width'" :format="'yyyy-MM-dd'" v-model="payment.payment_date"></vuejs-datepicker>
                            	  </div>
 
                            	  <div class="form-inline" style="margin-top: 10px;">
@@ -59,11 +60,18 @@
    
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
+    import Datepicker from 'vuejs-datepicker';
 
   export default{
      
      name : 'create-payment',
      mixins : [mixin],
+
+     components : {
+       
+       'vuejs-datepicker' : Datepicker,
+          
+     },
 
      data() {
 
@@ -151,3 +159,9 @@
 
 
 </script>
+
+<style type="text/css">
+	.width{
+		width: 100%;
+	}
+</style>

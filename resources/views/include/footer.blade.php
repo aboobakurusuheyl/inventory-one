@@ -1,9 +1,11 @@
     <!-- Jquery Core Js -->
     <script src="{{ url('plugins/jquery/jquery.min.js') }}"></script>
-
-     <script src="{{ url('plugins/momentjs/moment.js') }}"></script>
     <!-- Bootstrap Core Js -->
     <script src="{{ url('plugins/bootstrap/js/bootstrap.js') }}"></script>
+
+    
+     <script src="{{ url('plugins/momentjs/moment.js') }}"></script>
+
 
     <!-- Select Plugin Js -->
     <!-- <script src="{{ url('plugins/bootstrap-select/js/bootstrap-select.js') }}"></script> -->
@@ -40,7 +42,7 @@
 
     <!-- Demo Js -->
     <script src="{{ url('js/demo.js') }}"></script>
-     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!--      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> -->
 
          <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="{{ url('plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>

@@ -75,7 +75,40 @@
                             </li>
                            
                         </ul>
+                    </li>   
+
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">account_circle</i>
+                            <span>Customer</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ route('customer.index') }}">Customer</a>
+                            </li>
+                           
+                        </ul>
+                    </li>  
+
+
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">show_chart</i>
+                            <span>Report</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ route('report.index') }}">All Report</a>
+                            </li>
+                           
+                        </ul>
                     </li>
+
+
+            
+
+
     
                     <li>
                         <a href="pages/changelogs.html">

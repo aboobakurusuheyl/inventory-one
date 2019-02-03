@@ -55,7 +55,7 @@ class PaymentController extends Controller
           $payment->sell_id = $request->id;
           $payment->customer_id = $sell->customer_id;
           $payment->user_id = Auth::user()->id;
-          $payment->date = $request->payment_date;
+          $payment->date = date("Y-m-d", strtotime($request->payment_date));
           $payment->amount = $request->payment_amount;
           $payment->paid_in = $request->payment_in;
           $payment->bank_information = $request->bank_info;
