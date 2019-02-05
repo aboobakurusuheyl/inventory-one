@@ -25,5 +25,14 @@ class Product extends Model
 
    }
 
+   // relation with sell details 
+
+
+   public function sell_details(){
+         
+        return $this->hasMany('App\SellDetails');
+
+   }
+
 
 }

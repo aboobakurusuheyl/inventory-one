@@ -233,6 +233,7 @@ class InvoiceController extends Controller
 
                 $payment->sell_id = $invoice->id;
                 $payment->customer_id = $customer_id;
+                $payment->user_id = Auth::user()->id;
                 $payment->date = date("Y-m-d", strtotime($request->invoice_date));
                 $payment->paid_in = $request->payment_in;
                 $payment->bank_information = $request->bank_info;
@@ -266,7 +267,8 @@ class InvoiceController extends Controller
     {
         $invoice = Sell::find($id);
 
-        $invoice_details = SellDetails::with(['stock.category:id,name','stock.product:id,product_name'])->where('sell_id','=',$id)->get();
+        $invoice_details = SellDetails::with(['stock.category:id,name','stock.product:id,product_name'])
+                          ->where('sell_id','=',$id)->get();
 
         $payment = Payment::where('sell_id','=',$id)->get();
 

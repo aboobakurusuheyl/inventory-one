@@ -17,4 +17,5 @@ mix.js('resources/assets/js/product.js', 'public/js')
 mix.js('resources/assets/js/stock.js', 'public/js')
 mix.js('resources/assets/js/category.js', 'public/js')
 mix.js('resources/assets/js/invoice.js', 'public/js')
+mix.js('resources/assets/js/report.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

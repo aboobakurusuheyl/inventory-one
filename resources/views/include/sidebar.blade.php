@@ -106,6 +106,22 @@
                     </li>
 
 
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">show_chart</i>
+                            <span>User Manage</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ route('report.index') }}">Role</a>
+                                <a href="{{ route('report.index') }}">Role Permission</a>
+                                <a href="{{ route('report.index') }}">User</a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+
+
             
 
 

@@ -15,6 +15,11 @@ class SellDetails extends Model
 		return $this->belongsTo('App\Stock','stock_id');
 	}
 
+	public function product(){
+
+		return $this->belongsTo('App\Product');
+	}
+
 
 
 }
