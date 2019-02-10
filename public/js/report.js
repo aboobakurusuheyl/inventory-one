@@ -16877,7 +16877,7 @@ module.exports = __webpack_require__(247);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-Vue.component('report-form', __webpack_require__(257));
+Vue.component('report-form', __webpack_require__(248));
 // Vue.component('view-stock', require('./components/stock/ViewStock.vue'));
 
 var app = new Vue({
@@ -16886,15 +16886,15 @@ var app = new Vue({
 
 /***/ }),
 
-/***/ 257:
+/***/ 248:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(258)
+var __vue_script__ = __webpack_require__(249)
 /* template */
-var __vue_template__ = __webpack_require__(259)
+var __vue_template__ = __webpack_require__(250)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -16934,12 +16934,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 258:
+/***/ 249:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__ = __webpack_require__(162);
 //
 //
 //
@@ -16978,25 +16979,138 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
+  props: ['category', 'user', 'customer'],
   components: {
 
-    'vuejs-datepicker': __WEBPACK_IMPORTED_MODULE_0_vuejs_datepicker__["a" /* default */]
+    'vuejs-datepicker': __WEBPACK_IMPORTED_MODULE_1_vuejs_datepicker__["a" /* default */]
 
   },
 
-  data: data
+  data: function data() {
+
+    return {
+
+      report_type: '',
+      category_id: '',
+      product_id: '',
+      chalan_id: '',
+
+      product: [],
+      chalan: []
+
+    };
+  },
+
+
+  methods: {
+    findProduct: function findProduct() {
+      var _this = this;
+
+      axios.get(base_url + 'category/product/' + this.category_id).then(function (response) {
+
+        _this.product = response.data;
+      });
+    },
+    findStock: function findStock() {
+      var _this2 = this;
+
+      axios.get(base_url + 'chalan-list/chalan/' + this.product_id).then(function (response) {
+
+        _this2.chalan = response.data;
+      });
+    }
+  },
+
+  computed: {
+    isEnable: function isEnable() {
+      return this.report_type === 'invoice' || this.report_type === 'due';
+    }
+  }
 
 });
 
 /***/ }),
 
-/***/ 259:
+/***/ 250:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -17006,6 +17120,68 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-4" }, [
       _c("div", { staticClass: "input-group" }, [
+        _c("div", { staticClass: "form-line" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.report_type,
+                  expression: "report_type"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { name: "type", required: "" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.report_type = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { domProps: { value: "" } }, [
+                _vm._v("Chose Report Type *")
+              ]),
+              _vm._v(" "),
+              _c("option", { domProps: { value: "stock" } }, [
+                _vm._v("Stock Report")
+              ]),
+              _vm._v(" "),
+              _c("option", { domProps: { value: "sell" } }, [
+                _vm._v("Sell Report")
+              ]),
+              _vm._v(" "),
+              _c("option", { domProps: { value: "profit" } }, [
+                _vm._v("Profit Report")
+              ]),
+              _vm._v(" "),
+              _c("option", { domProps: { value: "due" } }, [
+                _vm._v("Due Report")
+              ]),
+              _vm._v(" "),
+              _c("option", { domProps: { value: "invoice" } }, [
+                _vm._v("Invoice Report")
+              ])
+            ]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "input-group" }, [
         _c(
           "div",
           { staticClass: "form-line" },
@@ -17013,7 +17189,7 @@ var render = function() {
             _c("vuejs-datepicker", {
               attrs: {
                 required: true,
-                placeholder: "Date To",
+                placeholder: "Date To *",
                 name: "start_date",
                 "input-class": "form-control"
               }
@@ -17033,7 +17209,7 @@ var render = function() {
             _c("vuejs-datepicker", {
               attrs: {
                 required: true,
-                placeholder: "Date From",
+                placeholder: "Date From *",
                 name: "end_date",
                 "input-class": "form-control"
               }
@@ -17044,52 +17220,238 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
+    !_vm.isEnable
+      ? _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "form-line" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.category_id,
+                      expression: "category_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "category_id" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.category_id = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      _vm.findProduct
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Chose Category (optional)")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.category, function(value) {
+                    return _c("option", { domProps: { value: value.id } }, [
+                      _vm._v(_vm._s(value.name))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.isEnable
+      ? _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "form-line" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product_id,
+                      expression: "product_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "product_id" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.product_id = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      _vm.findStock
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Chose Product (optional)")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.product, function(pr) {
+                    return _c("option", { domProps: { value: pr.id } }, [
+                      _vm._v(_vm._s(pr.product_name))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.isEnable
+      ? _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "form-line" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.chalan_id,
+                      expression: "chalan_id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "stock_id" },
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.chalan_id = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Chose Chalan (optional)")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.chalan, function(ch) {
+                    return _c("option", { domProps: { value: ch.id } }, [
+                      _vm._v(_vm._s(ch.chalan_no))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.isEnable
+      ? _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("div", { staticClass: "form-line" }, [
+              _c(
+                "select",
+                { staticClass: "form-control", attrs: { name: "vendor_id" } },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Chose Vendor (optional)")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.chalan, function(vn) {
+                    return _c("option", { domProps: { value: vn.id } }, [
+                      _vm._v(_vm._s(vn.name))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-4" }, [
       _c("div", { staticClass: "input-group" }, [
         _c("div", { staticClass: "form-line" }, [
           _c(
             "select",
-            {
-              staticClass: "form-control",
-              attrs: { name: "type", required: "" }
-            },
+            { staticClass: "form-control", attrs: { name: "user_id" } },
             [
               _c("option", { attrs: { value: "" } }, [
-                _vm._v("Chose Report Type")
+                _vm._v("Customer (optional)")
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "stock" } }, [
-                _vm._v("Stock Report")
+              _vm._l(_vm.customer, function(cs) {
+                return _c("option", { domProps: { value: cs.id } }, [
+                  _vm._v(_vm._s(cs.customer_name))
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "input-group" }, [
+        _c("div", { staticClass: "form-line" }, [
+          _c(
+            "select",
+            { staticClass: "form-control", attrs: { name: "user_id" } },
+            [
+              _c("option", { attrs: { value: "" } }, [
+                _vm._v("Chose Stock Entire / Seller (optional)")
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "sell" } }, [
-                _vm._v("Sell Report")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "profit" } }, [
-                _vm._v("Profit Report")
-              ]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "due" } }, [_vm._v("Due Report")]),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "invoice" } }, [
-                _vm._v("Invoice Report")
-              ])
-            ]
+              _vm._l(_vm.user, function(us) {
+                return _c("option", { domProps: { value: us.id } }, [
+                  _vm._v(_vm._s(us.name))
+                ])
+              })
+            ],
+            2
           )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

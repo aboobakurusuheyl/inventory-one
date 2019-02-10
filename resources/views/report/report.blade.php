@@ -40,7 +40,7 @@
 				<form action="{{ route('report.store') }}" method="GET">
 					
 					<div class="row">
-						<report-form></report-form>
+						<report-form :user="{{ $user }}" :customer="{{ $customer }}" :category="{{ $category }}" :vendor="{{ $vendor }}"></report-form>
 					</div>
 
 

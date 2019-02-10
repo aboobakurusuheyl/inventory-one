@@ -108,7 +108,7 @@
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">show_chart</i>
+                            <i class="material-icons">people</i>
                             <span>User Manage</span>
                         </a>
                         <ul class="ml-menu">

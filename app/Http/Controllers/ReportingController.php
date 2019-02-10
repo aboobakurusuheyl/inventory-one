@@ -24,7 +24,18 @@ class ReportingController extends Controller
      */
     public function index()
     {
-       return view('report.report');
+
+        $customer = Customer::all();
+        $category = Category::all();
+        $user = User::all();
+        $vendor = Vendor::all();
+
+       return view('report.report',[
+          'customer'=>$customer,
+          'category'=>$category,
+          'user'=>$user,
+          'vendor'=>$vendor,
+      ]);
     }
 
     /**
@@ -56,6 +67,13 @@ class ReportingController extends Controller
         $start_date = date("Y-m-d", strtotime($request->start_date));
         $end_date = date("Y-m-d", strtotime($request->end_date));
 
+        $vendor_id = $request->vendor_id;
+        $user_id = $request->user_id;
+        $customer_id = $request->customer_id;
+        $category_id = $request->category_id;
+        $product_id = $request->product_id;
+        $stock_id = $request->stock_id;
+
         $page = '';
 
         if($type == 'sell'){
@@ -68,18 +86,73 @@ class ReportingController extends Controller
           DB::raw('SUM(discount_amount) as total_discount_amount')
          )
          ->groupBy('product_id')
-         ->whereBetween('selling_date',[$start_date,$end_date])
-         ->get();
+         ->whereBetween('selling_date',[$start_date,$end_date]);
+         
+        if($user_id != ''){
+           
+         $data->where('user_id','=',$user_id);
 
-          $page = 'report.sell';
+         }
+
+        if($customer_id != ''){
+           
+         $data->where('customer_id','=',$customer_id);
+
+         }
+
+
+         if($vendor_id != ''){
+           
+         $data->where('vendor_id','=',$vendor_id);
+
+         } 
+
+         if($category_id != ''){
+           
+         $data->where('category_id','=',$category_id);
+
+         }  
+
+         if($product_id != ''){
+           
+         $data->where('product_id','=',$category_id);
+
+         }
+
+
+         if($stock_id != ''){
+           
+         $data->where('stock_id','=',$stock_id);
+
+         } 
+
+
+
+         $data = $data->get();
+
+         $page = 'report.sell';
 
         }
 
         if($type == 'invoice'){
             
             $data = Sell::with(['customer:id,customer_name','user:id,name'])
-                          ->whereBetween('sell_date',[$start_date,$end_date])
-                          ->get();
+                          ->whereBetween('sell_date',[$start_date,$end_date]);
+                      if($user_id != ''){
+
+                           $data->where('user_id','=',$user_id);
+
+                       }
+
+                       if($customer_id != ''){
+
+                           $data->where('customer_id','=',$customer_id);
+
+                       }
+
+
+
+                    $data =  $data->get();
 
            $page = 'report.invoice';              
 
@@ -87,15 +160,29 @@ class ReportingController extends Controller
 
        if($type == 'due'){
           
-         return  $data = Sell::with('customer:id,customer_name')
+          $data = Sell::with('customer:id,customer_name')
                         ->select('customer_id',
                           DB::raw('SUM(total_amount) as total_amount'),
                           DB::raw('SUM(paid_amount) as paid_amount')
                          )
                         ->where('payment_status','=',0)
                         ->whereBetween('sell_date',[$start_date,$end_date])
-                        ->groupBy('customer_id')
-                        ->get();
+                        ->groupBy('customer_id');
+
+                        if($user_id != ''){
+
+                         $data->where('user_id','=',$user_id);
+
+                         }
+
+                        if($customer_id != ''){
+
+                         $data->where('customer_id','=',$customer_id);
+
+                         }
+
+
+                        $data  = $data->get();
 
          $page = 'report.due';  
         }
@@ -110,12 +197,101 @@ class ReportingController extends Controller
                              DB::raw('SUM(discount_amount) as total_discount_amount')
                              )
                             ->groupBy('product_id')
-                            ->whereBetween('selling_date',[$start_date,$end_date])
-                            ->get();
+                            ->whereBetween('selling_date',[$start_date,$end_date]);
 
-          $page = 'report.profit';
+                            if($user_id != ''){
+           
+                            $data->where('user_id','=',$user_id);
+
+                             }
+
+                            if($customer_id != ''){
+           
+                             $data->where('customer_id','=',$customer_id);
+
+                             }
+
+
+                             if($vendor_id != ''){
+           
+                             $data->where('vendor_id','=',$vendor_id);
+
+                             } 
+
+                             if($category_id != ''){
+           
+                             $data->where('category_id','=',$category_id);
+
+                             }  
+
+                             if($product_id != ''){
+           
+                             $data->where('product_id','=',$category_id);
+
+                             }
+
+
+                             if($stock_id != ''){
+           
+                             $data->where('stock_id','=',$stock_id);
+
+                             } 
+
+                             $data = $data->get();
+
+                             $page = 'report.profit';
 
         }
+
+
+        if($type == 'stock'){
+          
+           // return $data = Stock::with(['sell_details' => function ($query) {
+           //                $query->sum('sold_quantity');
+           //               }])
+           //               ->select('product_id',DB::raw('SUM(stock_quantity) as quantity'))
+           //               ->groupBy('product_id')
+           //               ->get();
+
+          $data = Stock::with(['product:id,product_name','category:id,name','vendor:id,name'])
+                            ->withCount([
+                           'sell_details AS sold_qty' => function ($query){
+                            $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
+                             }]);
+                             
+                          if($user_id != ''){
+           
+                            $data->where('user_id','=',$user_id);
+
+                             }
+
+                             if($vendor_id != ''){
+           
+                             $data->where('vendor_id','=',$vendor_id);
+
+                             } 
+
+                             if($category_id != ''){
+           
+                             $data->where('category_id','=',$category_id);
+
+                             }  
+
+                             if($product_id != ''){
+           
+                             $data->where('product_id','=',$category_id);
+
+                             }
+
+                             $data = $data->get();
+
+                           
+                            $page = 'report.stock';
+
+
+        }
+
+        return $data;
 
         return view($page,[
             'data'=>$data,
