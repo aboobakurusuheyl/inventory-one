@@ -12,4 +12,10 @@ class Customer extends Model
        
        return $this->hasMany('App\Sell');
 	}
+
+
+	public function sell_details(){
+
+		return $this->hasMany('App\SellDetails');
+	}
 }

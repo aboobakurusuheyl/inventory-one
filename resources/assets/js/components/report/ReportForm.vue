@@ -83,7 +83,7 @@
 		<div class="col-md-4">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="user_id" >
+			 <select class="form-control" name="customer_id" >
 			 	<option value="">Customer (optional)</option>
 			 	<option v-for="cs in customer" :value="cs.id">{{ cs.customer_name }}</option>
 			 </select>

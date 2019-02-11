@@ -17409,7 +17409,7 @@ var render = function() {
         _c("div", { staticClass: "form-line" }, [
           _c(
             "select",
-            { staticClass: "form-control", attrs: { name: "user_id" } },
+            { staticClass: "form-control", attrs: { name: "customer_id" } },
             [
               _c("option", { attrs: { value: "" } }, [
                 _vm._v("Customer (optional)")

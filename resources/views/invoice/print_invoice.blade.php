@@ -37,7 +37,7 @@
             <span style="font-weight: bold">Phone:</span> {{ $invoice->customer->phone }}<br>
             <span style="font-weight: bold">Email:</span> {{ $invoice->customer->email ? $invoice->customer->email : 'no email' }}<br>
 
-            <span style="font-weight: bold">Email:</span> {{ $invoice->customer->address  }}<br>
+            <span style="font-weight: bold">Address:</span> {{ $invoice->customer->address  }}<br>
             
           </address>
         </div>
@@ -47,8 +47,8 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col text-right">
-          <b>Invoice No: {{ $invoice->id }}</b><br>
-          <b>Date:{{ date("d F Y", strtotime('$invoice->sell_date')) }}</b><br>
+          <b style="font-weight: bold;color: green">Invoice No: {{ $invoice->id }}</b><br>
+          <b>Date:{{ date("d F Y", strtotime($invoice->sell_date)) }}</b><br>
         </div>
         <!-- /.col -->
       </div>

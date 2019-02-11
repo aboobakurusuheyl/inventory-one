@@ -1,41 +1,13 @@
-@extends('include.master')
-
-
-@section('title','Belontory | Profit-Report')
-
-
-@section('page-title','Profit Report')
-
-
-@section('content')
-
-
-
-
-<div class="row clearfix">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<div class="card">
-			<div class="header">
-				<h2>
-					
-					Profit Report
-					
-				</h2>
-
-				<h2 class="pull-right">
-					
-			<a href="{{ url('print-report') }}?type={{ $type }}&start_date={{ $start_date }}&end_date={{ $end_date }}&category_id={{ $category_id }}&product_id={{ $product_id }}&stock_id={{ $stock_id }}&vendor_id={{ $vendor_id }}&customer_id={{ $customer_id }}&user_id={{ $user_id }}" target="_blank" type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float">
-                               <i class="material-icons">print</i>
-                                     </a>
-					
-				</h2>
-			</div>
-
-
-			<div class="body">
-
-				<div class="table-responsive">
-					<table class="table table-bordered table-condensed">
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profit Report</title>
+	<link href="{{ url('plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+</head>
+<body>
+   <div class="container">
+   	 <div class="row">
+   	 						<table class="table table-bordered table-condensed">
 						<thead>
 							<tr>
 								<td colspan="5" style="border: none !important;"><h3 style="text-align: center;">Equipement Solutions Ltd</h3></td>
@@ -100,18 +72,10 @@
 
 						</tbody>
 					</table>
-				</div>
-
-
-			</div>
-
-
-		</div>
-	</div>
-</div>
-
-
-
-
-@endsection
-
+   	 </div>
+   </div>
+   <script type="text/javascript">
+   	 window.print();
+   </script>
+</body>
+</html>
