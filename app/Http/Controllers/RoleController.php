@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+       return view('user.role');
     }
 
     /**
@@ -35,7 +35,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $request->validate([
+             'role_name' => 'required|unique:roles,role_name' 
+        ]);
+
+        $role = new Role;
+
+        $role->role_name = $request->role_name;
+
+        $role->save();
+
+        return response()->json(['status'=>'success','message'=>'Role Saved']); 
     }
 
     /**

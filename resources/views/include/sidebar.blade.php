@@ -113,7 +113,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{{ route('report.index') }}">Role</a>
+                                <a href="{{ route('role.index') }}">Role</a>
                                 <a href="{{ route('report.index') }}">Role Permission</a>
                                 <a href="{{ route('report.index') }}">User</a>
                             </li>

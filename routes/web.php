@@ -57,6 +57,9 @@ Route::resource('payment','PaymentController');
 // Report 
 
 
+Route::resource('role','RoleController');
+
+
 Route::get('report',['as'=>'report.index','uses'=>'ReportingController@index']);
 Route::get('get-report',['as'=>'report.store','uses'=>'ReportingController@store']);
 Route::get('print-report',['as'=>'report.print','uses'=>'ReportingController@Print']);
