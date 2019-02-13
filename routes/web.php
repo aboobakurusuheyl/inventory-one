@@ -58,6 +58,7 @@ Route::resource('payment','PaymentController');
 
 
 Route::resource('role','RoleController');
+Route::get('role-list','RoleController@RoleList');
 
 
 Route::get('report',['as'=>'report.index','uses'=>'ReportingController@index']);

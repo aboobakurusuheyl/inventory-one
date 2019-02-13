@@ -1,10 +1,157 @@
 <template>
 	<div class="wrap">
-		
-	</div>
+    <!--    <div class="row">
+            
+            filtering element 
+        </div> -->
+        <div class="body">
+
+
+
+        	<div class="table-responsive">
+        		
+        		<table class="table table-condensed table-hover">
+        			<thead>
+        				<tr>
+        					<th>Role Name</th>
+        					<th>Edit</th>
+        					<th>Delete</th>
+        				</tr>
+        			</thead>
+        			<tbody>
+        				<tr v-for="(value,index) in roles">
+        					<td>{{ value.role_name }}</td>
+        					<td>       						
+        						<button @click="editRole(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+        							<i class="material-icons">edit</i>
+        						</button>
+        					</td> 
+
+        					<td>
+        						<button @click="deleteRole(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+        							<i class="material-icons">delete</i>
+        						</button>       
+        					</td>
+        				</tr>
+        				
+        			</tbody>
+        		</table>
+
+
+        	</div>
+        	
+ 
+
+
+        <div class="row">
+
+        <update-role></update-role>
+
+        </div>
+
+
+
+    </div>
+</div>
 </template>
 
 <script>
 	
-	
+	import {EventBus} from '../../vue-asset';
+    import mixin from '../../mixin';
+
+	import UpdateRole from './UpdateRole.vue'
+
+	export default{
+
+        mixins:[mixin],
+
+		components : {
+			
+			'update-role' : UpdateRole
+
+		},
+
+		data(){
+			
+			return {
+
+				roles : [],
+
+			}
+			
+
+		},
+		created(){
+			
+			var _this = this; 
+			this.getData();
+
+			EventBus.$on('role-created', function () {
+				// window.history.pushState({}, null, location.pathname);
+				_this.getData();
+			});
+
+		},
+
+		methods : {
+
+           
+           getData(){
+
+             axios.get(base_url+'role-list')
+             .then(response => {
+               
+               this.roles = response.data;
+
+             })
+
+           },
+
+
+           editRole(id){
+           
+            EventBus.$emit('role-edit',id);
+             
+           },
+
+           deleteRole(id){
+              
+                Swal({
+         		title: 'Are you sure?',
+         		text: "You won't be able to revert this!",
+         		type: 'warning',
+         		showCancelButton: true,
+         		confirmButtonColor: '#3085d6',
+         		cancelButtonColor: '#d33',
+         		confirmButtonText: 'Yes, delete it!'
+         	},() => {
+
+
+
+         	}).then((result) => {
+         		if (result.value) {
+
+         			axios.delete(base_url+'role/'+id)
+         			.then(res => {
+
+         				EventBus.$emit('role-created',1);
+                         this.successAlert(res.data);
+         			})
+
+         		   
+         		}
+         	}) 
+
+           }
+
+
+		}
+     
+ }
+ 
+ 
+ 
+ 
+
 </script>

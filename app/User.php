@@ -41,6 +41,18 @@ class User extends Authenticatable
         return $this->hasMany('App\SellDetails');
     }
 
+
+    // relation with role 
+
+    public function role(){
+      
+      return $this->belongsTo('App\Role')->withDefault([
+        'id' => 0,
+        'role_name' => 'Guest Role',
+    ]);
+
+    }
+
     /**
      * The attributes that are mass assignable.
      *

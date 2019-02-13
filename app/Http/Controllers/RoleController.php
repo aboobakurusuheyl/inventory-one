@@ -17,6 +17,14 @@ class RoleController extends Controller
        return view('user.role');
     }
 
+
+    public function RoleList(){
+
+        $role = Role::all();
+
+        return $role;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -69,7 +77,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return $role;
     }
 
     /**
@@ -81,7 +89,26 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+          
+        $request->validate([
+             'role_name' => 'required|unique:roles,role_name' 
+        ]);
+
+        try{
+        
+        $role->role_name = $request->role_name;
+
+        $role->save();
+
+        return response()->json(['status'=>'success','message'=>'Role Updated']);
+        }
+        catch(\Exception $e)
+        {
+
+        return response()->json(['status'=>'error','message'=>'Something Went Wrong!']);
+
+        }
+
     }
 
     /**
@@ -92,6 +119,19 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        
+        try{
+
+            $role->delete();
+
+            return response()->json(['status'=>'success','Delete Success!']);
+        }
+        catch(\Exception $e){
+
+            return response()->json(['status'=>'error','Something Went Wrong!']);
+          
+
+        }
+
     }
 }
