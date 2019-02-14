@@ -14,6 +14,7 @@
         			<thead>
         				<tr>
         					<th>Role Name</th>
+        					<th>Assign Permission</th>
         					<th>Edit</th>
         					<th>Delete</th>
         				</tr>
@@ -21,6 +22,13 @@
         			<tbody>
         				<tr v-for="(value,index) in roles">
         					<td>{{ value.role_name }}</td>
+        					<td>       						
+        						<button @click="perMission(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+        							<i class="material-icons">vpn_key</i>
+        						</button>
+        					</td> 	
+
+
         					<td>       						
         						<button @click="editRole(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
         							<i class="material-icons">edit</i>
@@ -46,6 +54,7 @@
         <div class="row">
 
         <update-role></update-role>
+        <assign-role></assign-role>
 
         </div>
 
@@ -61,6 +70,7 @@
     import mixin from '../../mixin';
 
 	import UpdateRole from './UpdateRole.vue'
+	import AssignRole from './AssignRole.vue'
 
 	export default{
 
@@ -68,7 +78,8 @@
 
 		components : {
 			
-			'update-role' : UpdateRole
+			'update-role' : UpdateRole,
+			'assign-role' : AssignRole
 
 		},
 
@@ -105,6 +116,12 @@
                this.roles = response.data;
 
              })
+
+           },
+
+           perMission(id){
+               
+              EventBus.$emit('assign-permission',id);
 
            },
 

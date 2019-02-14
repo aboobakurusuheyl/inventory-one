@@ -78,18 +78,7 @@
                     </li>   
 
 
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">account_circle</i>
-                            <span>Customer</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ route('customer.index') }}">Customer</a>
-                            </li>
-                           
-                        </ul>
-                    </li>  
+       
 
 
                     <li>
@@ -105,6 +94,19 @@
                         </ul>
                     </li>
 
+                   <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">account_circle</i>
+                            <span>Customer</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{{ route('customer.index') }}">Customer</a>
+                            </li>
+                           
+                        </ul>
+                    </li>  
+
 
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
@@ -114,8 +116,8 @@
                         <ul class="ml-menu">
                             <li>
                                 <a href="{{ route('role.index') }}">Role</a>
-                                <a href="{{ route('report.index') }}">Role Permission</a>
-                                <a href="{{ route('report.index') }}">User</a>
+                                <!-- <a href="{{ route('report.index') }}">Role Permission</a> -->
+                                <a href="{{ route('user.index') }}">User</a>
                             </li>
                            
                         </ul>
@@ -137,14 +139,14 @@
             </div>
             <!-- #Menu -->
             <!-- Footer -->
-            <div class="legal">
+    <!--         <div class="legal">
                 <div class="copyright">
                     &copy; {{ date('Y') }} <a href="javascript:void(0);">Belogin Technologies Ltd</a>.
                 </div>
                 <div class="version">
                     <b>Version: </b> {{ rand(0,3) }}.{{ rand(0,9) }}.{{ rand(0,9) }}
                 </div>
-            </div>
+            </div> -->
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->

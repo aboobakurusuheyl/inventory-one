@@ -74,6 +74,9 @@ class ReportingController extends Controller
         $product_id = $request->product_id;
         $stock_id = $request->stock_id;
 
+
+
+
         $page = '';
 
         if($type == 'sell'){
@@ -112,7 +115,7 @@ class ReportingController extends Controller
 
          if($product_id != ''){
            
-         $data->where('product_id','=',$category_id);
+         $data->where('product_id','=',$product_id);
 
          }
 
@@ -223,7 +226,7 @@ class ReportingController extends Controller
 
                              if($product_id != ''){
            
-                             $data->where('product_id','=',$category_id);
+                             $data->where('product_id','=',$product_id);
 
                              }
 
@@ -268,8 +271,8 @@ class ReportingController extends Controller
                              }  
 
                              if($product_id != ''){
-           
-                             $data->where('product_id','=',$category_id);
+                         
+                             $data->where('product_id','=',$product_id);
 
                              }
 
@@ -353,7 +356,7 @@ class ReportingController extends Controller
 
          if($product_id != ''){
            
-         $data->where('product_id','=',$category_id);
+         $data->where('product_id','=',$product_id);
 
          }
 
@@ -464,7 +467,7 @@ class ReportingController extends Controller
 
                              if($product_id != ''){
            
-                             $data->where('product_id','=',$category_id);
+                             $data->where('product_id','=',$product_id);
 
                              }
 
@@ -510,7 +513,7 @@ class ReportingController extends Controller
 
                              if($product_id != ''){
            
-                             $data->where('product_id','=',$category_id);
+                             $data->where('product_id','=',$product_id);
 
                              }
 

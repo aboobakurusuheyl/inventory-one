@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Menu;
+use App\Permission;
+use DB;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -64,9 +67,99 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
-        //
+         $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get(); 
+        $permission = Permission::where('role_id','=',$id)->pluck('menu_id')->toArray();
+
+
+         $men = [];
+         $menus = [];
+
+
+         foreach ($menu as $key => $value) {
+            
+           
+           $men['id'] = $value->id;
+           $men['name'] = $value->name;
+           $men['parent_id'] = $value->parent_id;
+
+           if(count($permission) < 0){
+
+            $men['check'] = false;
+
+           }
+           else{
+             
+             if(in_array($value->id, $permission)){
+                
+                $men['check'] = true;
+
+             }
+             else{
+
+               $men['check'] = false; 
+             }
+
+
+
+           }
+
+          array_push($menus,$men);
+
+
+         }
+
+         return $menus;
+
+
+
+
+    }
+
+
+    public function Permission(Request $request){
+
+       try{
+        
+        DB::beginTransaction();
+
+      Permission::where('role_id','=',$request->id)->delete();
+      
+      // getting only check item from menus 
+      $menus = array_filter($request->menus, function ($var) {
+          return ($var['check'] == true);
+         });
+       
+       // finding only the id colum of manu   
+       $menu_id = array_column($menus, 'id');
+
+       foreach ($menu_id as  $value) {
+          
+         $permission = new Permission;
+
+         $permission->role_id = $request->id;  
+         $permission->menu_id = $value; 
+
+         $permission->save(); 
+
+        }
+
+        DB::commit();
+
+        return response()->json(['status'=>'success','message'=>'New Permission Given']);
+
+       }
+       catch(\Exception $e)
+       {
+
+        DB::rollBack();
+       return response()->json(['status'=>'error','message'=>'Something Went Wrong !']);
+
+
+
+       }
+
     }
 
     /**

@@ -60,10 +60,22 @@ Route::resource('payment','PaymentController');
 Route::resource('role','RoleController');
 Route::get('role-list','RoleController@RoleList');
 
+Route::post('permission','RoleController@Permission');
+
+
+
 
 Route::get('report',['as'=>'report.index','uses'=>'ReportingController@index']);
 Route::get('get-report',['as'=>'report.store','uses'=>'ReportingController@store']);
 Route::get('print-report',['as'=>'report.print','uses'=>'ReportingController@Print']);
+
+// user management 
+
+
+Route::resource('user','UserManageController');
+
+Route::get('comapny-setting',['as'=>'company.index','uses'=>'CompanyController@index']);
+Route::get('password-change',['as'=>'password.index','uses'=>'SettingController@ChangePassword']);
 
 
 
