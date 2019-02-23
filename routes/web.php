@@ -78,6 +78,9 @@ Route::get('comapny-setting',['as'=>'company.index','uses'=>'CompanyController@i
 Route::get('password-change',['as'=>'password.index','uses'=>'SettingController@ChangePassword']);
 
 
+Route::get('user-role','RoleController@userRole');
+
+
 
 
 Route::get('logout','UserController@logout');

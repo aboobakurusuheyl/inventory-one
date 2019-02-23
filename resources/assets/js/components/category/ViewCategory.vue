@@ -99,48 +99,48 @@
 	import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin';
 
-	import Updatecategory from './Updatecategory.vue'
+    import Updatecategory from './Updatecategory.vue'
 
-	export default{
+    export default{
 
         mixins:[mixin],
 
-		components : {
-			
-			'update-category' : Updatecategory
+        components : {
+            
+            'update-category' : Updatecategory
 
-		},
+        },
 
-		data(){
-			
-			return {
+        data(){
+            
+            return {
 
-				categorys : [],
-				name : '',
+                categorys : [],
+                name : '',
 
-			}
-			
+            }
+            
 
-		},
-		created(){
-			
-			var _this = this; 
-			this.getData();
+        },
+        created(){
+            
+            var _this = this; 
+            this.getData();
+            
+            EventBus.$on('category-created', function () {
+                window.history.pushState({}, null, location.pathname);
+                _this.getData();
+            });
 
-			EventBus.$on('category-created', function () {
-				window.history.pushState({}, null, location.pathname);
-				_this.getData();
-			});
+        },
 
-		},
-
-		methods : {
-			
-			getData(page = 1){
-				
-				axios.get(base_url+"category-list?page="+page+"&name="+this.name)
-				.then(response => {
-					
+        methods : {
+            
+            getData(page = 1){
+                
+                axios.get(base_url+"category-list?page="+page+"&name="+this.name)
+                .then(response => {
+                    
            // console.log(response.data);
 
            this.categorys = response.data;
@@ -192,9 +192,9 @@
 
          				EventBus.$emit('category-created',1);
                          this.successAlert(res.data);
-         			})
+                     })
 
-         		   
+                     
          		}
          	})       
 

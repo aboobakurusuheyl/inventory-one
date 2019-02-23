@@ -34,106 +34,55 @@
                         </a>
                     </li>
 
+                    @php
+                        $side_menu = sideMenu(Auth::user()->role_id) 
+                    @endphp
+
+
+                    @foreach($side_menu as $value)
+                      
+                   @if(count($value['sub_menu'])>0)
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">widgets</i>
-                            <span>Product</span>
+                            <i class="material-icons">{{ $value['icon'] }}</i>
+                            <span>{{ $value['name'] }}</span>
                         </a>
                         <ul class="ml-menu">
+
+                            @foreach($value['sub_menu'] as $sub)
                             <li>
-                                <a href="{{ route('supplier.index') }}" >
-                                    <span>Vendor</span>
+                                <a href="{{ $sub->menu_url ? route($sub->menu_url) : '' }}" >
+                                    <span>{{ $sub->name }}</span>
                                 </a>
                           
                             </li>         
-
-                            <li>
-                                <a href="{{ route('category.index') }}" >
-                                    <span>Product Category</span>
-                                </a>
-                          
-                            </li>    
-
-                             <li>
-                                <a href="{{ route('product.index') }}" >
-                                    <span>Product</span>
-                                </a>
-                          
-                            </li>
+                            @endforeach
             
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">compare_arrows</i>
-                            <span>Stock Management</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ route('stock.index') }}">Stock In</a>
-                                <a href="{{ route('invoice.index') }}">Stock Out/Invoice</a>
-                            </li>
-                           
-                        </ul>
-                    </li>   
-
-
-       
-
-
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">show_chart</i>
-                            <span>Report</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ route('report.index') }}">All Report</a>
-                            </li>
-                           
-                        </ul>
-                    </li>
-
-                   <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">account_circle</i>
-                            <span>Customer</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ route('customer.index') }}">Customer</a>
-                            </li>
-                           
-                        </ul>
-                    </li>  
-
-
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">people</i>
-                            <span>User Manage</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="{{ route('role.index') }}">Role</a>
-                                <!-- <a href="{{ route('report.index') }}">Role Permission</a> -->
-                                <a href="{{ route('user.index') }}">User</a>
-                            </li>
-                           
-                        </ul>
-                    </li>
-
-
-            
-
+                    @else
+                    
 
     
                     <li>
-                        <a href="pages/changelogs.html">
-                            <i class="material-icons">update</i>
-                            <span>Changelogs</span>
+                        <a href="{{ $value['url'] ? route($value['url']) : '' }}">
+                            <i class="material-icons">{{ $value['icon'] }}</i>
+                            <span>{{ $value['name'] }}</span>
                         </a>
                     </li>
+
+                    @endif
+
+
+
+                    @endforeach()
+
+               
+
+
+            
+
+
           
                 </ul>
             </div>

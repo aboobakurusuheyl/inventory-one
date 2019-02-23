@@ -6,6 +6,7 @@ use App\Role;
 use App\Menu;
 use App\Permission;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -69,7 +70,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-         $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get(); 
+        $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get(); 
         $permission = Permission::where('role_id','=',$id)->pluck('menu_id')->toArray();
 
 
@@ -226,5 +227,15 @@ class RoleController extends Controller
 
         }
 
+    }
+
+    public function userRole(){
+         $role_id = Auth::user()->role_id;
+
+         
+         echo "<pre>"; 
+         print_r(sideMenu($role_id));
+
+         echo "</pre>";
     }
 }
