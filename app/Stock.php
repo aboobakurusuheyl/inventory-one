@@ -24,7 +24,10 @@ class Stock extends Model
 
     public function user(){
 
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User')->withDefault([
+          'id' => 0,
+          'name' => 'Unknown User'
+        ]);
     }
 
     // realtion with vendor 

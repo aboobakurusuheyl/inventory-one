@@ -20,7 +20,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">account_circle</i>
 										</span>
 										<div class="form-line">
 											<input type="text" class="form-control date" placeholder="User Name" v-model="user.name">
@@ -31,7 +31,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">email</i>
 										</span>
 										<div class="form-line">
 											<input type="email" class="form-control date" placeholder="User Email" v-model="user.email">
@@ -42,7 +42,7 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">lock</i>
 										</span>
 										<div class="form-line">
 											<input type="password" class="form-control date" placeholder="Enter Password" v-model="user.password">
@@ -54,10 +54,10 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">lock_open</i>
 										</span>
 										<div class="form-line">
-											<input type="password" class="form-control date" placeholder="Confirm Password" v-model="user.confirm_password">
+											<input type="password" class="form-control date" placeholder="Confirm Password" v-model="user.password_confirmation">
 										</div>
 									</div>
 								</div> 		
@@ -66,11 +66,12 @@
 								<div class="col-md-6">
 									<div class="input-group">
 										<span class="input-group-addon">
-											<i class="material-icons">palette</i>
+											<i class="material-icons">vpn_key</i>
 										</span>
 										<div class="form-line">
 										<select class="form-control" v-model="user.role">
 											<option value="">Select Role</option>
+											<option v-for="value in role_list" :value="value.id">{{ value.role_name }}</option>
 										</select>
 										</div>
 									</div>
@@ -115,15 +116,23 @@
 					name : '',
 					email : '',
 					password : '',
-					confirm_password : '',
+					password_confirmation: '',
 					role : '',
 
 				},
+
+				role_list : [],
 
 				errors : null 
 
 
 			}
+
+		},
+
+		mounted(){
+          
+		  this.roleList();
 
 		},
 
@@ -138,12 +147,15 @@
 
 					$('#create-user').modal('hide');
 
-					this.user = {'name':'','details':''};
+					this.user = {
+					'name' : '',
+					'email' : '',
+					'password' : '',
+					'password_confirmation': '',
+					'role' : ''};
+
 					this.errors = null;
 					EventBus.$emit('user-created',response.data);
-
-					// this.showMessage(response.data);
-
 					this.successALert(response.data);
 
 				})
@@ -155,6 +167,15 @@
 					}
 
 				})
+
+			},
+
+			roleList(){
+               
+			   axios.get(base_url+'role-list')
+			   .then(response => {               
+				this.role_list = response.data;    
+			   });
 
 			},
 

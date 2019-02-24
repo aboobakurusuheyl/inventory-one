@@ -1,10 +1,10 @@
 @extends('include.master')
 
 
-@section('title','Belontory | Role')
+@section('title','Belontory | User')
 
 
-@section('page-title','Role')
+@section('page-title','User')
 
 
 @section('content')
