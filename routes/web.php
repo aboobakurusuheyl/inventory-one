@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware'=> ['auth','check.permission']],function(){
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +39,8 @@ Route::get('category/product/{id}','ProductController@productByCategory');
 
 // customer 
 Route::resource('customer','CustomerController');
+
+Route::get('customer-list','CustomerController@CustomerList');
 
 //Stock
 

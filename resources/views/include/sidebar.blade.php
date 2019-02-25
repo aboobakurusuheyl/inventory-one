@@ -27,7 +27,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
+                    <li  @if(Route::currentRouteName() == '') class="active" @endif>
                         <a href="{{ url('/') }}">
                             <i class="material-icons">dashboard</i>
                             <span>Dashboard</span>
@@ -42,7 +42,7 @@
                     @foreach($side_menu as $value)
                       
                    @if(count($value['sub_menu'])>0)
-                    <li>
+                    <li class="parent">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">{{ $value['icon'] }}</i>
                             <span>{{ $value['name'] }}</span>
@@ -50,7 +50,7 @@
                         <ul class="ml-menu">
 
                             @foreach($value['sub_menu'] as $sub)
-                            <li>
+                            <li @if(Route::currentRouteName() == $sub->menu_url) class="active" @endif>
                                 <a href="{{ $sub->menu_url ? route($sub->menu_url) : '' }}" >
                                     <span>{{ $sub->name }}</span>
                                 </a>
@@ -64,7 +64,7 @@
                     
 
     
-                    <li>
+                    <li @if(Route::currentRouteName() == $value['url']) class="active" @endif>
                         <a href="{{ $value['url'] ? route($value['url']) : '' }}">
                             <i class="material-icons">{{ $value['icon'] }}</i>
                             <span>{{ $value['name'] }}</span>
@@ -86,16 +86,6 @@
           
                 </ul>
             </div>
-            <!-- #Menu -->
-            <!-- Footer -->
-    <!--         <div class="legal">
-                <div class="copyright">
-                    &copy; {{ date('Y') }} <a href="javascript:void(0);">Belogin Technologies Ltd</a>.
-                </div>
-                <div class="version">
-                    <b>Version: </b> {{ rand(0,3) }}.{{ rand(0,9) }}.{{ rand(0,9) }}
-                </div>
-            </div> -->
-            <!-- #Footer -->
+
         </aside>
         <!-- #END# Left Sidebar -->

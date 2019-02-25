@@ -13,7 +13,11 @@ class Product extends Model
   
   public function category(){
 
-  	return $this->belongsTo('App\Category');
+  	return $this->belongsTo('App\Category')->withDefault([
+        'id' => 0,
+        'name' => 'unknow category',
+
+    ]);
   } 	
      
    // realtion with stock 

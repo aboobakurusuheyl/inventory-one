@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,54 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('customer.customer');
+       
+    }
+
+
+    public function CustomerList(Request $request){
+        
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $customer = Customer::withCount([
+            'sell AS total_amount' => function ($query){
+      
+              $query->select(DB::raw("COALESCE(SUM(total_amount),0)"));
+              
+            },
+            
+            'sell AS total_paid_amount' => function ($query){
+      
+              $query->select(DB::raw("COALESCE(SUM(paid_amount),0)"));
+              
+            },
+            
+            ])->orderBy('customer_name','asc');
+
+            if($name != ''){
+             
+                $customer->where('customer_name','LIKE','%'.$name.'%');
+
+            }
+
+            if($email != ''){
+                 
+                $customer->where('email','LIKE','%'.$email.'%');
+
+            }
+
+            if($phone){
+               
+                $customer->where('phone','LIKE','%'.$email.'%');
+
+            }
+            
+            $customer = $customer->get();
+
+            return $customer;
+
     }
 
     /**
@@ -35,7 +83,33 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+         
+            'customer_name' => 'required',
+            'email' => 'nullable|email|unique:customers',
+            'phone' => 'nullable|numeric|unique:customers',
+        ]);
+       
+        try{
+            $customer = new Customer;
+
+            $customer->customer_name = $request->customer_name;
+            $customer->email = $request->email;
+            $customer->phone = $request->phone;
+            $customer->address = $request->address;
+            $customer->save();
+
+            return response()->json(['status'=>'success','message'=>'Customer Created !']);
+        }
+        catch(\Exception $e)
+        {
+         
+            return response()->json(['status'=>'error','message'=>'Something Went Wrong !']);
+
+        }
+    
+
+
     }
 
     /**

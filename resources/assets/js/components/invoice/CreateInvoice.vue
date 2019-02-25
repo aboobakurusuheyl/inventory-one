@@ -115,7 +115,9 @@
                                   <i class="material-icons">note</i>
                                 </span>
                                 <div class="form-line">
-                                  <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Customer Address" v-model="invoice.customer_address"></textarea>
+                                  <textarea rows="1" class="form-control no-resize auto-growth"
+                                   placeholder="Customer Address"
+                                    v-model="invoice.customer_address"></textarea>
                                 </div>
                               </div>
                             </div>
@@ -144,7 +146,8 @@
                                   <i class="material-icons">person</i>
                                 </span>
                                 <div class="form-line">
-                                  <vuejs-datepicker :input-class="'form-control'" :format="'yyyy-MM-dd'" value-format="yyyy-MM-dd" v-model="invoice.invoice_date"></vuejs-datepicker>
+                                  <vuejs-datepicker :input-class="'form-control'" :format="'yyyy-MM-dd'"
+                                   value-format="yyyy-MM-dd" v-model="invoice.invoice_date"></vuejs-datepicker>
                             <!--       <input id="datep" class="form-control" 
                                   type="text"  name="" v-model="invoice.invoice_date"> -->
                                   <span class="requiredField"

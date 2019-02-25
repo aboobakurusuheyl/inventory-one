@@ -277,13 +277,22 @@
            $('.bs-date').datepicker();
 
 
+       
+          
+        
+
+
     
         });
 
-    //        $(window).load(function(){
+    $(window).load(function(){
 
-    // console.log( moment() );
-    //         });
+        var segment3 = '{{ Request::segment(1) }}';
+        var url = base_url + segment3;
+
+        $('a[href="' + url + '"]').parents('.parent').children('a .menu-toggle').addClass('toggled');
+             
+           });
     </script>
 
 
