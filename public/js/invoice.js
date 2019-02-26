@@ -34762,7 +34762,7 @@ exports = module.exports = __webpack_require__(163)(false);
 
 
 // module
-exports.push([module.i, "\n.requiredField{\n\n  color: red;\n}\n", ""]);
+exports.push([module.i, "\n.requiredField {\r\n  color: red;\n}\r\n", ""]);
 
 // exports
 
@@ -35179,7 +35179,80 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -35188,51 +35261,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-  props: ['categorys', 'customers'],
+  props: ["categorys", "customers"],
   mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
 
   components: {
-
-    'vuejs-datepicker': __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__["a" /* default */]
-
+    "vuejs-datepicker": __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__["a" /* default */]
   },
 
   data: function data() {
-
     return {
-
       invoice: {
-        invoice_no: '',
-        customer_type: '',
-        customer_id: '',
-        customer_name: '',
-        customer_email: '',
-        customer_phone: '',
-        customer_address: '',
-        invoice_date: '',
+        invoice_no: "",
+        customer_type: "",
+        customer_id: "",
+        customer_name: "",
+        customer_email: "",
+        customer_phone: "",
+        customer_address: "",
+        invoice_date: "",
         total_discount: 0,
         total_amount: 0,
         grand_total: 0,
         paid_amount: 0,
-        payment_in: 'cash',
-        bank_info: '',
+        payment_in: "cash",
+        bank_info: "",
         product: [{
-          category: '',
-          product_id: '',
-          chalan: '',
-          chalan_id: '',
+          category: "",
+          product_id: "",
+          chalan: "",
+          chalan_id: "",
           stoc_quantity: 0,
           quantity: 0,
           price: 0,
           total_price: 0,
           discount: 0,
-          discount_type: '1',
+          discount_type: "1",
           discount_amount: 0,
           products: [],
           stocks: []
         }]
-
       },
 
       invoice_state: false,
@@ -35248,15 +35315,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       // alert('clicked');
 
-      axios.post(base_url + 'invoice', this.invoice).then(function (response) {
-
+      axios.post(base_url + "invoice", this.invoice).then(function (response) {
         _this2.successALert(response.data);
 
         _this2.resetForm();
 
         _this2.invoice_state = false;
 
-        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('invoice-created', 1);
+        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit("invoice-created", 1);
       }).catch(function (error) {
         if (error.response.status == 422) {
           _this2.errors = error.response.data.errors;
@@ -35270,13 +35336,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     findProduct: function findProduct(index) {
       var _this3 = this;
 
-      if (this.invoice.product[index].category === '') {
-
+      if (this.invoice.product[index].category === "") {
         this.invoice.product[index].products = [];
       } else {
-
-        axios.get(base_url + 'category/product/' + this.invoice.product[index].category).then(function (response) {
-
+        axios.get(base_url + "category/product/" + this.invoice.product[index].category).then(function (response) {
           _this3.invoice.product[index].products = response.data;
           _this3.invoice.product[index].stocks = [];
         });
@@ -35285,13 +35348,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     findStock: function findStock(index) {
       var _this4 = this;
 
-      if (this.invoice.product[index].product_id === '') {
-
+      if (this.invoice.product[index].product_id === "") {
         this.invoice.product[index].stocks = [];
       } else {
-
-        axios.get(base_url + 'chalan-list/chalan/' + this.invoice.product[index].product_id).then(function (response) {
-
+        axios.get(base_url + "chalan-list/chalan/" + this.invoice.product[index].product_id).then(function (response) {
           _this4.invoice.product[index].stocks = response.data;
         });
       }
@@ -35299,15 +35359,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     findStockDetails: function findStockDetails(index) {
       var _this5 = this;
 
-      if (this.invoice.product[index].chalan_id === '') {
-
+      if (this.invoice.product[index].chalan_id === "") {
         this.invoice.product[index].quantity = 0;
         this.invoice.product[index].price = 0;
         this.invoice.product[index].discount = 0;
       } else {
-
-        axios.get(base_url + 'stock/' + this.invoice.product[index].chalan_id).then(function (response) {
-
+        axios.get(base_url + "stock/" + this.invoice.product[index].chalan_id).then(function (response) {
           _this5.invoice.product[index].quantity = 1;
           _this5.invoice.product[index].price = response.data.selling_price;
           _this5.invoice.product[index].discount = response.data.discount;
@@ -35320,33 +35377,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.invoice_state = !this.invoice_state;
 
-      axios.get(base_url + 'get/invoice/number').then(function (response) {
-
+      axios.get(base_url + "get/invoice/number").then(function (response) {
         _this6.invoice.invoice_no = response.data;
       });
 
       window.scrollTo(0, top);
     },
     addmore: function addmore() {
-
       this.invoice.product.push({
-        category: '',
-        product_id: '',
-        chalan: '',
-        chalan_id: '',
+        category: "",
+        product_id: "",
+        chalan: "",
+        chalan_id: "",
         stoc_quantity: 0,
         quantity: 0,
         price: 0,
         total_price: 0,
         discount: 0,
-        discount_type: '1',
+        discount_type: "1",
         discount_amount: 0,
         products: [],
         stocks: []
       });
     },
     removeItem: function removeItem(index) {
-
       var _this = this;
       if (_this.invoice.product.length > 1) {
         _this.invoice.product.splice(index, 1);
@@ -35354,54 +35408,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
     },
     resetForm: function resetForm() {
-
       this.invoice = {
-        invoice_no: '',
-        customer_type: '',
-        customer_id: '',
-        customer_name: '',
-        customer_email: '',
-        customer_phone: '',
-        customer_address: '',
-        invoice_date: '',
+        invoice_no: "",
+        customer_type: "",
+        customer_id: "",
+        customer_name: "",
+        customer_email: "",
+        customer_phone: "",
+        customer_address: "",
+        invoice_date: "",
         total_discount: 0,
         total_amount: 0,
         grand_total: 0,
         paid_amount: 0,
-        payment_in: 'cash',
-        bank_info: '',
+        payment_in: "cash",
+        bank_info: "",
         product: [{
-          category: '',
-          product_id: '',
-          chalan: '',
-          chalan_id: '',
+          category: "",
+          product_id: "",
+          chalan: "",
+          chalan_id: "",
           stoc_quantity: 0,
           quantity: 0,
           price: 0,
           total_price: 0,
           discount: 0,
-          discount_type: '1',
+          discount_type: "1",
           discount_amount: 0,
           products: [],
           stocks: []
         }]
-
       };
     },
     discount: function discount(type, _discount, main_amount) {
-
-      if (type === '2') {
-
+      if (type === "2") {
         return (_discount / 100 * main_amount).toFixed(2);
       } else {
-
         return _discount.toFixed(2);
       }
     }
   },
 
-  // end of method section 
-
+  // end of method section
 
   computed: {
     totalAmount: function totalAmount() {
@@ -35421,7 +35469,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return sum;
     }
   }
-
 });
 
 /***/ }),
@@ -35444,7 +35491,7 @@ var render = function() {
             },
             [
               _c("i", { staticClass: "glyphicon glyphicon-plus" }),
-              _vm._v(" New Invoice\n                             ")
+              _vm._v(" New Invoice\n    ")
             ]
           )
         ])
@@ -35465,11 +35512,7 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "header" }, [
-          _c("h2", { staticClass: "pull-left" }, [
-            _vm._v(
-              "\n                                Create Invoice\n                          \n                            "
-            )
-          ]),
+          _c("h2", { staticClass: "pull-left" }, [_vm._v("Create Invoice")]),
           _vm._v(" "),
           _c("h2", { staticClass: "pull-right" }, [
             _c(
@@ -35618,13 +35661,7 @@ var render = function() {
                                 return _c(
                                   "option",
                                   { domProps: { value: customer.id } },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(customer.customer_name) +
-                                        "\n                                    "
-                                    )
-                                  ]
+                                  [_vm._v(_vm._s(customer.customer_name))]
                                 )
                               })
                             ],
@@ -35634,13 +35671,11 @@ var render = function() {
                           _vm.errors.hasOwnProperty("customer_id")
                             ? _c("span", { staticClass: "requiredField" }, [
                                 _vm._v(
-                                  "\n                                " +
-                                    _vm._s(
-                                      _vm.errors.hasOwnProperty("customer_id")
-                                        ? _vm.errors.customer_id[0]
-                                        : ""
-                                    ) +
-                                    "\n                                  "
+                                  _vm._s(
+                                    _vm.errors.hasOwnProperty("customer_id")
+                                      ? _vm.errors.customer_id[0]
+                                      : ""
+                                  )
                                 )
                               ])
                             : _vm._e()
@@ -35690,12 +35725,11 @@ var render = function() {
                           _vm.errors.hasOwnProperty("customer_name")
                             ? _c("span", { staticClass: "requiredField" }, [
                                 _vm._v(
-                                  "\n                                " +
-                                    _vm._s(
-                                      _vm.errors.hasOwnProperty("customer_name")
-                                        ? _vm.errors.customer_name[0]
-                                        : ""
-                                    )
+                                  _vm._s(
+                                    _vm.errors.hasOwnProperty("customer_name")
+                                      ? _vm.errors.customer_name[0]
+                                      : ""
+                                  )
                                 )
                               ])
                             : _vm._e()
@@ -35907,13 +35941,11 @@ var render = function() {
                         _vm.errors.hasOwnProperty("invoice_date")
                           ? _c("span", { staticClass: "requiredField" }, [
                               _vm._v(
-                                "\n                                 " +
-                                  _vm._s(
-                                    _vm.errors.hasOwnProperty("invoice_date")
-                                      ? _vm.errors.invoice_date[0]
-                                      : ""
-                                  ) +
-                                  "\n                                 "
+                                _vm._s(
+                                  _vm.errors.hasOwnProperty("invoice_date")
+                                    ? _vm.errors.invoice_date[0]
+                                    : ""
+                                )
                               )
                             ])
                           : _vm._e()
@@ -36155,12 +36187,13 @@ var render = function() {
                                       { domProps: { value: ch.id } },
                                       [
                                         _vm._v(
-                                          _vm._s(ch.chalan_no) +
+                                          "\n                        " +
+                                            _vm._s(ch.chalan_no) +
                                             ". qty(" +
                                             _vm._s(
                                               ch.stock_quantity - ch.sold_qty
                                             ) +
-                                            ")"
+                                            ")\n                      "
                                         )
                                       ]
                                     )
@@ -36535,7 +36568,7 @@ var render = function() {
                       staticClass: "form-group"
                     },
                     [
-                      _c("label", [_vm._v("Paid In : ")]),
+                      _c("label", [_vm._v("Paid In :")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "input-group focused" }, [
                         _c("div", { staticClass: "input-group-addon" }),

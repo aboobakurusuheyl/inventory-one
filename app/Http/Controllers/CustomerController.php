@@ -53,13 +53,13 @@ class CustomerController extends Controller
 
             }
 
-            if($phone){
+            if($phone != ''){
                
-                $customer->where('phone','LIKE','%'.$email.'%');
+                $customer->where('phone','LIKE','%'.$phone.'%');
 
             }
             
-            $customer = $customer->get();
+            $customer = $customer->paginate(10);
 
             return $customer;
 
@@ -131,7 +131,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return $customer;
     }
 
     /**
@@ -143,7 +143,29 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $request->validate([
+         
+            'customer_name' => 'required',
+            'email' => 'nullable|email|unique:customers,email,'.$request->id,
+            'phone' => 'nullable|numeric|unique:customers,email,'.$request->id,
+        ]);
+       
+        try{
+       
+            $customer->customer_name = $request->customer_name;
+            $customer->email = $request->email;
+            $customer->phone = $request->phone;
+            $customer->address = $request->address;
+            $customer->update();
+
+            return response()->json(['status'=>'success','message'=>'Customer Information Updated !']);
+        }
+        catch(\Exception $e)
+        {
+         
+            return response()->json(['status'=>'error','message'=>'Something Went Wrong !']);
+
+        }
     }
 
     /**

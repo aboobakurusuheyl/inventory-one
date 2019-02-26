@@ -6,8 +6,8 @@
     "/js/user.js": "/js/user.js",
     "/js/product.js": "/js/product.js",
     "/js/category.js": "/js/category.js",
+    "/js/customer.js": "/js/customer.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/report.js": "/js/report.js",
-    "/js/customer.js": "/js/customer.js"
+    "/js/report.js": "/js/report.js"
 }

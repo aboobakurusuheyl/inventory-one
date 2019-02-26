@@ -14,7 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $company = Company::find(1);
+        return view('setting.company_setting',['company'=>$company]);
     }
 
     /**
@@ -35,7 +36,22 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+         
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+
+         ]);
+
+         $company = Company::find(1);
+
+         $company->name = $request->name;
+         $company->address = $request->address;
+         $company->phone = $request->phone;
+         $company->update();
+        \Session::flash('message','Company Information Updated');
+         return redirect()->back();
     }
 
     /**

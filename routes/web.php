@@ -78,8 +78,10 @@ Route::resource('user','UserManageController');
 
 Route::get('user-list','UserManageController@UserList');
 
-Route::get('comapny-setting',['as'=>'company.index','uses'=>'CompanyController@index']);
-Route::get('password-change',['as'=>'password.index','uses'=>'SettingController@ChangePassword']);
+Route::get('comapany-setting',['as'=>'company.index','uses'=>'CompanyController@index']);
+Route::post('comapany-setting',['as'=>'company.store','uses'=>'CompanyController@store']);
+Route::get('password-change',['as'=>'password.index','uses'=>'SettingController@index']);
+Route::post('password-change',['as'=>'password.store','uses'=>'SettingController@store']);
 
 
 Route::get('user-role','RoleController@userRole');

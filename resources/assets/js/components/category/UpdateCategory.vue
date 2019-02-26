@@ -123,7 +123,7 @@ export default{
          
           if(res.data.status == 'success'){
           
-               this.successALert(res.data);
+              this.successALert(res.data);
               EventBus.$emit('category-created',1);
               this.closeModal();
               $('#update-category').modal('hide');
