@@ -1,7 +1,7 @@
 <template>
 
 	<div class="col-md-12">
-				<div class="modal fade" id="update-product" tabindex="-1" role="dialog">
+				<div class="modal fade" id="update-product"  role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -22,7 +22,7 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
-											<select class="form-control" v-model="product.category">
+											<select class="form-control select2" v-model="product.category">
 												<option value="">Select Category</option>
 
 												<option v-for="(value,index) in cat" :value="value.id">{{ value.name }}</option>

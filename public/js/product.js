@@ -5176,33 +5176,52 @@ module.exports = function normalizeComponent (
 // import {EventBus} from './vue-asset';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-   created: function created() {
+  created: function created() {
 
-      // this.hello();
+    // this.hello();
 
-   },
+  },
 
 
-   methods: {
-      successALert: function successALert(data) {
+  methods: {
+    successALert: function successALert(data) {
 
-         console.log(data);
-         Swal({
-            position: 'top-end',
-            type: data.status,
-            title: data.message,
-            showConfirmButton: false,
-            timer: 1500
-         });
+      console.log(data);
+      Swal({
+        position: 'top-end',
+        type: data.status,
+        title: data.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  },
+
+  filters: {
+    moment: function moment(date, format) {
+      return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
+    }
+
+  },
+
+  mounted: function mounted() {
+
+    $('.select2').select2();
+  },
+
+  directives: {
+    select: {
+      twoWay: true,
+      bind: function bind(el, binding, vnode) {
+        $(el).select2().on("select2:select", function (e) {
+          // v-model looks for
+          //  - an event named "change"
+          //  - a value with property path "$event.target.value"
+          el.dispatchEvent(new Event('change', { target: e.target }));
+        });
       }
-   },
-
-   filters: {
-      moment: function moment(date, format) {
-         return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
-      }
-
-   }
+    }
+  }
 
 });
 
@@ -32838,6 +32857,20 @@ __webpack_require__(2);
 Vue.component('create-product', __webpack_require__(188));
 Vue.component('view-product', __webpack_require__(191));
 
+// select change 
+
+// Vue.directive('select', {
+//     twoWay: true,
+//     bind: function (el, binding, vnode) {
+//       $(el).select2().on("select2:select", (e) => {
+//         // v-model looks for
+//         //  - an event named "change"
+//         //  - a value with property path "$event.target.value"
+//         el.dispatchEvent(new Event('change', { target: e.target }));
+//       });
+//     },
+//   });
+
 var app = new Vue({
 
     el: '#belontory'
@@ -32898,6 +32931,10 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin__ = __webpack_require__(6);
+//
+//
+//
+//
 //
 //
 //
@@ -33046,7 +33083,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "create-product", tabindex: "-1", role: "dialog" }
+        attrs: { id: "create-product", role: "dialog" }
       },
       [
         _c(
@@ -33074,56 +33111,59 @@ var render = function() {
                       _c("div", { staticClass: "input-group" }, [
                         _vm._m(1),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-line" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.product.category,
-                                  expression: "product.category"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.product,
-                                    "category",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.product.category,
+                                expression: "product.category"
+                              },
+                              {
+                                name: "select",
+                                rawName: "v-select",
+                                value: _vm.product.category,
+                                expression: "product.category"
                               }
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Select Category")
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(_vm.categorys, function(value, index) {
-                                return _c(
-                                  "option",
-                                  { domProps: { value: value.id } },
-                                  [_vm._v(_vm._s(value.name))]
-                                )
-                              })
                             ],
-                            2
-                          )
-                        ])
+                            staticClass: "form-control select2",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.product,
+                                  "category",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Select Category")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.categorys, function(value, index) {
+                              return _c(
+                                "option",
+                                { key: index, domProps: { value: value.id } },
+                                [_vm._v(_vm._s(value.name))]
+                              )
+                            })
+                          ],
+                          2
+                        )
                       ])
                     ]),
                     _vm._v(" "),
@@ -33809,7 +33849,7 @@ var render = function() {
       "div",
       {
         staticClass: "modal fade",
-        attrs: { id: "update-product", tabindex: "-1", role: "dialog" }
+        attrs: { id: "update-product", role: "dialog" }
       },
       [
         _c(
@@ -33849,7 +33889,7 @@ var render = function() {
                                   expression: "product.category"
                                 }
                               ],
-                              staticClass: "form-control",
+                              staticClass: "form-control select2",
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter

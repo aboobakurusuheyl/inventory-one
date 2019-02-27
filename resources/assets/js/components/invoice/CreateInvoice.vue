@@ -50,7 +50,7 @@
                   <i class="material-icons">person</i>
                 </span>
                 <div class="form-line">
-                  <select class="form-control" v-model="invoice.customer_id">
+                  <select class="form-control select2" v-model="invoice.customer_id">
                     <option value>Customer List</option>
 
                     <option
@@ -218,15 +218,14 @@
                     </td>
                     <td>
                       <select
-                        class="form-control"
+                        class="form-control select2"
                         v-model="invoice.product[index].category"
+                        v-select="invoice.product[index].category"
+                        v-bind:id="'cat'+index"
                         @change="findProduct(index)"
                       >
                         <option value>Select Category</option>
-                        <option
-                          v-for="(value,index) in categorys"
-                          :value="value.id"
-                        >{{ value.name }}</option>
+                        <option v-for="value in categorys" :value="value.id">{{ value.name }}</option>
                       </select>
                       <span
                         v-if="errors['product.'+index+'.category']"
@@ -603,6 +602,12 @@ export default {
         products: [],
         stocks: []
       });
+
+      // var index =  this.invoice.product.length;
+
+      // setTimeout(function(){
+      //   $("#cat"+index).select2();
+      // },100);
     },
 
     removeItem(index) {

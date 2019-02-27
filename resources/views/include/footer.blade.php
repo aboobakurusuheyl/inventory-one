@@ -8,7 +8,7 @@
 
 
     <!-- Select Plugin Js -->
-    <!-- <script src="{{ url('plugins/bootstrap-select/js/bootstrap-select.js') }}"></script> -->
+    {{-- <!-- <script src="{{ url('plugins/bootstrap-select/js/bootstrap-select.js') }}"></script> --> --}}
 
     <!-- Slimscroll Plugin Js -->
     <script src="{{ url('plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>

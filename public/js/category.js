@@ -5176,33 +5176,52 @@ module.exports = function normalizeComponent (
 // import {EventBus} from './vue-asset';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-   created: function created() {
+  created: function created() {
 
-      // this.hello();
+    // this.hello();
 
-   },
+  },
 
 
-   methods: {
-      successALert: function successALert(data) {
+  methods: {
+    successALert: function successALert(data) {
 
-         console.log(data);
-         Swal({
-            position: 'top-end',
-            type: data.status,
-            title: data.message,
-            showConfirmButton: false,
-            timer: 1500
-         });
+      console.log(data);
+      Swal({
+        position: 'top-end',
+        type: data.status,
+        title: data.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  },
+
+  filters: {
+    moment: function moment(date, format) {
+      return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
+    }
+
+  },
+
+  mounted: function mounted() {
+
+    $('.select2').select2();
+  },
+
+  directives: {
+    select: {
+      twoWay: true,
+      bind: function bind(el, binding, vnode) {
+        $(el).select2().on("select2:select", function (e) {
+          // v-model looks for
+          //  - an event named "change"
+          //  - a value with property path "$event.target.value"
+          el.dispatchEvent(new Event('change', { target: e.target }));
+        });
       }
-   },
-
-   filters: {
-      moment: function moment(date, format) {
-         return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
-      }
-
-   }
+    }
+  }
 
 });
 
@@ -33222,6 +33241,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Updatecategory_vue__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Updatecategory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Updatecategory_vue__);
+//
+//
+//
 //
 //
 //

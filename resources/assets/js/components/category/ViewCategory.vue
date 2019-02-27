@@ -8,7 +8,10 @@
 
         	<div class="row">
         		<div class="col-md-4">
-        			<input type="text" class="form-control" v-on:keyup="getData" placeholder="Serach By Name" name="" v-model="name">
+        			<input type="text" class="form-control"
+					 v-on:keyup="getData" 
+					 placeholder="Serach By Name" 
+					 name="" v-model="name">
         		</div>
         		<div class="col-md-4">
         			

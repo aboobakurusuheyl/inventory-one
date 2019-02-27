@@ -10,12 +10,16 @@
    	 		<table class="table table-bordered">
 						<thead>
 							<tr>
-								<td colspan="4" style="border: none !important;"><h3 style="text-align: center;">Equipement Solutions Ltd</h3></td>
+								<td colspan="4" style="border: none !important;">
+									<h3 style="text-align: center;">{{ $company->name }}</h3>
+								</td>
 
 							</tr>		
 
 							<tr style="border: none !important;">
-								<td colspan="4" style="border: none !important;"><p style="text-align: center;">Ashulia Dhaka Bangladesh <br> 01832944211</p></td>
+								<td colspan="4" style="border: none !important;">
+									<p style="text-align: center;">{{ $company->address }} <br>
+										 {{ $company->phone }}</p></td>
 
 							</tr>  			
 

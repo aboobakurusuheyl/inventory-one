@@ -12,6 +12,7 @@ use App\SellDetails;
 use App\Stock;
 use App\User;
 use App\Vendor;
+use App\Company;
 use DB;
 use Auth;
 
@@ -284,7 +285,7 @@ class ReportingController extends Controller
 
         }
 
-        // return $data;
+        $company = Company::find(1);
 
         return view($page,[
             'data'=>$data,
@@ -296,7 +297,8 @@ class ReportingController extends Controller
             'category_id' => $category_id,
             'product_id' => $product_id,
             'stock_id' => $stock_id,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'company' => $company,
         ]);
 
 
@@ -525,7 +527,7 @@ class ReportingController extends Controller
 
         }
 
-        // return $data;
+        $company = Company::find(1);
 
         return view($page,[
             'data'=>$data,
@@ -537,7 +539,8 @@ class ReportingController extends Controller
             'category_id' => $category_id,
             'product_id' => $product_id,
             'stock_id' => $stock_id,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'company' => $company,
         ]);
     }
 

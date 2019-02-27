@@ -2,7 +2,7 @@
 	
 	<div class="wrap">
 		
-		<div class="modal fade" id="create-product" tabindex="-1" role="dialog">
+		<div class="modal fade" id="create-product"  role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -21,13 +21,17 @@
 										<span class="input-group-addon">
 											<i class="material-icons">palette</i>
 										</span>
-										<div class="form-line">
-											<select class="form-control" v-model="product.category">
+									
+											<select class="form-control select2"
+											 v-model="product.category" 
+											 v-select="product.category" 
+											 >
 												<option value="">Select Category</option>
 
-												<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
+												<option v-for="(value,index) in categorys"
+												 :value="value.id" v-bind:key="index">{{ value.name }}</option>
 											</select>
-										</div>
+										
 									</div>
 								</div>  				
 
@@ -149,6 +153,8 @@
 
 
   },
+
+
 
 
 

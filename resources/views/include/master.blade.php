@@ -5,6 +5,12 @@
    <title>@yield('title','Belontory')</title>
 
  @include('include.header')
+ <style>
+   .select2{
+
+       width: 100% !important;
+   }
+ </style>
 </head>
 
 <body class="theme-red">
@@ -270,29 +276,19 @@
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+   $(document).ready(function($) {
+   	 	
+   	 	$('.select2').select2();
 
-           $('.select2').select2();
+   	 });
+    // $(window).load(function(){
 
-           $('.bs-date').datepicker();
+    //     var segment3 = '{{ Request::segment(1) }}';
+    //     var url = base_url + segment3;
 
-
-       
-          
-        
-
-
-    
-        });
-
-    $(window).load(function(){
-
-        var segment3 = '{{ Request::segment(1) }}';
-        var url = base_url + segment3;
-
-        $('a[href="' + url + '"]').parents('.parent').children('a .menu-toggle').addClass('toggled');
+    //     $('a[href="' + url + '"]').parents('.parent').children('a .menu-toggle').addClass('toggled');
              
-           });
+    //        });
     </script>
 
 
