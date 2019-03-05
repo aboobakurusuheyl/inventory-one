@@ -5,7 +5,7 @@
 			<div class="col-md-4">
 			<div class="input-group">
 			<div class="form-line">
-			   <select class="form-control" name="type" required="" v-model="report_type">
+			   <select class="form-control select2" name="type" required="" v-model="report_type" v-select="report_type">
 			   	 <option :value="''">Chose Report Type *</option>
 			   	 <option :value="'stock'">Stock Report</option>
 			   	 <option :value="'sell'">Sell Report</option>
@@ -37,7 +37,10 @@
 		<div class="col-md-4" v-if="!isEnable">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="category_id" v-model="category_id" v-on:change="findProduct">
+			 <select class="form-control select2" name="category_id" 
+			 v-model="category_id" 
+			 v-select="category_id" 
+			 v-on:change="findProduct">
 			 	<option value="">Chose Category (optional)</option>
 			 	<option v-for="value in category" :value="value.id">{{ value.name }}</option>
 			 </select>
@@ -48,7 +51,11 @@
 		<div class="col-md-4" v-if="!isEnable">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="product_id" v-model="product_id" v-on:change="findStock">
+			 <select class="form-control select2" name="product_id" 
+			 v-model="product_id"
+			 v-select="product_id"
+			  v-on:change="findStock"
+			  >
 			 	<option value="">Chose Product (optional)</option>
 			 	<option v-for="pr in product" :value="pr.id">{{ pr.product_name }}</option>
 			 </select>
@@ -60,7 +67,11 @@
 		<div class="col-md-4" v-if="!isEnable">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="stock_id" v-model="chalan_id">
+			 <select class="form-control select2" 
+			 name="stock_id"
+			  v-model="chalan_id"
+			  v-select="chalan_id"
+			  >
 			 	<option value="">Chose Chalan (optional)</option>
 			 	<option v-for="ch in chalan" :value="ch.id">{{ ch.chalan_no }}</option>
 			 </select>
@@ -71,9 +82,9 @@
 		<div class="col-md-4" v-if="!isEnable">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="vendor_id" >
+			 <select class="form-control select2" name="vendor_id">
 			 	<option value="">Chose Vendor (optional)</option>
-			 	<option v-for="vn in chalan" :value="vn.id">{{ vn.name }}</option>
+			 	<option v-for="vn in vendor" :value="vn.id">{{ vn.name }}</option>
 			 </select>
 			</div>
 			</div>
@@ -83,7 +94,7 @@
 		<div class="col-md-4">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="customer_id" >
+			 <select class="form-control select2" name="customer_id" >
 			 	<option value="">Customer (optional)</option>
 			 	<option v-for="cs in customer" :value="cs.id">{{ cs.customer_name }}</option>
 			 </select>
@@ -95,7 +106,7 @@
 		<div class="col-md-4">
 			<div class="input-group">
 			<div class="form-line">
-			 <select class="form-control" name="user_id" >
+			 <select class="form-control select2" name="user_id" >
 			 	<option value="">Chose Stock Entire / Seller (optional)</option>
 			 	<option v-for="us in user" :value="us.id">{{ us.name }}</option>
 			 </select>
@@ -113,14 +124,16 @@
   
   import {EventBus} from '../../vue-asset';	
   import Datepicker from 'vuejs-datepicker';
+  import mixin from '../../mixin.js';
 
 	export default{
-       props : ['category','user','customer'],
+       props : ['category','user','customer','vendor'],
        components : {
          
          'vuejs-datepicker' : Datepicker,
         
-       },
+	   },
+	   mixins:[mixin],
 
        data(){
           
@@ -143,7 +156,7 @@
        methods: {
 
        	       findProduct(){ 
-
+                this.product = [];
                axios.get(base_url+'category/product/'+this.category_id)
               .then(response => {
                
@@ -155,6 +168,7 @@
 
 		  	findStock(){
 
+               this.chalan = [];
                axios.get(base_url+'chalan-list/chalan/'+this.product_id)
               .then(response => {
                

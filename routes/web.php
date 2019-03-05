@@ -12,10 +12,12 @@
 */
 Route::group(['middleware'=> ['auth','check.permission']],function(){
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+
+
+// dashaboard 
+Route::get('/','DashboardController@index');
+Route::get('info-box','DashboardController@InfoBox');
 // vendor 
 
 Route::resource('supplier','VendorController');

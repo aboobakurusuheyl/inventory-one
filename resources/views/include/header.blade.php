@@ -41,3 +41,4 @@
    <!--  <link href="{{ url('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />   --> 
 
     <link href="{{ url('css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ url('css/vue-multiselect.min.css') }}" rel="stylesheet" />

@@ -50,14 +50,24 @@
                   <i class="material-icons">person</i>
                 </span>
                 <div class="form-line">
-                  <select class="form-control select2" v-model="invoice.customer_id">
+                                <multiselect 
+                       v-model="invoice.customer_id"
+                        deselect-label=""
+                         track-by="id"
+                          label="customer_name"
+                          open-direction="bottom"
+                           placeholder="Select Product"
+                            :options="customers" 
+                             :allow-empty="false">
+                             </multiselect>
+                  <!-- <select class="form-control select2" v-model="invoice.customer_id">
                     <option value>Customer List</option>
 
                     <option
                       v-for="customer in customers"
                       :value="customer.id"
                     >{{ customer.customer_name }}</option>
-                  </select>
+                  </select> -->
                   <span
                     class="requiredField"
                     v-if="(errors.hasOwnProperty('customer_id'))"
@@ -217,16 +227,31 @@
                       </a>
                     </td>
                     <td>
-                      <select
-                        class="form-control select2"
+                      <!-- <select
+                        class="form-control"
                         v-model="invoice.product[index].category"
-                        v-select="invoice.product[index].category"
+                     
                         v-bind:id="'cat'+index"
                         @change="findProduct(index)"
                       >
                         <option value>Select Category</option>
-                        <option v-for="value in categorys" :value="value.id">{{ value.name }}</option>
-                      </select>
+                        <option v-for="value in categorys"
+                         :value="value.id"
+                         >
+                         {{ value.name }}
+                         </option>
+                      </select> -->
+                       <multiselect 
+                       v-model="invoice.product[index].category"
+                        deselect-label=""
+                         track-by="id"
+                          label="name"
+                          open-direction="bottom"
+                           placeholder="Select Category"
+                            :options="categorys" 
+                             @input="findProduct(index)"
+                             :allow-empty="false">
+                             </multiselect>
                       <span
                         v-if="errors['product.'+index+'.category']"
                         class="requiredField"
@@ -234,7 +259,7 @@
                     </td>
 
                     <td>
-                      <select
+                      <!-- <select
                         class="form-control"
                         v-model="invoice.product[index].product_id"
                         @change="findStock(index)"
@@ -242,7 +267,18 @@
                         <option value>Select Product</option>
 
                         <option v-for="pr in vl.products" :value="pr.id">{{ pr.product_name }}</option>
-                      </select>
+                      </select> -->
+                                  <multiselect 
+                       v-model="invoice.product[index].product_id"
+                        deselect-label=""
+                         track-by="id"
+                          label="product_name"
+                          open-direction="bottom"
+                           placeholder="Select Product"
+                            :options="invoice.product[index].products" 
+                             @input="findStock(index)"
+                             :allow-empty="false">
+                             </multiselect>
                       <span
                         v-if="errors['product.'+index+'.product_id']"
                         class="requiredField"
@@ -342,7 +378,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top:20px">
               <div class="col-md-12">
                 <a href @click.prevent="addmore" class="btn bg-teal">+ Add More</a>
               </div>
@@ -448,12 +484,15 @@ import mixin from "../../mixin";
 
 import Datepicker from "vuejs-datepicker";
 
+import Multiselect from 'vue-multiselect';
+
 export default {
   props: ["categorys", "customers"],
   mixins: [mixin],
 
   components: {
-    "vuejs-datepicker": Datepicker
+    "vuejs-datepicker": Datepicker,
+     Multiselect
   },
 
   data() {
@@ -533,7 +572,7 @@ export default {
           .get(
             base_url +
               "category/product/" +
-              this.invoice.product[index].category
+              this.invoice.product[index].category.id
           )
           .then(response => {
             this.invoice.product[index].products = response.data;
@@ -550,7 +589,7 @@ export default {
           .get(
             base_url +
               "chalan-list/chalan/" +
-              this.invoice.product[index].product_id
+              this.invoice.product[index].product_id.id
           )
           .then(response => {
             this.invoice.product[index].stocks = response.data;
@@ -603,12 +642,12 @@ export default {
         stocks: []
       });
 
-      // var index =  this.invoice.product.length;
+      //  var index =  this.invoice.product.length;
 
       // setTimeout(function(){
       //   $("#cat"+index).select2();
-      // },100);
-    },
+      //  },100);
+    }, 
 
     removeItem(index) {
       var _this = this;
@@ -661,6 +700,7 @@ export default {
         return discount.toFixed(2);
       }
     }
+    
   },
 
   // end of method section
@@ -690,5 +730,7 @@ export default {
 <style type="text/css">
 .requiredField {
   color: red;
+  
 }
+
 </style>

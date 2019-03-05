@@ -13,21 +13,36 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                     	<select class="form-control show-tick" data-live-serach="true" @change="getProduct()" v-model="category">
+                     	<select class="form-control select2"
+                          data-live-serach="true"
+                           @change="getProduct()"    
+                           v-model="category"
+                           v-select="category"
+                           >
 								<option value="">All Category</option>
 
 							 <option v-for="(cat,index) in categorys" :value="cat.id">{{ cat.name  }}</option>
 						</select>
                     </div>
                     <div class="col-md-4">
-                      <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="product">
+                      <select class="form-control select2"
+                       data-live-serach="true"
+                        @change="getData(1)"
+                         v-model="product"
+                         v-select="product"
+                         >
                                 <option value="">All Product</option>
 
                              <option v-for="(pd,index) in products" :value="pd.id">{{ pd.product_name  }}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                          <select class="form-control show-tick" data-live-serach="true" @change="getData(1)" v-model="vendor">
+                          <select class="form-control select2"
+                           data-live-serach="true"
+                            @change="getData(1)"
+                             v-model="vendor"
+                             v-select="vendor"
+                             >
                                 <option value="">All Vendor</option>
 
                              <option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name  }}</option>
@@ -199,7 +214,7 @@
 
 
          getProduct(){
-
+           
               if(this.category === ''){
 
                this.products = [];
@@ -208,7 +223,7 @@
 
                 }
                 else{
-              
+              this.products = [];
                axios.get(base_url+'category/product/'+this.category)
               .then(response => {
                

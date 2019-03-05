@@ -13,6 +13,7 @@ use App\Customer;
 use App\Sell;
 use App\SellDetails;
 use App\Payment;
+use App\company;
 use DB;
 use Auth;
 
@@ -105,6 +106,8 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+
+      
         $request->validate([
           'customer_type' => 'required',
           'customer_id' => 'required_if:customer_type,1',
@@ -145,7 +148,7 @@ class InvoiceController extends Controller
            // customer adding  
             if($request->customer_type == 1){
                 
-                $customer_id = $request->customer_id;
+                 $customer_id = $request['customer_id']['id'];
             }
             else{
 
@@ -198,8 +201,8 @@ class InvoiceController extends Controller
                
                $inv_details->stock_id = $value['chalan_id'];
                $inv_details->sell_id = $invoice->id;
-               $inv_details->product_id = $value['product_id'];
-               $inv_details->category_id = $value['category'];
+               $inv_details->product_id = $value['product_id']['id'];
+               $inv_details->category_id = $value['category']['id'];
                $inv_details->customer_id = $customer_id;
                $inv_details->vendor_id = $stock->vendor_id;
                $inv_details->user_id = Auth::user()->id;
@@ -249,7 +252,7 @@ class InvoiceController extends Controller
                catch(\Exception $e){
              
              DB::rollback();
-             // return $e;
+             return $e;
              return response()->json(['status'=>'error','message'=>'Something Went Wrong!']);
         }
  
@@ -264,6 +267,7 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
+        
         $invoice = Sell::find($id);
 
         $invoice_details = SellDetails::with(['stock.category:id,name','stock.product:id,product_name'])
@@ -271,10 +275,13 @@ class InvoiceController extends Controller
 
         $payment = Payment::where('sell_id','=',$id)->get();
 
+        $company = Company::find(1);
+
         return view('invoice.print_invoice',[
            'invoice' => $invoice,
            'invoice_details' => $invoice_details,
            'payment' => $payment,
+           'company' => $company,
         ]);
     }
 

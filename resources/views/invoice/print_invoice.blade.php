@@ -8,9 +8,9 @@
     <div class="container">
     	<div class="row">
     		<div class="col-md-12" style="text-align: center;">
-    		<h2 >Equipments Solutions Ltd</h2>
-    		<small>Ashulia Dhaka Bangladesh</small><br>
-    		<small>01832944211</small>
+    		<h2 >{{ $company->name }}</h2>
+    		<small>{{ $company->address }}</small><br>
+    		<small>{{ $company->phone }}</small>
     		<hr>
     	</div>
     	</div>

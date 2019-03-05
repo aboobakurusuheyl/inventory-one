@@ -8,7 +8,11 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <select class="form-control select2" @change="getData" v-model="cat">
+                    <select class="form-control select2"
+                     @change="getData"
+                      v-model="cat"
+                      v-select="cat"
+                      >
                      <option value="">Filter By Category</option>
 
                      <option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>         

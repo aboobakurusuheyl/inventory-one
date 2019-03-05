@@ -21,4 +21,5 @@ mix.js('resources/assets/js/report.js', 'public/js')
 mix.js('resources/assets/js/role.js', 'public/js')
 mix.js('resources/assets/js/user.js', 'public/js')
 mix.js('resources/assets/js/customer.js', 'public/js')
+mix.js('resources/assets/js/dashboard.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

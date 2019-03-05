@@ -49,6 +49,7 @@ function subMenu($role_id,$id){
             ->join('permissions', 'permissions.menu_id', '=', 'menus.id')
             ->where('permissions.role_id',$role_id)
             ->where('menus.parent_id','=',$id)
+            ->orderBy('id','ASC')
             ->get()->toArray();
 }
 ?>
