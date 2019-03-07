@@ -23,7 +23,11 @@
 										</span>
 										<div class="form-line">
 											<p>Product Category</p>
-											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.category" @change="findProduct()">
+											<select class="form-control select2"
+											
+											 v-model="stock.category"
+											 v-select="stock.category"
+											  @change="findProduct()">
 												<option value="">Select Category</option>
 
 												<option v-for="(value,index) in categorys" :value="value.id">{{ value.name }}</option>
@@ -40,7 +44,11 @@
 										</span>
 										<div class="form-line">
 											<p>Select Product</p>
-											<select class="form-control show-tick bootstrap-select" data-live-serach="true" v-model="stock.product">
+											<select class="form-control select2"
+											 v-model="stock.product"
+											 v-select="stock.product"
+										
+											 >
 												<option value="">Select Product</option>
 
 												<option v-for="(value,index) in products" :value="value.id">{{ value.product_name }}</option>
@@ -56,7 +64,11 @@
 										</span>
 										<div class="form-line">
 											<p>Vendor</p>
-											<select class="form-control show-tick" data-live-serach="true" v-model="stock.vendor">
+											<select class="form-control select2"
+											 data-live-serach="true"
+											  v-model="stock.vendor"
+											  v-select="stock.vendor"
+												>
 												<option value="">Select Vendor</option>
 
 												<option v-for="(vd,index) in vendors" :value="vd.id">{{ vd.name }}</option>
@@ -243,7 +255,7 @@
 
 				}
 				else{
-
+          this.products = [];
 					axios.get(base_url+'category/product/'+this.stock.category)
 					.then(response => {
 

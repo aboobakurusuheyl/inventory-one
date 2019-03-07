@@ -33087,6 +33087,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33129,7 +33141,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 				this.products = [];
 			} else {
-
+				this.products = [];
 				axios.get(base_url + 'category/product/' + this.stock.category).then(function (response) {
 
 					_this.products = response.data;
@@ -33232,11 +33244,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.category,
                                   expression: "stock.category"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.category,
+                                  expression: "stock.category"
                                 }
                               ],
-                              staticClass:
-                                "form-control show-tick bootstrap-select",
-                              attrs: { "data-live-serach": "true" },
+                              staticClass: "form-control select2",
                               on: {
                                 change: [
                                   function($event) {
@@ -33296,11 +33312,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.product,
                                   expression: "stock.product"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.product,
+                                  expression: "stock.product"
                                 }
                               ],
-                              staticClass:
-                                "form-control show-tick bootstrap-select",
-                              attrs: { "data-live-serach": "true" },
+                              staticClass: "form-control select2",
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -33355,10 +33375,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.vendor,
                                   expression: "stock.vendor"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.vendor,
+                                  expression: "stock.vendor"
                                 }
                               ],
-                              staticClass: "form-control show-tick",
-                              attrs: { "data-live-serach": "true" },
+                              staticClass: "form-control select2",
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -34273,6 +34298,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34353,7 +34390,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 				this.products = [];
 			} else {
-
+				this.products = [];
 				axios.get(base_url + 'category/product/' + this.stock.category).then(function (response) {
 
 					_this2.products = response.data;
@@ -34454,11 +34491,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.category,
                                   expression: "stock.category"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.category,
+                                  expression: "stock.category"
                                 }
                               ],
-                              staticClass:
-                                "form-control show-tick bootstrap-select",
-                              attrs: { "data-live-serach": "true" },
+                              staticClass: "form-control select2",
                               on: {
                                 change: [
                                   function($event) {
@@ -34520,11 +34561,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.product,
                                   expression: "stock.product"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.product,
+                                  expression: "stock.product"
                                 }
                               ],
-                              staticClass:
-                                "form-control show-tick bootstrap-select",
-                              attrs: { "data-live-serach": "true" },
+                              staticClass: "form-control select2",
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -34581,9 +34626,15 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.stock.vendor,
                                   expression: "stock.vendor"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.stock.vendor,
+                                  expression: "stock.vendor"
                                 }
                               ],
-                              staticClass: "form-control show-tick",
+                              staticClass: "form-control select2",
                               attrs: { "data-live-serach": "true" },
                               on: {
                                 change: function($event) {

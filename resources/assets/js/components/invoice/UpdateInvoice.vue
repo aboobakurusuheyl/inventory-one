@@ -542,12 +542,12 @@
 
                   if(type === 2){
 
-                    return ((discount/100)*main_amount).toFixed(2);
+                    return parseFloat(((discount/100)*main_amount)).toFixed(2);
                   }
 
                   else{
 
-                    return discount.toFixed(2);
+                    return parseFloat(discount).toFixed(2);
 
                   }
                 }

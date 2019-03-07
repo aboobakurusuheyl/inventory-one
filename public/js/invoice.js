@@ -35523,9 +35523,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     discount: function discount(type, _discount, main_amount) {
       if (type === "2") {
-        return (_discount / 100 * main_amount).toFixed(2);
+        return parseFloat(_discount / 100 * main_amount).toFixed(2);
       } else {
-        return _discount.toFixed(2);
+        return parseFloat(_discount).toFixed(2);
       }
     }
   },
@@ -37762,10 +37762,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (type === 2) {
 
-        return (_discount / 100 * main_amount).toFixed(2);
+        return parseFloat(_discount / 100 * main_amount).toFixed(2);
       } else {
 
-        return _discount.toFixed(2);
+        return parseFloat(_discount).toFixed(2);
       }
     }
   },
