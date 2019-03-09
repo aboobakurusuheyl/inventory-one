@@ -13,7 +13,7 @@ use App\Customer;
 use App\Sell;
 use App\SellDetails;
 use App\Payment;
-use App\company;
+use App\Company;
 use DB;
 use Auth;
 

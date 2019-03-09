@@ -33932,6 +33932,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -33962,7 +33966,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             product: '',
             category: '',
             vendor: '',
-            products: []
+            products: [],
+            isLoading: true
 
         };
     },
@@ -33986,12 +33991,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-
+            this.isLoading = true;
             axios.get(base_url + "stock-list?page=" + page + "&product=" + this.product + "&category=" + this.category + "&vendor=" + this.vendor).then(function (response) {
 
                 // console.log(response.data);
 
                 _this2.stocks = response.data;
+                _this2.isLoading = false;
             }).catch(function (error) {
 
                 console.log(error);
@@ -35607,105 +35613,113 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c(
-          "table",
-          { staticClass: "table table-condensed table-hover table-bordered" },
-          [
-            _vm._m(0),
-            _vm._v(" "),
+      _vm.isLoading
+        ? _c("div", { staticClass: "loading" }, [
+            _c("h2", { staticStyle: { "text-align": "center" } }, [
+              _vm._v("Loading.......")
+            ])
+          ])
+        : _c("div", { staticClass: "table-responsive" }, [
             _c(
-              "tbody",
-              _vm._l(_vm.stocks.data, function(value, index) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(value.product.product_name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.vendor.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.chalan_no))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.stock_quantity))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.current_quantity))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.buying_price))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.selling_price))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(value.user.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm._f("moment")(value.created_at, "LL")))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(value.stock_quantity - value.sold_qty))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.editQty(value.id, value.category_id)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "material-icons" }, [
-                          _vm._v("add")
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.editStock(value.id, value.category_id)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "material-icons" }, [
-                          _vm._v("edit")
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn bg-pink btn-circle waves-effect waves-circle waves-float",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.deleteStock(value.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "material-icons" }, [
-                          _vm._v("delete")
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              })
+              "table",
+              {
+                staticClass: "table table-condensed table-hover table-bordered"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.stocks.data, function(value, index) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(value.product.product_name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.vendor.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.chalan_no))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.stock_quantity))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.current_quantity))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.buying_price))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.selling_price))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(value.user.name))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("moment")(value.created_at, "LL")))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(value.stock_quantity - value.sold_qty))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.editQty(value.id, value.category_id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("add")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.editStock(value.id, value.category_id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("edit")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.deleteStock(value.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "material-icons" }, [
+                              _vm._v("delete")
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  })
+                )
+              ]
             )
-          ]
-        )
-      ]),
+          ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _vm.stocks.last_page > 1

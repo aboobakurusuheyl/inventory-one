@@ -33496,6 +33496,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -33521,7 +33525,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             products: [],
             name: '',
-            cat: ''
+            cat: '',
+            isLoading: true
 
         };
     },
@@ -33544,11 +33549,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
 
+            this.isLoading = true;
             axios.get(base_url + "product-list?page=" + page + "&name=" + this.name + "&cat=" + this.cat).then(function (response) {
 
                 // console.log(response.data);
 
                 _this2.products = response.data;
+                _this2.isLoading = false;
             }).catch(function (error) {
 
                 console.log(error);
@@ -34204,64 +34211,70 @@ var render = function() {
         _c("div", { staticClass: "col-md-4" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-condensed table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.products.data, function(value, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(value.category.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.product_name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.details))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editProduct(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("edit")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-pink btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.deleteProduct(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("delete")
-                      ])
-                    ]
-                  )
-                ])
-              ])
-            })
-          )
-        ])
-      ]),
+      _vm.isLoading
+        ? _c("div", { staticClass: "loading" }, [
+            _c("h2", { staticStyle: { "text-align": "center" } }, [
+              _vm._v("Loading.....")
+            ])
+          ])
+        : _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-condensed table-hover" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.products.data, function(value, index) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(value.category.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.product_name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.details))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.editProduct(value.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("edit")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteProduct(value.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("delete")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _vm.products.last_page > 1

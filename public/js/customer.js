@@ -33618,6 +33618,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -33636,7 +33640,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       customers: [],
       name: "",
       email: "",
-      phone: ""
+      phone: "",
+      isLoading: true
     };
   },
   created: function created() {
@@ -33655,10 +33660,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
+      this.isLoading = true;
       axios.get(base_url + "customer-list?page=" + page + "&name=" + this.name + "&email=" + this.email + "&phone=" + this.phone).then(function (response) {
         // console.log(response.data);
 
         _this2.customers = response.data;
+        _this2.isLoading = false;
       }).catch(function (error) {
         console.log(error);
       });
@@ -34315,55 +34322,63 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-condensed table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.customers.data, function(value, index) {
-              return _c("tr", { key: index }, [
-                _c("td", [_vm._v(_vm._s(value.customer_name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.email))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.phone))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.address))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.total_amount))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.total_paid_amount))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(value.total_amount - value.total_paid_amount))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editcustomer(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("edit")
-                      ])
-                    ]
-                  )
-                ])
-              ])
-            })
-          )
-        ])
-      ]),
+      _vm.isLoading
+        ? _c("div", { staticClass: "loading" }, [
+            _c("h2", { staticStyle: { "text-align": "center" } }, [
+              _vm._v("Loading.......")
+            ])
+          ])
+        : _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-condensed table-hover" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.customers.data, function(value, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [_vm._v(_vm._s(value.customer_name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.phone))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.address))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.total_amount))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(value.total_paid_amount))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(value.total_amount - value.total_paid_amount)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.editcustomer(value.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("edit")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _vm.customers.last_page > 1

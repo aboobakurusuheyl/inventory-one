@@ -37031,6 +37031,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -37067,8 +37071,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             end_date: '',
             invoices: [],
             format: 'yyyy-MM-dd',
-
-            url: base_url + 'invoice/'
+            url: base_url + 'invoice/',
+            isLoading: true
 
         };
     },
@@ -37092,8 +37096,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
 
+            this.isLoading = true;
             axios.get(base_url + "invoice-list?page=" + page + "&customer_id=" + this.customer_id + "&invoice_id=" + this.invoice_id + "&start_date=" + this.end_date + "&end_date=" + this.start_date).then(function (response) {
                 _this2.invoices = response.data;
+                _this2.isLoading = false;
             }).catch(function (error) {
 
                 console.log(error);
@@ -39737,161 +39743,174 @@ var render = function() {
           _c("div", { staticClass: "col-md-4" })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "table-responsive" }, [
-          _c(
-            "table",
-            { staticClass: "table table-condensed table-hover table-bordered" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
+        _vm.isLoading
+          ? _c("div", { staticClass: "loading" }, [
+              _c("h2", { staticStyle: { "text-align": "center" } }, [
+                _vm._v("Loading.......")
+              ])
+            ])
+          : _c("div", { staticClass: "table-responsive" }, [
               _c(
-                "tbody",
-                _vm._l(_vm.invoices.data, function(value, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(value.id))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("moment")(value.sell_date, "LL")))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(value.customer.customer_name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(value.total_amount))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(value.paid_amount))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        class: {
-                          "text-success": value.payment_status === 1,
-                          "text-danger": value.payment_status === 0
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                              " +
-                            _vm._s(value.total_amount - value.paid_amount) +
-                            "\n                             "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(value.user.name))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "btn bg-blue-grey btn-circle waves-effect waves-circle waves-float",
-                          attrs: {
-                            href: "",
-                            "data-toggle": "modal",
-                            "data-target": "#smallModal"
+                "table",
+                {
+                  staticClass:
+                    "table table-condensed table-hover table-bordered"
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.invoices.data, function(value, index) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(value.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(_vm._f("moment")(value.sell_date, "LL"))
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(value.customer.customer_name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(value.total_amount))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(value.paid_amount))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          {
+                            class: {
+                              "text-success": value.payment_status === 1,
+                              "text-danger": value.payment_status === 0
+                            }
                           },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.CreatePayment(value.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("attach_money")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "btn bg-cyan btn-circle waves-effect waves-circle waves-float",
-                          attrs: {
-                            href: "",
-                            "data-toggle": "modal",
-                            "data-target": "#viewPayment"
-                          },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.ViewPayment(value.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("remove_red_eye")
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "btn bg-orange btn-circle waves-effect waves-circle waves-float",
-                          attrs: {
-                            href: _vm.url + value.id,
-                            target: "_blank",
-                            type: "button"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("print")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.editInvoice(value.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("edit")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn bg-pink btn-circle waves-effect waves-circle waves-float",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.deleteInvoice(value.id)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "material-icons" }, [
-                            _vm._v("delete")
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                })
+                          [
+                            _vm._v(
+                              "\n                              " +
+                                _vm._s(value.total_amount - value.paid_amount) +
+                                "\n                             "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(value.user.name))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn bg-blue-grey btn-circle waves-effect waves-circle waves-float",
+                              attrs: {
+                                href: "",
+                                "data-toggle": "modal",
+                                "data-target": "#smallModal"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.CreatePayment(value.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("attach_money")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn bg-cyan btn-circle waves-effect waves-circle waves-float",
+                              attrs: {
+                                href: "",
+                                "data-toggle": "modal",
+                                "data-target": "#viewPayment"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.ViewPayment(value.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("remove_red_eye")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn bg-orange btn-circle waves-effect waves-circle waves-float",
+                              attrs: {
+                                href: _vm.url + value.id,
+                                target: "_blank",
+                                type: "button"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("print")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.editInvoice(value.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("edit")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteInvoice(value.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("delete")
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    })
+                  )
+                ]
               )
-            ]
-          )
-        ]),
+            ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _vm.invoices.last_page > 1

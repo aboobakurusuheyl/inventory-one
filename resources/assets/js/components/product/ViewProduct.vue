@@ -27,7 +27,11 @@
             </div>
         </div>
 
-        <div class="table-responsive">
+        <div class="loading" v-if="isLoading">
+            <h2 style="text-align:center">Loading.....</h2>
+        </div>
+
+        <div class="table-responsive" v-else>
             
             <table class="table table-condensed table-hover">
                 <thead>
@@ -129,6 +133,7 @@
         products : [],
         name : '',
         cat : '',
+        isLoading : true,
 
     }
     
@@ -150,12 +155,14 @@ methods : {
     
    getData(page = 1){
       
+      this.isLoading = true;
       axios.get(base_url+"product-list?page="+page+"&name="+this.name+"&cat="+this.cat)
       .then(response => {
          
            // console.log(response.data);
 
            this.products = response.data;
+           this.isLoading = false;
 
        }).catch(error => {
 

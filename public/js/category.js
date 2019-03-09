@@ -33356,7 +33356,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
 
 
 
@@ -33364,127 +33367,114 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
 
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
+  components: {
+    "update-category": __WEBPACK_IMPORTED_MODULE_2__Updatecategory_vue___default.a
+  },
 
-    components: {
+  data: function data() {
+    return {
+      categorys: [],
+      name: "",
+      isLoading: true
+    };
+  },
+  created: function created() {
+    var _this = this;
+    this.getData();
 
-        'update-category': __WEBPACK_IMPORTED_MODULE_2__Updatecategory_vue___default.a
+    __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on("category-created", function () {
+      window.history.pushState({}, null, location.pathname);
+      _this.getData();
+    });
+  },
 
+
+  methods: {
+    getData: function getData() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      this.isLoading = true;
+      axios.get(base_url + "category-list?page=" + page + "&name=" + this.name).then(function (response) {
+        _this2.categorys = response.data;
+        _this2.isLoading = false;
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
 
-    data: function data() {
 
-        return {
+    // edit vendor
 
-            categorys: [],
-            name: ''
-
-        };
+    editCategory: function editCategory(id) {
+      __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit("category-edit", id);
     },
-    created: function created() {
-
-        var _this = this;
-        this.getData();
-
-        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on('category-created', function () {
-            window.history.pushState({}, null, location.pathname);
-            _this.getData();
-        });
+    showMessage: function showMessage(data) {
+      if (data.status == "success") {
+        toastr.success(data.message, "Success Alert", { timeOut: 500 });
+      } else {
+        toastr.error(data.message, "Error Alert", { timeOut: 500 });
+      }
     },
 
 
-    methods: {
-        getData: function getData() {
-            var _this2 = this;
+    // delete vendor
 
-            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    deleteCategory: function deleteCategory(id) {
+      var _this3 = this;
 
-
-            axios.get(base_url + "category-list?page=" + page + "&name=" + this.name).then(function (response) {
-
-                // console.log(response.data);
-
-                _this2.categorys = response.data;
-            }).catch(function (error) {
-
-                console.log(error);
-            });
-        },
-
-
-        // edit vendor 
-
-        editCategory: function editCategory(id) {
-
-            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('category-edit', id);
-        },
-        showMessage: function showMessage(data) {
-            if (data.status == 'success') {
-                toastr.success(data.message, 'Success Alert', { timeOut: 500 });
-            } else {
-                toastr.error(data.message, 'Error Alert', { timeOut: 500 });
-            }
-        },
-
-
-        // delete vendor 
-
-        deleteCategory: function deleteCategory(id) {
-            var _this3 = this;
-
-            Swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }, function () {}).then(function (result) {
-                if (result.value) {
-
-                    axios.delete(base_url + 'category/' + id).then(function (res) {
-
-                        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('category-created', 1);
-                        _this3.successAlert(res.data);
-                    });
-                }
-            });
-        },
-        range: function range(start, count) {
-            return Array.apply(0, Array(count)).map(function (element, index) {
-                return index + start;
-            });
-        },
-        pageClicked: function pageClicked(pageNo) {
-            var vm = this;
-            vm.getData(pageNo);
+      Swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }, function () {}).then(function (result) {
+        if (result.value) {
+          axios.delete(base_url + "category/" + id).then(function (res) {
+            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit("category-created", 1);
+            _this3.successAlert(res.data);
+          });
         }
+      });
     },
-
-    computed: {
-        paginateLoop: function paginateLoop() {
-            var categorys = this.categorys;
-            if (categorys.last_page > 11) {
-                if (categorys.last_page - 5 <= categorys.current_page) {
-                    return categorys.last_page - 10;
-                }
-                if (categorys.current_page > 6) {
-                    return categorys.current_page - 5;
-                }
-            }
-            return 1;
-        },
-        numberOfPage: function numberOfPage() {
-            if (this.categorys.last_page < 11) {
-                return this.categorys.last_page;
-            } else {
-                return 11;
-            }
-        }
+    range: function range(start, count) {
+      return Array.apply(0, Array(count)).map(function (element, index) {
+        return index + start;
+      });
+    },
+    pageClicked: function pageClicked(pageNo) {
+      var vm = this;
+      vm.getData(pageNo);
     }
+  },
 
+  computed: {
+    paginateLoop: function paginateLoop() {
+      var categorys = this.categorys;
+      if (categorys.last_page > 11) {
+        if (categorys.last_page - 5 <= categorys.current_page) {
+          return categorys.last_page - 10;
+        }
+        if (categorys.current_page > 6) {
+          return categorys.current_page - 5;
+        }
+      }
+      return 1;
+    },
+    numberOfPage: function numberOfPage() {
+      if (this.categorys.last_page < 11) {
+        return this.categorys.last_page;
+      } else {
+        return 11;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -33831,217 +33821,240 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrap" }, [
-    _c("div", { staticClass: "body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.name,
-                expression: "name"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Serach By Name", name: "" },
-            domProps: { value: _vm.name },
-            on: {
-              keyup: _vm.getData,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.name = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-condensed table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.categorys.data, function(value, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(value.name))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editCategory(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("edit")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-pink btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.deleteCategory(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("delete")
-                      ])
-                    ]
-                  )
-                ])
-              ])
-            })
-          )
+    _vm.isLoading
+      ? _c("div", { staticClass: "row" }, [
+          _c("h2", { staticStyle: { "text-align": "center" } }, [
+            _vm._v("Loading......")
+          ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _vm.categorys.last_page > 1
-          ? _c("div", { staticClass: "text-center col-md-12" }, [
+      : _c("div", { staticClass: "body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Serach By Name",
+                  name: ""
+                },
+                domProps: { value: _vm.name },
+                on: {
+                  keyup: _vm.getData,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-condensed table-hover" }, [
+              _vm._m(0),
+              _vm._v(" "),
               _c(
-                "ul",
-                { staticClass: "pagination" },
-                [
-                  _c(
-                    "li",
-                    {
-                      class: [_vm.categorys.current_page == 1 ? "disabled" : ""]
-                    },
-                    [
-                      _vm.categorys.current_page != 1
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "?page=" + _vm.categorys.current_page,
-                                "aria-label": "Previous"
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(
-                                    _vm.categorys.current_page - 1
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("«")
-                              ])
-                            ]
-                          )
-                        : _c("a", [
-                            _c("span", { attrs: { "aria-hidden": "true" } }, [
-                              _vm._v("«")
-                            ])
+                "tbody",
+                _vm._l(_vm.categorys.data, function(value, index) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(value.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.editCategory(value.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("edit")
                           ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(
-                    _vm.range(_vm.paginateLoop, _vm.numberOfPage),
-                    function(pageNo) {
-                      return _c(
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteCategory(value.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "material-icons" }, [
+                            _vm._v("delete")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _vm.categorys.last_page > 1
+              ? _c("div", { staticClass: "text-center col-md-12" }, [
+                  _c(
+                    "ul",
+                    { staticClass: "pagination" },
+                    [
+                      _c(
                         "li",
                         {
                           class: [
-                            _vm.categorys.current_page == pageNo ? "active" : ""
+                            _vm.categorys.current_page == 1 ? "disabled" : ""
                           ]
                         },
                         [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "?page=" + pageNo },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(pageNo)
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(pageNo))]
-                          )
-                        ]
-                      )
-                    }
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      class: [
-                        _vm.categorys.current_page == _vm.categorys.last_page
-                          ? "disabled"
-                          : ""
-                      ]
-                    },
-                    [
-                      _vm.categorys.current_page != _vm.categorys.last_page
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "?page=" + _vm.categorys.current_page,
-                                "aria-label": "Next"
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(
-                                    _vm.categorys.current_page + 1
+                          _vm.categorys.current_page != 1
+                            ? _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "?page=" + _vm.categorys.current_page,
+                                    "aria-label": "Previous"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.pageClicked(
+                                        _vm.categorys.current_page - 1
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { attrs: { "aria-hidden": "true" } },
+                                    [_vm._v("«")]
                                   )
-                                }
-                              }
+                                ]
+                              )
+                            : _c("a", [
+                                _c(
+                                  "span",
+                                  { attrs: { "aria-hidden": "true" } },
+                                  [_vm._v("«")]
+                                )
+                              ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(
+                        _vm.range(_vm.paginateLoop, _vm.numberOfPage),
+                        function(pageNo) {
+                          return _c(
+                            "li",
+                            {
+                              class: [
+                                _vm.categorys.current_page == pageNo
+                                  ? "active"
+                                  : ""
+                              ]
                             },
                             [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("»")
-                              ])
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "?page=" + pageNo },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.pageClicked(pageNo)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(pageNo))]
+                              )
                             ]
                           )
-                        : _c("a", [
-                            _c("span", { attrs: { "aria-hidden": "true" } }, [
-                              _vm._v("»")
-                            ])
-                          ])
-                    ]
+                        }
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          class: [
+                            _vm.categorys.current_page ==
+                            _vm.categorys.last_page
+                              ? "disabled"
+                              : ""
+                          ]
+                        },
+                        [
+                          _vm.categorys.current_page != _vm.categorys.last_page
+                            ? _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "?page=" + _vm.categorys.current_page,
+                                    "aria-label": "Next"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.pageClicked(
+                                        _vm.categorys.current_page + 1
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { attrs: { "aria-hidden": "true" } },
+                                    [_vm._v("»")]
+                                  )
+                                ]
+                              )
+                            : _c("a", [
+                                _c(
+                                  "span",
+                                  { attrs: { "aria-hidden": "true" } },
+                                  [_vm._v("»")]
+                                )
+                              ])
+                        ]
+                      )
+                    ],
+                    2
                   )
-                ],
-                2
-              )
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [_c("update-category")], 1)
-    ])
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [_c("update-category")], 1)
+        ])
   ])
 }
 var staticRenderFns = [

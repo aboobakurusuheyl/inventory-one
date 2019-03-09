@@ -26,7 +26,12 @@
         <div class="col-md-4"></div>
       </div>
 
-      <div class="table-responsive">
+      
+       <div class="loading" v-if="isLoading">
+                    <h2 style="text-align:center">Loading.......</h2>
+        </div>
+
+      <div class="table-responsive" v-else>
         <table class="table table-condensed table-hover">
           <thead>
             <tr>
@@ -129,7 +134,8 @@ export default {
     return {
       users: [],
       name: "",
-      email: ""
+      email: "",
+      isLoading : true,
     };
   },
   created() {
@@ -143,6 +149,7 @@ export default {
 
   methods: {
     getData(page = 1) {
+      this.isLoading = true;
       axios
         .get(
           base_url +
@@ -155,6 +162,7 @@ export default {
         )
         .then(response => {
           this.users = response.data;
+          this.isLoading = false;
         })
         .catch(error => {
           console.log(error);

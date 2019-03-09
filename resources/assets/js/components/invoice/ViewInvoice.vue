@@ -44,7 +44,11 @@
 
                  </div>
 
-                 <div class="table-responsive">
+                <div class="loading" v-if="isLoading">
+                    <h2 style="text-align:center">Loading.......</h2>
+                </div>
+
+                 <div class="table-responsive" v-else>
 
                      <table class="table table-condensed table-hover table-bordered">
                          <thead>
@@ -181,9 +185,8 @@
                 end_date : '',
                 invoices : [],
                 format : 'yyyy-MM-dd',
-
-
                 url : base_url+'invoice/',
+                isLoading : true,
 
             }
 
@@ -207,9 +210,11 @@
 
            getData(page = 1){
 
+              this.isLoading = true;
                axios.get(base_url+"invoice-list?page="+page+"&customer_id="+this.customer_id+"&invoice_id="+this.invoice_id+"&start_date="+this.end_date+"&end_date="+this.start_date).then(response =>
                 {
                       this.invoices = response.data;
+                      this.isLoading = false;
 
                 }).catch(error =>
                 {
