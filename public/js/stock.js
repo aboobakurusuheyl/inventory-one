@@ -33934,8 +33934,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -35640,7 +35638,9 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(value.stock_quantity))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(value.current_quantity))]),
+                      _c("td", [
+                        _vm._v(_vm._s(value.stock_quantity - value.sold_qty))
+                      ]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(value.buying_price))]),
                       _vm._v(" "),
@@ -35650,10 +35650,6 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm._f("moment")(value.created_at, "LL")))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(value.stock_quantity - value.sold_qty))
                       ]),
                       _vm._v(" "),
                       _c("td", [
@@ -35859,8 +35855,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Selling Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Entry By")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Entry Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Entry Date")]),
         _vm._v(" "),
