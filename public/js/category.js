@@ -33360,6 +33360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -33438,7 +33439,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (result.value) {
           axios.delete(base_url + "category/" + id).then(function (res) {
             __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit("category-created", 1);
-            _this3.successAlert(res.data);
+            _this3.successALert(res.data);
           });
         }
       });
@@ -33821,49 +33822,45 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrap" }, [
-    _vm.isLoading
-      ? _c("div", { staticClass: "row" }, [
-          _c("h2", { staticStyle: { "text-align": "center" } }, [
-            _vm._v("Loading......")
-          ])
-        ])
-      : _c("div", { staticClass: "body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.name,
-                    expression: "name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  placeholder: "Serach By Name",
-                  name: ""
-                },
-                domProps: { value: _vm.name },
-                on: {
-                  keyup: _vm.getData,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  }
+    _c("div", { staticClass: "body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Serach By Name", name: "" },
+            domProps: { value: _vm.name },
+            on: {
+              keyup: _vm.getData,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
+                _vm.name = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" })
+      ]),
+      _vm._v(" "),
+      _vm.isLoading
+        ? _c("div", { staticClass: "row" }, [
+            _c("h2", { staticStyle: { "text-align": "center" } }, [
+              _vm._v("Loading......")
+            ])
+          ])
+        : _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-condensed table-hover" }, [
               _vm._m(0),
               _vm._v(" "),
@@ -33919,142 +33916,129 @@ var render = function() {
               )
             ])
           ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _vm.categorys.last_page > 1
-              ? _c("div", { staticClass: "text-center col-md-12" }, [
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _vm.categorys.last_page > 1
+          ? _c("div", { staticClass: "text-center col-md-12" }, [
+              _c(
+                "ul",
+                { staticClass: "pagination" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "pagination" },
+                    "li",
+                    {
+                      class: [_vm.categorys.current_page == 1 ? "disabled" : ""]
+                    },
                     [
-                      _c(
-                        "li",
-                        {
-                          class: [
-                            _vm.categorys.current_page == 1 ? "disabled" : ""
-                          ]
-                        },
-                        [
-                          _vm.categorys.current_page != 1
-                            ? _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "?page=" + _vm.categorys.current_page,
-                                    "aria-label": "Previous"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.pageClicked(
-                                        _vm.categorys.current_page - 1
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "span",
-                                    { attrs: { "aria-hidden": "true" } },
-                                    [_vm._v("«")]
-                                  )
-                                ]
-                              )
-                            : _c("a", [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("«")]
-                                )
-                              ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(
-                        _vm.range(_vm.paginateLoop, _vm.numberOfPage),
-                        function(pageNo) {
-                          return _c(
-                            "li",
+                      _vm.categorys.current_page != 1
+                        ? _c(
+                            "a",
                             {
-                              class: [
-                                _vm.categorys.current_page == pageNo
-                                  ? "active"
-                                  : ""
-                              ]
+                              attrs: {
+                                href: "?page=" + _vm.categorys.current_page,
+                                "aria-label": "Previous"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.pageClicked(
+                                    _vm.categorys.current_page - 1
+                                  )
+                                }
+                              }
                             },
                             [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "?page=" + pageNo },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.pageClicked(pageNo)
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(pageNo))]
-                              )
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("«")
+                              ])
                             ]
                           )
-                        }
-                      ),
-                      _vm._v(" "),
-                      _c(
+                        : _c("a", [
+                            _c("span", { attrs: { "aria-hidden": "true" } }, [
+                              _vm._v("«")
+                            ])
+                          ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(
+                    _vm.range(_vm.paginateLoop, _vm.numberOfPage),
+                    function(pageNo) {
+                      return _c(
                         "li",
                         {
                           class: [
-                            _vm.categorys.current_page ==
-                            _vm.categorys.last_page
-                              ? "disabled"
-                              : ""
+                            _vm.categorys.current_page == pageNo ? "active" : ""
                           ]
                         },
                         [
-                          _vm.categorys.current_page != _vm.categorys.last_page
-                            ? _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "?page=" + _vm.categorys.current_page,
-                                    "aria-label": "Next"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.pageClicked(
-                                        _vm.categorys.current_page + 1
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "span",
-                                    { attrs: { "aria-hidden": "true" } },
-                                    [_vm._v("»")]
-                                  )
-                                ]
-                              )
-                            : _c("a", [
-                                _c(
-                                  "span",
-                                  { attrs: { "aria-hidden": "true" } },
-                                  [_vm._v("»")]
-                                )
-                              ])
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "?page=" + pageNo },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.pageClicked(pageNo)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(pageNo))]
+                          )
                         ]
                       )
-                    ],
-                    2
+                    }
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      class: [
+                        _vm.categorys.current_page == _vm.categorys.last_page
+                          ? "disabled"
+                          : ""
+                      ]
+                    },
+                    [
+                      _vm.categorys.current_page != _vm.categorys.last_page
+                        ? _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "?page=" + _vm.categorys.current_page,
+                                "aria-label": "Next"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.pageClicked(
+                                    _vm.categorys.current_page + 1
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("»")
+                              ])
+                            ]
+                          )
+                        : _c("a", [
+                            _c("span", { attrs: { "aria-hidden": "true" } }, [
+                              _vm._v("»")
+                            ])
+                          ])
+                    ]
                   )
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [_c("update-category")], 1)
-        ])
+                ],
+                2
+              )
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [_c("update-category")], 1)
+    ])
   ])
 }
 var staticRenderFns = [

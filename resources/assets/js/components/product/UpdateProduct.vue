@@ -22,7 +22,7 @@
 											<i class="material-icons">palette</i>
 										</span>
 										<div class="form-line">
-											<select class="form-control select2" v-model="product.category">
+											<select class="form-control select2" v-model="product.category" v-select="product.category">
 												<option value="">Select Category</option>
 
 												<option v-for="(value,index) in cat" :value="value.id">{{ value.name }}</option>

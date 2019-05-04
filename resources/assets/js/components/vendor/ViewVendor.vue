@@ -189,7 +189,7 @@
                     .then(res => {
 
                      EventBus.$emit('vendor-created',1);
-                     this.successAlert(res.data);
+                     this.successALert(res.data);
                     })
 
                  

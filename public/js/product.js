@@ -33914,6 +33914,12 @@ var render = function() {
                                   rawName: "v-model",
                                   value: _vm.product.category,
                                   expression: "product.category"
+                                },
+                                {
+                                  name: "select",
+                                  rawName: "v-select",
+                                  value: _vm.product.category,
+                                  expression: "product.category"
                                 }
                               ],
                               staticClass: "form-control select2",

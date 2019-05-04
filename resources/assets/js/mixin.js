@@ -14,7 +14,7 @@ export default{
    
       successALert(data){
            
-           console.log(data)
+        console.log(data)
 				Swal({
 					position: 'top-end',
 					type: data.status,

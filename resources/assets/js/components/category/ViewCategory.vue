@@ -1,9 +1,8 @@
+
 <template>
   <div class="wrap">
-    <div class="row" v-if="isLoading">
-      <h2 style="text-align:center">Loading......</h2>
-    </div>
-    <div class="body" v-else>
+  
+    <div class="body">
       <div class="row">
         <div class="col-md-4">
           <input
@@ -18,8 +17,10 @@
         <div class="col-md-4"></div>
         <div class="col-md-4"></div>
       </div>
-
-      <div class="table-responsive">
+     <div class="row" v-if="isLoading">
+      <h2 style="text-align:center">Loading......</h2>
+     </div>
+      <div class="table-responsive"  v-else>
         <table class="table table-condensed table-hover">
           <thead>
             <tr>
@@ -177,7 +178,7 @@ export default {
         if (result.value) {
           axios.delete(base_url + "category/" + id).then(res => {
             EventBus.$emit("category-created", 1);
-            this.successAlert(res.data);
+            this.successALert(res.data);
           });
         }
       });

@@ -33574,7 +33574,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     axios.delete(base_url + 'supplier/' + id).then(function (res) {
 
                         __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('vendor-created', 1);
-                        _this3.successAlert(res.data);
+                        _this3.successALert(res.data);
                     });
                 }
             });
