@@ -5197,13 +5197,6 @@ module.exports = function normalizeComponent (
     }
   },
 
-  filters: {
-    moment: function moment(date, format) {
-      return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
-    }
-
-  },
-
   mounted: function mounted() {
 
     $('.select2').select2();
@@ -33386,7 +33379,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     this.getData();
 
     __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on("category-created", function () {
-      window.history.pushState({}, null, location.pathname);
       _this.getData();
     });
   },

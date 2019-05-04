@@ -39,9 +39,9 @@ class InvoiceController extends Controller
     public function getLastInvoice(){
 
             
-            $invoice = Sell::orderBy('id','desc')->first();
+            $invoice = Sell::orderBy('id','desc')->get();
 
-            if(count($invoice)>0){
+            if($invoice){
 
                 return $invoice->id + 1;
             }

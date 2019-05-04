@@ -148,6 +148,7 @@
     
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
+    import MomentMixin from '../../moment_mixin.js';
 
     import editStock from './editStock.vue';
     import UpdateQuantity from './UpdateQuantity.vue';
@@ -157,7 +158,7 @@
 
     	props:['categorys','vendors'],
 
-        mixins:[mixin],
+        mixins:[mixin,MomentMixin],
 
         components : {
            

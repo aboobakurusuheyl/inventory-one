@@ -81,10 +81,11 @@
 
 		import {EventBus} from '../../vue-asset';
 		import mixin from '../../mixin.js';
+		import MomentMixin from '../../moment_mixin.js';
 		export default{
 
 			name : 'view-payment',
-			mixins : [mixin],
+			mixins : [mixin,MomentMixin],
 
 			data(){
 

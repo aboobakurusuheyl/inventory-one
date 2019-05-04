@@ -25,12 +25,7 @@ export default{
 			},
    },
 
- filters: {
-  moment: function (date,format) {
-    return moment(date).format(format);
-  }
 
-},
 
 
 mounted(){

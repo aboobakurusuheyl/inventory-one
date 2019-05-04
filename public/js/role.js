@@ -5197,13 +5197,6 @@ module.exports = function normalizeComponent (
     }
   },
 
-  filters: {
-    moment: function moment(date, format) {
-      return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
-    }
-
-  },
-
   mounted: function mounted() {
 
     $('.select2').select2();

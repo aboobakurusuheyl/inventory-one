@@ -5197,13 +5197,6 @@ module.exports = function normalizeComponent (
     }
   },
 
-  filters: {
-    moment: function moment(date, format) {
-      return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
-    }
-
-  },
-
   mounted: function mounted() {
 
     $('.select2').select2();
@@ -36879,13 +36872,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UpdateInvoice_vue__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__UpdateInvoice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__UpdateInvoice_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreatePayment_vue__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CreatePayment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__CreatePayment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ViewPayment_vue__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ViewPayment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__ViewPayment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__moment_mixin_js__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuejs_datepicker__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__UpdateInvoice_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__UpdateInvoice_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__UpdateInvoice_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CreatePayment_vue__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CreatePayment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__CreatePayment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ViewPayment_vue__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ViewPayment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__ViewPayment_vue__);
 //
 //
 //
@@ -37035,6 +37029,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -37049,15 +37044,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     props: ['categorys', 'customers'],
 
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin_js__["a" /* default */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin_js__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__moment_mixin_js__["a" /* default */]],
 
     components: {
 
         //     'edit-stock' : editStock,
-        'update-invoice': __WEBPACK_IMPORTED_MODULE_3__UpdateInvoice_vue___default.a,
-        'create-payment': __WEBPACK_IMPORTED_MODULE_4__CreatePayment_vue___default.a,
-        'view-payment': __WEBPACK_IMPORTED_MODULE_5__ViewPayment_vue___default.a,
-        'vuejs-datepicker': __WEBPACK_IMPORTED_MODULE_2_vuejs_datepicker__["a" /* default */]
+        'update-invoice': __WEBPACK_IMPORTED_MODULE_4__UpdateInvoice_vue___default.a,
+        'create-payment': __WEBPACK_IMPORTED_MODULE_5__CreatePayment_vue___default.a,
+        'view-payment': __WEBPACK_IMPORTED_MODULE_6__ViewPayment_vue___default.a,
+        'vuejs-datepicker': __WEBPACK_IMPORTED_MODULE_3_vuejs_datepicker__["a" /* default */]
 
     },
 
@@ -39273,6 +39268,7 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__moment_mixin_js__ = __webpack_require__(302);
 //
 //
 //
@@ -39352,6 +39348,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -39359,7 +39356,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 
 	name: 'view-payment',
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin_js__["a" /* default */]],
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin_js__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__moment_mixin_js__["a" /* default */]],
 
 	data: function data() {
 
@@ -40080,6 +40077,89 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-1d8d1f02", module.exports)
   }
 }
+
+/***/ }),
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+// import {EventBus} from './vue-asset';
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+   created: function created() {
+
+      // this.hello();
+
+   },
+
+
+   methods: {},
+
+   filters: {
+      moment: function moment(date, format) {
+         return __WEBPACK_IMPORTED_MODULE_0_moment___default()(date).format(format);
+      }
+
+   }
+
+});
 
 /***/ })
 /******/ ]);

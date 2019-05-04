@@ -151,6 +151,7 @@
 
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
+    import MomentMixin from '../../moment_mixin.js';
 
     import Datepicker from 'vuejs-datepicker';
     import UpdateInvoice from './UpdateInvoice.vue';
@@ -163,7 +164,7 @@
 
         props: ['categorys','customers'],
 
-        mixins:[mixin],
+        mixins:[mixin,MomentMixin],
 
         components : {
 

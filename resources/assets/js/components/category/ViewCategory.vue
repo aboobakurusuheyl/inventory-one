@@ -127,12 +127,13 @@ export default {
     this.getData();
 
     EventBus.$on("category-created", function() {
-      window.history.pushState({}, null, location.pathname);
       _this.getData();
     });
   },
 
   methods: {
+
+
     getData(page = 1) {
 		this.isLoading = true;
       axios.get(base_url + "category-list?page=" + page + "&name=" + this.name)
@@ -151,6 +152,7 @@ export default {
     editCategory(id) {
       EventBus.$emit("category-edit", id);
     },
+
 
     showMessage(data) {
       if (data.status == "success") {
