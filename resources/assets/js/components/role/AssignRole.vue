@@ -32,6 +32,7 @@
                                         <div class="switch">
                                             <label><input :value="value.id" :id="value.id"  v-model="value.check" type="checkbox" checked><span class="lever switch-col-blue"></span></label>
                                         </div>
+                                        <br>
                                     </div>
 									 										
 									</div>

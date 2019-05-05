@@ -195,23 +195,6 @@
                  
                  }
              })       
-           
-         // if(confirm('Are You Sure ?')){
-      
-         //   axios.delete(base_url+'supplier/'+id).then(response => {
-         //     console.log(response.data)
-         //     if(response.data.status == 'success'){
-         //        this.showMessage(response.data);
-         //        EventBus.$emit('vendor-created',1);
-         //     }else{
-         //        this.showMessage(response.data);
-         //     }
-
-         //   })
-
-         // }
-
-
             
          },
 

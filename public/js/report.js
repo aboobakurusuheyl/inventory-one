@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 247);
+/******/ 	return __webpack_require__(__webpack_require__.s = 248);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -34402,18 +34402,19 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
 /* 244 */,
 /* 245 */,
 /* 246 */,
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(248);
-
-
-/***/ }),
+/* 247 */,
 /* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(249);
+
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
 __webpack_require__(2);
-Vue.component('report-form', __webpack_require__(249));
+Vue.component('report-form', __webpack_require__(250));
 // Vue.component('view-stock', require('./components/stock/ViewStock.vue'));
 
 var app = new Vue({
@@ -34421,15 +34422,15 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(250)
+var __vue_script__ = __webpack_require__(251)
 /* template */
-var __vue_template__ = __webpack_require__(251)
+var __vue_template__ = __webpack_require__(252)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34468,7 +34469,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34659,7 +34660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {

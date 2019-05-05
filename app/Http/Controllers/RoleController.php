@@ -70,6 +70,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+
         $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get(); 
         $permission = Permission::where('role_id','=',$id)->pluck('menu_id')->toArray();
 
@@ -78,7 +79,7 @@ class RoleController extends Controller
          $menus = [];
 
 
-         foreach ($menu as $key => $value) {
+         foreach($menu as $key => $value) {
             
            
            $men['id'] = $value->id;
@@ -111,7 +112,19 @@ class RoleController extends Controller
 
          }
 
-         return $menus;
+      return $menus;
+
+
+
+
+  
+
+   // $data = makeNested($menus);
+   //  echo "<pre>";
+   //  print_r($data);
+   //  echo "</pre>";
+
+   //  exit();
 
 
 

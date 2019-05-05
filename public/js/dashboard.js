@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 288);
+/******/ 	return __webpack_require__(__webpack_require__.s = 289);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -32954,18 +32954,19 @@ webpackContext.id = 161;
 /* 285 */,
 /* 286 */,
 /* 287 */,
-/* 288 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(289);
-
-
-/***/ }),
+/* 288 */,
 /* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(290);
+
+
+/***/ }),
+/* 290 */
+/***/ (function(module, exports, __webpack_require__) {
+
 __webpack_require__(2);
-Vue.component('info-box', __webpack_require__(290));
+Vue.component('info-box', __webpack_require__(291));
 // Vue.component('view-invoice', require('./components/invoice/ViewInvoice.vue'));
 
 var app = new Vue({
@@ -32974,15 +32975,15 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(291)
+var __vue_script__ = __webpack_require__(292)
 /* template */
-var __vue_template__ = __webpack_require__(292)
+var __vue_template__ = __webpack_require__(293)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33021,7 +33022,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33240,7 +33241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
