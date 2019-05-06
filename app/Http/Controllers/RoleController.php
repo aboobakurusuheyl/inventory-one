@@ -71,60 +71,39 @@ class RoleController extends Controller
     public function show($id)
     {
 
-        $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get(); 
+        $menu = Menu::select('id','name','parent_id')->orderBy('parent_id','asc')->get()->toArray(); 
         $permission = Permission::where('role_id','=',$id)->pluck('menu_id')->toArray();
 
 
-         $men = [];
+    
          $menus = [];
 
 
          foreach($menu as $key => $value) {
-            
-           
-           $men['id'] = $value->id;
-           $men['name'] = $value->name;
-           $men['parent_id'] = $value->parent_id;
-
-           if(count($permission) < 0){
-
-            $men['check'] = false;
-
-           }
-           else{
              
-             if(in_array($value->id, $permission)){
+             if(in_array($value['id'], $permission)){
                 
-                $men['check'] = true;
+                $value['check'] = true;
 
              }
              else{
 
-               $men['check'] = false; 
+               $value['check'] = false; 
              }
 
 
 
-           }
 
-          array_push($menus,$men);
+          array_push($menus,$value);
 
 
          }
+        
+        // return menu according herirarcy 
 
-      return $menus;
+   return  makeNested($menus);
+   
 
-
-
-
-  
-
-   // $data = makeNested($menus);
-   //  echo "<pre>";
-   //  print_r($data);
-   //  echo "</pre>";
-
-   //  exit();
 
 
 

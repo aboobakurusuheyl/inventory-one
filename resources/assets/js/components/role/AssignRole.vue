@@ -25,14 +25,23 @@
 										
 									</div> -->	
 
-								<div class="demo-checkbox">
-										
-								   <div class="col-md-4" v-for="value in role.menus">
-                                        <div class="demo-switch-title">{{ value.name }}</div>
+								<div class="demo-checkbox" v-for="(value,index) in role.menus" :key="index">
+                                     
+									<div class="col-md-12">
+                                    <hr v-if="index !== 0">
+									  <div class="demo-switch-title">{{ value.name }}</div>
+
                                         <div class="switch">
-                                            <label><input :value="value.id" :id="value.id"  v-model="value.check" type="checkbox" checked><span class="lever switch-col-blue"></span></label>
+                                            <label v-if="value.sub_menu.length === 0"><input :value="value.id" :id="value.id"  v-model="value.check" type="checkbox" checked><span class="lever switch-col-blue"></span></label>
                                         </div>
-                                        <br>
+                                        <hr style="border: 2px solid #ccc">
+                                   </div>
+                                      <!-- sub menu  	 -->
+								   <div class="col-md-4"  v-for="sub in value.sub_menu" >
+                                     	  <div class="demo-switch-title">{{ sub.name }}</div>
+                                        <div class="switch">
+                                            <label><input :value="sub.id" :id="sub.id"  v-model="sub.check" type="checkbox" checked><span class="lever switch-col-blue"></span></label>
+                                        </div>
                                     </div>
 									 										
 									</div>

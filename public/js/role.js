@@ -33887,6 +33887,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34029,80 +34038,162 @@ var render = function() {
                 _vm._v(" "),
                 _c("form", [
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c(
-                        "div",
-                        { staticClass: "demo-checkbox" },
-                        _vm._l(_vm.role.menus, function(value) {
-                          return _c("div", { staticClass: "col-md-4" }, [
-                            _c("div", { staticClass: "demo-switch-title" }, [
-                              _vm._v(_vm._s(value.name))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "switch" }, [
-                              _c("label", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: value.check,
-                                      expression: "value.check"
-                                    }
-                                  ],
-                                  attrs: {
-                                    id: value.id,
-                                    type: "checkbox",
-                                    checked: ""
-                                  },
-                                  domProps: {
-                                    value: value.id,
-                                    checked: Array.isArray(value.check)
-                                      ? _vm._i(value.check, value.id) > -1
-                                      : value.check
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      var $$a = value.check,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = value.id,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              value,
-                                              "check",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              value,
-                                              "check",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
+                    _c(
+                      "div",
+                      { staticClass: "col-md-12" },
+                      _vm._l(_vm.role.menus, function(value, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "demo-checkbox" },
+                          [
+                            _c("div", { staticClass: "col-md-12" }, [
+                              index !== 0 ? _c("hr") : _vm._e(),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "demo-switch-title" }, [
+                                _vm._v(_vm._s(value.name))
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "switch" }, [
+                                value.sub_menu.length === 0
+                                  ? _c("label", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: value.check,
+                                            expression: "value.check"
+                                          }
+                                        ],
+                                        attrs: {
+                                          id: value.id,
+                                          type: "checkbox",
+                                          checked: ""
+                                        },
+                                        domProps: {
+                                          value: value.id,
+                                          checked: Array.isArray(value.check)
+                                            ? _vm._i(value.check, value.id) > -1
+                                            : value.check
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            var $$a = value.check,
+                                              $$el = $event.target,
+                                              $$c = $$el.checked ? true : false
+                                            if (Array.isArray($$a)) {
+                                              var $$v = value.id,
+                                                $$i = _vm._i($$a, $$v)
+                                              if ($$el.checked) {
+                                                $$i < 0 &&
+                                                  _vm.$set(
+                                                    value,
+                                                    "check",
+                                                    $$a.concat([$$v])
+                                                  )
+                                              } else {
+                                                $$i > -1 &&
+                                                  _vm.$set(
+                                                    value,
+                                                    "check",
+                                                    $$a
+                                                      .slice(0, $$i)
+                                                      .concat(
+                                                        $$a.slice($$i + 1)
+                                                      )
+                                                  )
+                                              }
+                                            } else {
+                                              _vm.$set(value, "check", $$c)
+                                            }
+                                          }
                                         }
-                                      } else {
-                                        _vm.$set(value, "check", $$c)
-                                      }
-                                    }
-                                  }
-                                }),
-                                _c("span", {
-                                  staticClass: "lever switch-col-blue"
-                                })
-                              ])
+                                      }),
+                                      _c("span", {
+                                        staticClass: "lever switch-col-blue"
+                                      })
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", {
+                                staticStyle: { border: "2px solid #ccc" }
+                              })
                             ]),
                             _vm._v(" "),
-                            _c("br")
-                          ])
-                        })
-                      )
-                    ])
+                            _vm._l(value.sub_menu, function(sub) {
+                              return _c("div", { staticClass: "col-md-4" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "demo-switch-title" },
+                                  [_vm._v(_vm._s(sub.name))]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "switch" }, [
+                                  _c("label", [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: sub.check,
+                                          expression: "sub.check"
+                                        }
+                                      ],
+                                      attrs: {
+                                        id: sub.id,
+                                        type: "checkbox",
+                                        checked: ""
+                                      },
+                                      domProps: {
+                                        value: sub.id,
+                                        checked: Array.isArray(sub.check)
+                                          ? _vm._i(sub.check, sub.id) > -1
+                                          : sub.check
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = sub.check,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = sub.id,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  sub,
+                                                  "check",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  sub,
+                                                  "check",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(sub, "check", $$c)
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _c("span", {
+                                      staticClass: "lever switch-col-blue"
+                                    })
+                                  ])
+                                ])
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      })
+                    )
                   ])
                 ])
               ]),

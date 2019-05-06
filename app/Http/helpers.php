@@ -54,28 +54,40 @@ function subMenu($role_id,$id){
 }
 
 function makeNested($source) {
-      $nested = array();
+      $menu = array();
+
+      $sub_menu = array();
+
+      $new_menu = [];
 
       foreach ( $source as &$s ) {
             if ( $s['parent_id'] == 0 ) {
                   // no parent_id so we put it in the root of the array
-                  $nested[] = &$s;
-            }
-            else {
-                  $pid = $s['parent_id'];
-                  if ( isset($source[$pid]) ) {
-                        // If the parent ID exists in the source array
-                        // we add it to the 'children' array of the parent after initializing it.
+                  $menu[] = &$s;
+            }  
 
-                        if ( !isset($source[$pid]['children']) ) {
-                              $source[$pid]['children'] = array();
-                        }
-
-                        $source[$pid]['children'][] = &$s;
-                  }
+            if ( $s['parent_id'] != 0 ) {
+                  // it have  parent id so making child id
+                  $sub_menu[] = &$s;
             }
+
       }
 
-      return $nested;
+     // in this loop we are puting child into there parent 
+      foreach ($menu as $key => $value) {
+             $value['sub_menu'] = [];
+             foreach ($sub_menu as $sk => $sub) {
+            
+                if ($value['id']==$sub['parent_id']){   
+                   
+                   array_push($value['sub_menu'],$sub);
+                  }  
+
+             }
+
+             array_push($new_menu,$value);
+      }
+
+      return $new_menu;
 }
 ?>
