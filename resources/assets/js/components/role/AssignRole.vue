@@ -29,12 +29,12 @@
                                      
 									<div class="col-md-12">
                                     <hr v-if="index !== 0">
-									  <div class="demo-switch-title">{{ value.name }}</div>
+									  <div style="font-weight: bold;" class="demo-switch-title">{{ value.name }}</div>
 
                                         <div class="switch">
                                             <label v-if="value.sub_menu.length === 0"><input :value="value.id" :id="value.id"  v-model="value.check" type="checkbox" checked><span class="lever switch-col-blue"></span></label>
                                         </div>
-                                        <hr style="border: 2px solid #ccc">
+                                        <!-- <hr style="border: 2px solid #ccc"> -->
                                    </div>
                                       <!-- sub menu  	 -->
 								   <div class="col-md-4"  v-for="sub in value.sub_menu" >

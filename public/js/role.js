@@ -34049,9 +34049,14 @@ var render = function() {
                             _c("div", { staticClass: "col-md-12" }, [
                               index !== 0 ? _c("hr") : _vm._e(),
                               _vm._v(" "),
-                              _c("div", { staticClass: "demo-switch-title" }, [
-                                _vm._v(_vm._s(value.name))
-                              ]),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "demo-switch-title",
+                                  staticStyle: { "font-weight": "bold" }
+                                },
+                                [_vm._v(_vm._s(value.name))]
+                              ),
                               _vm._v(" "),
                               _c("div", { staticClass: "switch" }, [
                                 value.sub_menu.length === 0
@@ -34114,11 +34119,7 @@ var render = function() {
                                       })
                                     ])
                                   : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("hr", {
-                                staticStyle: { border: "2px solid #ccc" }
-                              })
+                              ])
                             ]),
                             _vm._v(" "),
                             _vm._l(value.sub_menu, function(sub) {
