@@ -75,44 +75,7 @@
         </table>
       </div>
 
-      <div class="row">
-        <div class="text-center col-md-12" v-if="customers.last_page > 1">
-          <ul class="pagination">
-            <li :class="[ ((customers.current_page == 1) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+customers.current_page"
-                @click.prevent="pageClicked(customers.current_page-1)"
-                aria-label="Previous"
-                v-if="customers.current_page != 1"
-              >
-                <span aria-hidden="true">«</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">«</span>
-              </a>
-            </li>
-            <li
-              v-for="pageNo in range(paginateLoop, numberOfPage)"
-              :class="[ ((customers.current_page == pageNo) ? 'active' : '') ]"
-            >
-              <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-            </li>
-            <li :class="[ ((customers.current_page == customers.last_page) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+customers.current_page"
-                @click.prevent="pageClicked(customers.current_page+1)"
-                aria-label="Next"
-                v-if="customers.current_page != customers.last_page"
-              >
-                <span aria-hidden="true">»</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">»</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+       <pagination :pageData="customers"></pagination>
 
       <div class="row">
         <update-customer></update-customer>
@@ -126,12 +89,14 @@ import { EventBus } from "../../vue-asset";
 import mixin from "../../mixin";
 
 import UpdateCustomer from "./UpdateCustomer.vue";
+import Pagination  from '../pagination/pagination.vue';
 
 export default {
   mixins: [mixin],
 
   components: {
-    "update-customer": UpdateCustomer
+    "update-customer": UpdateCustomer,
+    "pagination": Pagination,
   },
 
   data() {
@@ -191,12 +156,6 @@ export default {
         toastr.error(data.message, "Error Alert", { timeOut: 500 });
       }
     },
-
-    range(start, count) {
-      return Array.apply(0, Array(count)).map(function(element, index) {
-        return index + start;
-      });
-    },
     pageClicked(pageNo) {
       var vm = this;
       vm.getData(pageNo);
@@ -204,25 +163,9 @@ export default {
   },
 
   computed: {
-    paginateLoop() {
-      let customers = this.customers;
-      if (customers.last_page > 11) {
-        if (customers.last_page - 5 <= customers.current_page) {
-          return customers.last_page - 10;
-        }
-        if (customers.current_page > 6) {
-          return customers.current_page - 5;
-        }
-      }
-      return 1;
-    },
-    numberOfPage() {
-      if (this.customers.last_page < 11) {
-        return this.customers.last_page;
-      } else {
-        return 11;
-      }
-    }
+
+
+
   }
 };
 </script>

@@ -39,7 +39,7 @@ class InvoiceController extends Controller
     public function getLastInvoice(){
 
             
-            $invoice = Sell::orderBy('id','desc')->get();
+            $invoice = Sell::orderBy('id','desc')->first();
 
             if($invoice){
 
@@ -394,7 +394,19 @@ class InvoiceController extends Controller
             
             $invoice->update();
 
-             SellDetails::where('sell_id','=',$id)->delete();
+         $details = SellDetails::where('sell_id','=',$id)->get();
+
+            foreach ($details as $key => $sell) {
+               
+               $old_stock = Stock::find($sell->stock_id);
+
+               $old_stock->current_quantity = $old_stock->current_quantity+$sell->sold_quantity;
+
+               $old_stock->update();
+
+             }
+
+              SellDetails::where('sell_id','=',$id)->delete();
 
             foreach ($request->product as  $value) {
                 
@@ -422,9 +434,9 @@ class InvoiceController extends Controller
 
                $inv_details->save();
 
-               // $stock->current_quantity = $stock->current_quantity - $value['quantity'];
+               $stock->current_quantity = $stock->current_quantity - $value['quantity'];
 
-               // $stock->update();
+               $stock->update();
 
                
             
@@ -464,8 +476,20 @@ class InvoiceController extends Controller
 
            // delete Sell details 
 
-            SellDetails::where('sell_id','=',$id)->delete();
-           //delete payment
+            $details = SellDetails::where('sell_id','=',$id)->get();
+
+            foreach ($details as $key => $value) {
+               
+               $stock = Stock::find($value->stock_id);
+
+               $stock->current_quantity = $stock->current_quantity+$value->sold_quantity;
+
+               $stock->update();
+
+             }
+          
+             SellDetails::where('sell_id','=',$id)->delete();
+             //delete payment
 
             Payment::where('sell_id','=',$id)->delete();
 

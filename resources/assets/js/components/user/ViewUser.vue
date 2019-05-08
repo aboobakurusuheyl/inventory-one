@@ -71,44 +71,7 @@
         </table>
       </div>
 
-      <div class="row">
-        <div class="text-center col-md-12" v-if="users.last_page > 1">
-          <ul class="pagination">
-            <li :class="[ ((users.current_page == 1) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+users.current_page"
-                @click.prevent="pageClicked(users.current_page-1)"
-                aria-label="Previous"
-                v-if="users.current_page != 1"
-              >
-                <span aria-hidden="true">«</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">«</span>
-              </a>
-            </li>
-            <li
-              v-for="pageNo in range(paginateLoop, numberOfPage)"
-              :class="[ ((users.current_page == pageNo) ? 'active' : '') ]"
-            >
-              <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-            </li>
-            <li :class="[ ((users.current_page == users.last_page) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+users.current_page"
-                @click.prevent="pageClicked(users.current_page+1)"
-                aria-label="Next"
-                v-if="users.current_page != users.last_page"
-              >
-                <span aria-hidden="true">»</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">»</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+       <pagination :pageData="users"></pagination>
 
       <div class="row">
         <update-user></update-user>
@@ -122,12 +85,14 @@ import { EventBus } from "../../vue-asset";
 import mixin from "../../mixin";
 
 import UpdateUser from "./UpdateUser.vue";
+import Pagination from '../pagination/pagination.vue';
 
 export default {
   mixins: [mixin],
 
   components: {
-    "update-user": UpdateUser
+    "update-user": UpdateUser,
+    "pagination": Pagination,
   },
 
   data() {
@@ -199,11 +164,6 @@ export default {
       });
     },
 
-    range(start, count) {
-      return Array.apply(0, Array(count)).map(function(element, index) {
-        return index + start;
-      });
-    },
     pageClicked(pageNo) {
       var vm = this;
       vm.getData(pageNo);
@@ -211,25 +171,7 @@ export default {
   },
 
   computed: {
-    paginateLoop() {
-      let users = this.users;
-      if (users.last_page > 11) {
-        if (users.last_page - 5 <= users.current_page) {
-          return users.last_page - 10;
-        }
-        if (users.current_page > 6) {
-          return users.current_page - 5;
-        }
-      }
-      return 1;
-    },
-    numberOfPage() {
-      if (this.users.last_page < 11) {
-        return this.users.last_page;
-      } else {
-        return 11;
-      }
-    }
+    
   }
 };
 </script>

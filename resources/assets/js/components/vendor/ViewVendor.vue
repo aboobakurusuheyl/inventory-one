@@ -55,32 +55,7 @@
 
                    </div>
                      
-                             <div class="row">
-            <div class="text-center col-md-12" v-if="vendors.last_page > 1">
-                <ul class="pagination">
-                    <li :class="[ ((vendors.current_page == 1) ? 'disabled' : '') ]">
-                         <a :href="'?page='+vendors.current_page" @click.prevent="pageClicked(vendors.current_page-1)" aria-label="Previous" v-if="vendors.current_page != 1">
-                             <span aria-hidden="true">«</span>
-                         </a>
-                        <a v-else>
-                            <span  aria-hidden="true">«</span>
-                        </a>
-                    </li>
-                    <li v-for="pageNo in range(paginateLoop, numberOfPage)"
-                        :class="[ ((vendors.current_page == pageNo) ? 'active' : '') ]">
-                        <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-                    </li>
-                    <li :class="[ ((vendors.current_page == vendors.last_page) ? 'disabled' : '') ]" >
-                        <a  :href="'?page='+vendors.current_page" @click.prevent="pageClicked(vendors.current_page+1)" aria-label="Next" v-if="vendors.current_page != vendors.last_page">
-                            <span aria-hidden="true">»</span>
-                        </a>
-                        <a v-else>
-                            <span  aria-hidden="true">»</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-</div>  
+         <pagination :pageData="vendors"></pagination> 
 
 
  <div class="row">
@@ -99,7 +74,9 @@
 
     import mixin from '../../mixin';
 
-    import UpdateVendor from './UpdateVendor.vue'
+    import UpdateVendor from './UpdateVendor.vue';
+
+    import Pagination from '../pagination/pagination.vue';
 
 
 
@@ -109,7 +86,8 @@
 
         components : {
            
-            'update-vendor' : UpdateVendor
+            'update-vendor' : UpdateVendor,
+            'pagination' : Pagination,
 
         },
 
@@ -198,12 +176,6 @@
             
          },
 
-         range(start, count) {
-        return Array.apply(0, Array(count))
-            .map(function (element, index){
-                return index + start;
-            });
-         },
           pageClicked(pageNo){
                 var vm = this;
                 vm.getData(pageNo);
@@ -212,27 +184,6 @@
         },
 
         computed: {
-          
-           paginateLoop(){
-                let vendors = this.vendors;
-                if(vendors.last_page > 11){
-                    if((vendors.last_page - 5) <= vendors.current_page){
-                        return vendors.last_page - 10;
-                    }
-                    if(vendors.current_page > 6){
-                        return vendors.current_page - 5;
-                    }
-                }
-                return 1;
-            },
-            numberOfPage(){
-                if(this.vendors.last_page < 11){
-                    return this.vendors.last_page;
-                }else{
-                    return 11;
-                }
-            }
-
 
         }
          

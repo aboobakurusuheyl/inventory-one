@@ -62,6 +62,7 @@
                             <table class="table table-condensed table-hover table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>Category</th>
                                         <th>Product</th>
                                         <th>Vendor</th>
                                         <th>Chalan</th>
@@ -76,11 +77,12 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(value,index) in stocks.data">
+                                        <td>{{ value.category.name }}</td>
                                         <td>{{ value.product.product_name }}</td>
                                         <td>{{ value.vendor.name }}</td>
                                         <td>{{ value.chalan_no }}</td>
                                         <td>{{ value.stock_quantity }}</td>
-                                        <td>{{ value.stock_quantity-value.sold_qty }}</td>
+                                        <td>{{ value.current_quantity }}</td>
                                         <td>{{ value.buying_price }}</td>
                                         <td>{{ value.selling_price }}</td>
                                         <td>{{ value.user.name }}</td>
@@ -108,32 +110,8 @@
 
                    </div>
                      
-                             <div class="row">
-            <div class="text-center col-md-12" v-if="stocks.last_page > 1">
-                <ul class="pagination">
-                    <li :class="[ ((stocks.current_page == 1) ? 'disabled' : '') ]">
-                         <a :href="'?page='+stocks.current_page" @click.prevent="pageClicked(stocks.current_page-1)" aria-label="Previous" v-if="stocks.current_page != 1">
-                             <span aria-hidden="true">«</span>
-                         </a>
-                        <a v-else>
-                            <span  aria-hidden="true">«</span>
-                        </a>
-                    </li>
-                    <li v-for="pageNo in range(paginateLoop, numberOfPage)"
-                        :class="[ ((stocks.current_page == pageNo) ? 'active' : '') ]">
-                        <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-                    </li>
-                    <li :class="[ ((stocks.current_page == stocks.last_page) ? 'disabled' : '') ]" >
-                        <a  :href="'?page='+stocks.current_page" @click.prevent="pageClicked(stocks.current_page+1)" aria-label="Next" v-if="stocks.current_page != stocks.last_page">
-                            <span aria-hidden="true">»</span>
-                        </a>
-                        <a v-else>
-                            <span  aria-hidden="true">»</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-</div>  
+               
+               <pagination :pageData="stocks"></pagination> 
 
 
 
@@ -152,6 +130,7 @@
 
     import editStock from './editStock.vue';
     import UpdateQuantity from './UpdateQuantity.vue';
+    import Pagination from '../pagination/pagination.vue';
     
 
     export default{
@@ -164,6 +143,7 @@
            
             'edit-stock' : editStock,
             'update-qty' : UpdateQuantity,
+            'pagination' : Pagination,
 
         },
 
@@ -290,13 +270,6 @@
             
          },
 
- 
-         range(start, count) {
-        return Array.apply(0, Array(count))
-            .map(function (element, index){
-                return index + start;
-            });
-         },
           pageClicked(pageNo){
                 var vm = this;
                 vm.getData(pageNo);
@@ -306,26 +279,6 @@
 
         computed: {
           
-           paginateLoop(){
-                let stocks = this.stocks;
-                if(stocks.last_page > 11){
-                    if((stocks.last_page - 5) <= stocks.current_page){
-                        return stocks.last_page - 10;
-                    }
-                    if(stocks.current_page > 6){
-                        return stocks.current_page - 5;
-                    }
-                }
-                return 1;
-            },
-            numberOfPage(){
-                if(this.stocks.last_page < 11){
-                    return this.stocks.last_page;
-                }else{
-                    return 11;
-                }
-            }
-
 
         },
 

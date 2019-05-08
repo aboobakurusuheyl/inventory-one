@@ -56,44 +56,7 @@
         </table>
       </div>
 
-      <div class="row">
-        <div class="text-center col-md-12" v-if="categorys.last_page > 1">
-          <ul class="pagination">
-            <li :class="[ ((categorys.current_page == 1) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+categorys.current_page"
-                @click.prevent="pageClicked(categorys.current_page-1)"
-                aria-label="Previous"
-                v-if="categorys.current_page != 1"
-              >
-                <span aria-hidden="true">«</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">«</span>
-              </a>
-            </li>
-            <li
-              v-for="pageNo in range(paginateLoop, numberOfPage)"
-              :class="[ ((categorys.current_page == pageNo) ? 'active' : '') ]"
-            >
-              <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-            </li>
-            <li :class="[ ((categorys.current_page == categorys.last_page) ? 'disabled' : '') ]">
-              <a
-                :href="'?page='+categorys.current_page"
-                @click.prevent="pageClicked(categorys.current_page+1)"
-                aria-label="Next"
-                v-if="categorys.current_page != categorys.last_page"
-              >
-                <span aria-hidden="true">»</span>
-              </a>
-              <a v-else>
-                <span aria-hidden="true">»</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <pagination :pageData="categorys"></pagination>
 
       <div class="row">
         <update-category></update-category>
@@ -108,11 +71,14 @@ import mixin from "../../mixin";
 
 import Updatecategory from "./Updatecategory.vue";
 
+import Pagination  from '../pagination/pagination.vue';
+
 export default {
   mixins: [mixin],
 
   components: {
-    "update-category": Updatecategory
+    "update-category": Updatecategory,
+    "pagination": Pagination,
   },
 
   data() {
@@ -186,11 +152,6 @@ export default {
       });
     },
 
-    range(start, count) {
-      return Array.apply(0, Array(count)).map(function(element, index) {
-        return index + start;
-      });
-    },
     pageClicked(pageNo) {
       var vm = this;
       vm.getData(pageNo);
@@ -198,25 +159,7 @@ export default {
   },
 
   computed: {
-    paginateLoop() {
-      let categorys = this.categorys;
-      if (categorys.last_page > 11) {
-        if (categorys.last_page - 5 <= categorys.current_page) {
-          return categorys.last_page - 10;
-        }
-        if (categorys.current_page > 6) {
-          return categorys.current_page - 5;
-        }
-      }
-      return 1;
-    },
-    numberOfPage() {
-      if (this.categorys.last_page < 11) {
-        return this.categorys.last_page;
-      } else {
-        return 11;
-      }
-    }
+
   }
 };
 </script>

@@ -67,32 +67,7 @@
 
         </div>
         
-        <div class="row">
-            <div class="text-center col-md-12" v-if="products.last_page > 1">
-                <ul class="pagination">
-                    <li :class="[ ((products.current_page == 1) ? 'disabled' : '') ]">
-                       <a :href="'?page='+products.current_page" @click.prevent="pageClicked(products.current_page-1)" aria-label="Previous" v-if="products.current_page != 1">
-                           <span aria-hidden="true">«</span>
-                       </a>
-                       <a v-else>
-                        <span  aria-hidden="true">«</span>
-                    </a>
-                </li>
-                <li v-for="pageNo in range(paginateLoop, numberOfPage)"
-                :class="[ ((products.current_page == pageNo) ? 'active' : '') ]">
-                <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-            </li>
-            <li :class="[ ((products.current_page == products.last_page) ? 'disabled' : '') ]" >
-                <a  :href="'?page='+products.current_page" @click.prevent="pageClicked(products.current_page+1)" aria-label="Next" v-if="products.current_page != products.last_page">
-                    <span aria-hidden="true">»</span>
-                </a>
-                <a v-else>
-                    <span  aria-hidden="true">»</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>  
+        <pagination :pageData="products"></pagination>
 
 
 <div class="row">
@@ -111,6 +86,7 @@
     import mixin from '../../mixin';
 
     import UpdateProduct from './UpdateProduct.vue';
+    import Pagination from '../pagination/pagination.vue';
 
 
 
@@ -122,7 +98,8 @@
 
      components : {
          
-        'update-product' : UpdateProduct
+        'update-product' : UpdateProduct,
+        'pagination' : Pagination
 
     },
 
@@ -218,13 +195,6 @@ methods : {
 
            
        },
-
-       range(start, count) {
-        return Array.apply(0, Array(count))
-        .map(function (element, index){
-            return index + start;
-        });
-    },
     pageClicked(pageNo){
         var vm = this;
         vm.getData(pageNo);
@@ -233,26 +203,6 @@ methods : {
 },
 
 computed: {
-  
- paginateLoop(){
-    let products = this.products;
-    if(products.last_page > 11){
-        if((products.last_page - 5) <= products.current_page){
-            return products.last_page - 10;
-        }
-        if(products.current_page > 6){
-            return products.current_page - 5;
-        }
-    }
-    return 1;
-},
-numberOfPage(){
-    if(this.products.last_page < 11){
-        return this.products.last_page;
-    }else{
-        return 11;
-    }
-}
 
 
 },

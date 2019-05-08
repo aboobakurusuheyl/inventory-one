@@ -46,15 +46,13 @@ class StockController extends Controller
       'user'=> function($query){
 
         $query->select('id','name');
+      },
+      'category'=> function($query){
+
+        $query->select('id','name');
       }
     ]
   )
-     ->withCount([
-      'sell_details AS sold_qty' => function ($query) {
-
-        $query->select(DB::raw("SUM(sold_quantity) as sold_qty"));
-
-      }])
      ->orderBy('updated_at','desc');
 
 
@@ -85,19 +83,14 @@ class StockController extends Controller
 
   public function ChalanList($id){
 
-  // raw query for that 
-   // $chalan = DB::select("select `stocks`.*,(select COALESCE(SUM(sold_quantity),0) from `sell_details` where `stocks`.`id` = `sell_details`.`stock_id`) as sold_qty from `stocks` where `product_id` = '$id' and `stock_quantity` > (select COALESCE(SUM(sold_quantity),0) from `sell_details` where `stocks`.`id` = `sell_details`.`stock_id`)  order by `updated_at` desc");
    $chalan = Stock::where('product_id','=',$id)
-    ->withCount([
-      'sell_details AS sold_qty' => function ($query) use ($id){
+             ->where('current_quantity','>',0)
+   // ->withCount([
+   //  'sell_details AS sold_qty' => function ($query) use ($id){
 
-        $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
-        
-      }])
-   ->where('stock_quantity','>',
-    DB::raw('(select COALESCE(SUM(sold_quantity),0) 
-      from `sell_details`
-      where `stocks`.`id` = `sell_details`.`stock_id`)'))
+   //    $query->select(DB::raw("COALESCE(SUM(sold_quantity),0)"));
+
+   //  }])
    ->orderBy('updated_at','desc')
    ->get();
 
@@ -158,11 +151,15 @@ class StockController extends Controller
         $stock->status = 1;
         $stock->save();
 
+        Stock::where('product_id','=',$request->product)
+        ->where('current_quantity','>',0)
+        ->update(['selling_price'=>$request->selling_price]);
+
         return response()->json(['status'=>'success','message'=>'Product Added To Stock']);
 
       }
       catch(\Exception $e){
-
+        return $e;
         return response()->json(['status'=>'error','message'=>'Problem To Update Stock']);
 
 

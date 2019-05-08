@@ -111,33 +111,72 @@ class RoleController extends Controller
     }
 
 
+
     public function Permission(Request $request){
 
        try{
         
-        DB::beginTransaction();
-
+      DB::beginTransaction();
       Permission::where('role_id','=',$request->id)->delete();
       
       // getting only check item from menus 
-      $menus = array_filter($request->menus, function ($var) {
-          return ($var['check'] == true);
-         });
-       
-       // finding only the id colum of manu   
-       $menu_id = array_column($menus, 'id');
+      // $menus = array_filter($request->menus, function ($var) {
+      //     return ($var['check'] == true);
+      //    });
+      
+      // inserting permission to the permission table 
+       foreach($request->menus as $key => $value) {
+           // when menu have sub menu 
+           if(count($value['sub_menu'])>0){
+            
+             $flag = 0;
+         
+            foreach ($value['sub_menu'] as  $sub_menu) {
+                
 
-       foreach ($menu_id as  $value) {
-          
-         $permission = new Permission;
+                // if child is permited then parent have to permited 
+                if($sub_menu['check']==true){
+                   
+                   $sub = new Permission;
 
-         $permission->role_id = $request->id;  
-         $permission->menu_id = $value; 
+                   $sub->role_id = $request->id;
+                   $sub->menu_id = $sub_menu['id'];
 
-         $permission->save(); 
+                   $sub->save();
 
-        }
+                   $flag = 1;
 
+                  }
+                 
+                }
+              
+              // flag determine whether  parent will isnert or not insert 
+             if($flag == 1){
+                   $menu_per = new Permission;
+                   $menu_per->role_id = $request->id;
+                   $menu_per->menu_id = $value['id'];
+                   $menu_per->save();
+
+                   $flag = 0;
+
+                }   
+
+
+              }
+              else{
+                
+                 if($value['check']==true){
+                   
+                    $parent_per = new Permission;
+                    $parent_per->role_id = $request->id;
+                    $parent_per->menu_id = $value['id'];
+                    $parent_per->save();
+                  }
+
+              }
+
+           }
+           
         DB::commit();
 
         return response()->json(['status'=>'success','message'=>'New Permission Given']);

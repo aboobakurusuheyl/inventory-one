@@ -111,37 +111,7 @@
 
                  </div>
 
-                 <div class="row">
-                     <div class="text-center col-md-12" v-if="invoices.last_page > 1">
-                         <ul class="pagination">
-                             <li :class="[ ((invoices.current_page == 1) ? 'disabled' : '') ]">
-                                 <a :href="'?page='+invoices.current_page" @click.prevent="pageClicked(invoices.current_page-1)" aria-label="Previous" v-if="invoices.current_page != 1">
-                                     <span aria-hidden="true">«</span>
-                                 </a>
-                                 <a v-else>
-                                     <span  aria-hidden="true">«</span>
-                                 </a>
-                             </li>
-                             <li v-for="pageNo in range(paginateLoop, numberOfPage)"
-                             :class="[ ((invoices.current_page == pageNo) ? 'active' : '') ]">
-                             <a :href="'?page='+pageNo" @click.prevent="pageClicked(pageNo)">{{ pageNo }}</a>
-                         </li>
-                         <li :class="[ ((invoices.current_page == invoices.last_page) ? 'disabled' : '') ]" >
-                             <a  :href="'?page='+invoices.current_page" @click.prevent="pageClicked(invoices.current_page+1)" aria-label="Next" v-if="invoices.current_page != invoices.last_page">
-                                 <span aria-hidden="true">»</span>
-                             </a>
-                             <a v-else>
-                                 <span  aria-hidden="true">»</span>
-                             </a>
-                         </li>
-                     </ul>
-                 </div>
-             </div>  
-
-
-
-
-
+                 <pagination :pageData="invoices"></pagination>
 
          </div>
      </div>
@@ -152,6 +122,7 @@
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
     import MomentMixin from '../../moment_mixin.js';
+    import Pagination  from '../pagination/pagination.vue';
 
     import Datepicker from 'vuejs-datepicker';
     import UpdateInvoice from './UpdateInvoice.vue';
@@ -173,6 +144,7 @@
             'create-payment' : CreatePayment,
             'view-payment' : ViewPayment,
             'vuejs-datepicker' :  Datepicker,
+            'pagination' :  Pagination,
 
         },
 
@@ -275,15 +247,6 @@
            EventBus.$emit('view-payment',id);
 
          },
-
-         range(start, count) {
-             return Array.apply(0, Array(count))
-             .map(function (element, index){
-                 return index + start;
-             });
-         },
-
-
          pageClicked(pageNo){
              var vm = this;
              vm.getData(pageNo);
@@ -296,25 +259,6 @@
 
      computed: {
 
-         paginateLoop(){
-             let invoices = this.invoices;
-             if(invoices.last_page > 11){
-                 if((invoices.last_page - 5) <= invoices.current_page){
-                     return invoices.last_page - 10;
-                 }
-                 if(invoices.current_page > 6){
-                     return invoices.current_page - 5;
-                 }
-             }
-             return 1;
-         },
-         numberOfPage(){
-             if(this.invoices.last_page < 11){
-                 return this.invoices.last_page;
-             }else{
-                 return 11;
-             }
-         }
 
 
      },

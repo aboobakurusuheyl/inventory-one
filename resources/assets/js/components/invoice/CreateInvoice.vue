@@ -292,9 +292,9 @@
                         @change="findStockDetails(index)"
                       >
                         <option value>Select Chalan</option>
-                        <option v-for="ch in vl.stocks" :value="ch.id">
+                        <option v-for="(ch,ch_index) in vl.stocks" :value="ch.id">
                           {{
-                          ch.chalan_no }}. qty({{ ch.stock_quantity-ch.sold_qty }})
+                          ch.chalan_no }}. qty({{ ch.current_quantity }})
                         </option>
                       </select>
                       
@@ -308,6 +308,7 @@
                       <input
                         class="form-control"
                         type="number"
+                        @change="CheckStock(index)"
                         name
                         v-model="invoice.product[index].quantity"
                         v-bind:disabled="vl.chalan_id === ''"
@@ -518,7 +519,8 @@ export default {
             product_id: "",
             chalan: "",
             chalan_id: "",
-            stoc_quantity: 0,
+            stock_quantity: 0,
+            current_quantity : 0,
             quantity: 0,
             price: 0,
             total_price: 0,
@@ -610,9 +612,21 @@ export default {
             this.invoice.product[index].price = response.data.selling_price;
             this.invoice.product[index].discount = response.data.discount;
             this.invoice.product[index].stock_quantity =
-              response.data.stock_quantity;
+              response.data.stock_quantity; 
+          this.invoice.product[index].current_quantity =
+              response.data.current_quantity;
           });
       }
+    },
+
+    CheckStock(product_index){
+
+        if(this.invoice.product[product_index].quantity > this.invoice.product[product_index].current_quantity){
+
+
+            this.invoice.product[product_index].quantity = this.invoice.product[product_index].current_quantity;
+
+        }
     },
 
     showInvoice() {
@@ -631,7 +645,8 @@ export default {
         product_id: "",
         chalan: "",
         chalan_id: "",
-        stoc_quantity: 0,
+        stock_quantity: 0,
+        current_quantity: 0,
         quantity: 0,
         price: 0,
         total_price: 0,
@@ -679,7 +694,8 @@ export default {
             product_id: "",
             chalan: "",
             chalan_id: "",
-            stoc_quantity: 0,
+            stock_quantity: 0,
+            current_quantity : 0,
             quantity: 0,
             price: 0,
             total_price: 0,

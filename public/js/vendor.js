@@ -33386,6 +33386,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixin__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UpdateVendor_vue__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__UpdateVendor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__UpdateVendor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pagination_pagination_vue__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pagination_pagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pagination_pagination_vue__);
 //
 //
 //
@@ -33456,31 +33458,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 
 
 
@@ -33491,120 +33470,96 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixin__["a" /* default */]],
 
-    components: {
+  components: {
 
-        'update-vendor': __WEBPACK_IMPORTED_MODULE_2__UpdateVendor_vue___default.a
+    'update-vendor': __WEBPACK_IMPORTED_MODULE_2__UpdateVendor_vue___default.a,
+    'pagination': __WEBPACK_IMPORTED_MODULE_3__pagination_pagination_vue___default.a
 
+  },
+
+  data: function data() {
+
+    return {
+
+      vendors: [],
+      name: '',
+      email: '',
+      phone: ''
+
+    };
+  },
+  created: function created() {
+
+    var _this = this;
+    this.getData();
+
+    __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on('vendor-created', function () {
+      window.history.pushState({}, null, location.pathname);
+      _this.getData();
+    });
+  },
+
+
+  methods: {
+    getData: function getData() {
+      var _this2 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+
+      axios.get(base_url + "vendor-list?page=" + page + "&name=" + this.name + "&email=" + this.email + "&phone=" + this.phone).then(function (response) {
+
+        // console.log(response.data);
+
+        _this2.vendors = response.data;
+      }).catch(function (error) {
+
+        console.log(error);
+      });
     },
 
-    data: function data() {
 
-        return {
+    // edit vendor 
 
-            vendors: [],
-            name: '',
-            email: '',
-            phone: ''
+    editVendor: function editVendor(id) {
 
-        };
-    },
-    created: function created() {
-
-        var _this = this;
-        this.getData();
-
-        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$on('vendor-created', function () {
-            window.history.pushState({}, null, location.pathname);
-            _this.getData();
-        });
+      __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('vendor-edit', id);
     },
 
 
-    methods: {
-        getData: function getData() {
-            var _this2 = this;
+    // delete vendor 
 
-            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    deleteVendor: function deleteVendor(id) {
+      var _this3 = this;
 
+      Swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }, function () {}).then(function (result) {
+        if (result.value) {
 
-            axios.get(base_url + "vendor-list?page=" + page + "&name=" + this.name + "&email=" + this.email + "&phone=" + this.phone).then(function (response) {
+          axios.delete(base_url + 'supplier/' + id).then(function (res) {
 
-                // console.log(response.data);
-
-                _this2.vendors = response.data;
-            }).catch(function (error) {
-
-                console.log(error);
-            });
-        },
-
-
-        // edit vendor 
-
-        editVendor: function editVendor(id) {
-
-            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('vendor-edit', id);
-        },
-
-
-        // delete vendor 
-
-        deleteVendor: function deleteVendor(id) {
-            var _this3 = this;
-
-            Swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }, function () {}).then(function (result) {
-                if (result.value) {
-
-                    axios.delete(base_url + 'supplier/' + id).then(function (res) {
-
-                        __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('vendor-created', 1);
-                        _this3.successALert(res.data);
-                    });
-                }
-            });
-        },
-        range: function range(start, count) {
-            return Array.apply(0, Array(count)).map(function (element, index) {
-                return index + start;
-            });
-        },
-        pageClicked: function pageClicked(pageNo) {
-            var vm = this;
-            vm.getData(pageNo);
+            __WEBPACK_IMPORTED_MODULE_0__vue_asset__["EventBus"].$emit('vendor-created', 1);
+            _this3.successALert(res.data);
+          });
         }
+      });
     },
-
-    computed: {
-        paginateLoop: function paginateLoop() {
-            var vendors = this.vendors;
-            if (vendors.last_page > 11) {
-                if (vendors.last_page - 5 <= vendors.current_page) {
-                    return vendors.last_page - 10;
-                }
-                if (vendors.current_page > 6) {
-                    return vendors.current_page - 5;
-                }
-            }
-            return 1;
-        },
-        numberOfPage: function numberOfPage() {
-            if (this.vendors.last_page < 11) {
-                return this.vendors.last_page;
-            } else {
-                return 11;
-            }
-        }
+    pageClicked: function pageClicked(pageNo) {
+      var vm = this;
+      vm.getData(pageNo);
     }
+  },
+
+  computed: {}
 
 });
 
@@ -34126,263 +34081,154 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "wrap" }, [
-    _c("div", { staticClass: "body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.name,
-                expression: "name"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Name", name: "" },
-            domProps: { value: _vm.name },
-            on: {
-              keyup: _vm.getData,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+    _c(
+      "div",
+      { staticClass: "body" },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name"
                 }
-                _vm.name = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.email,
-                expression: "email"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Email", name: "" },
-            domProps: { value: _vm.email },
-            on: {
-              keyup: _vm.getData,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Name", name: "" },
+              domProps: { value: _vm.name },
+              on: {
+                keyup: _vm.getData,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
                 }
-                _vm.email = $event.target.value
               }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.phone,
-                expression: "phone"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Phone", name: "" },
-            domProps: { value: _vm.phone },
-            on: {
-              keyup: _vm.getData,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.phone = $event.target.value
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-condensed table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.vendors.data, function(value, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(value.name))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.email))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.phone))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(value.address))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-blue btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editVendor(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("edit")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn bg-pink btn-circle waves-effect waves-circle waves-float",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.deleteVendor(value.id)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "material-icons" }, [
-                        _vm._v("delete")
-                      ])
-                    ]
-                  )
-                ])
-              ])
             })
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _vm.vendors.last_page > 1
-          ? _c("div", { staticClass: "text-center col-md-12" }, [
-              _c(
-                "ul",
-                { staticClass: "pagination" },
-                [
-                  _c(
-                    "li",
-                    {
-                      class: [_vm.vendors.current_page == 1 ? "disabled" : ""]
-                    },
-                    [
-                      _vm.vendors.current_page != 1
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "?page=" + _vm.vendors.current_page,
-                                "aria-label": "Previous"
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(_vm.vendors.current_page - 1)
-                                }
-                              }
-                            },
-                            [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("«")
-                              ])
-                            ]
-                          )
-                        : _c("a", [
-                            _c("span", { attrs: { "aria-hidden": "true" } }, [
-                              _vm._v("«")
-                            ])
-                          ])
-                    ]
-                  ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.email,
+                  expression: "email"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Email", name: "" },
+              domProps: { value: _vm.email },
+              on: {
+                keyup: _vm.getData,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.email = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.phone,
+                  expression: "phone"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Phone", name: "" },
+              domProps: { value: _vm.phone },
+              on: {
+                keyup: _vm.getData,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.phone = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-responsive" }, [
+          _c("table", { staticClass: "table table-condensed table-hover" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.vendors.data, function(value, index) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(value.name))]),
                   _vm._v(" "),
-                  _vm._l(
-                    _vm.range(_vm.paginateLoop, _vm.numberOfPage),
-                    function(pageNo) {
-                      return _c(
-                        "li",
-                        {
-                          class: [
-                            _vm.vendors.current_page == pageNo ? "active" : ""
-                          ]
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "?page=" + pageNo },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(pageNo)
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(pageNo))]
-                          )
-                        ]
-                      )
-                    }
-                  ),
+                  _c("td", [_vm._v(_vm._s(value.email))]),
                   _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      class: [
-                        _vm.vendors.current_page == _vm.vendors.last_page
-                          ? "disabled"
-                          : ""
+                  _c("td", [_vm._v(_vm._s(value.phone))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(value.address))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn bg-blue btn-circle waves-effect waves-circle waves-float",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.editVendor(value.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "material-icons" }, [
+                          _vm._v("edit")
+                        ])
                       ]
-                    },
-                    [
-                      _vm.vendors.current_page != _vm.vendors.last_page
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "?page=" + _vm.vendors.current_page,
-                                "aria-label": "Next"
-                              },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.pageClicked(_vm.vendors.current_page + 1)
-                                }
-                              }
-                            },
-                            [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("»")
-                              ])
-                            ]
-                          )
-                        : _c("a", [
-                            _c("span", { attrs: { "aria-hidden": "true" } }, [
-                              _vm._v("»")
-                            ])
-                          ])
-                    ]
-                  )
-                ],
-                2
-              )
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [_c("update-vendor")], 1)
-    ])
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn bg-pink btn-circle waves-effect waves-circle waves-float",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.deleteVendor(value.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "material-icons" }, [
+                          _vm._v("delete")
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              })
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("pagination", { attrs: { pageData: _vm.vendors } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [_c("update-vendor")], 1)
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -34411,6 +34257,397 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-017e9c8d", module.exports)
+  }
+}
+
+/***/ }),
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(304)
+/* template */
+var __vue_template__ = __webpack_require__(305)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/pagination/pagination.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2ef64428", Component.options)
+  } else {
+    hotAPI.reload("data-v-2ef64428", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 304 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_asset_js__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+	props: ['pageData'],
+
+	data: function data() {
+
+		return {};
+	},
+
+
+	methods: {
+		range: function range(start, count) {
+			return Array.apply(0, Array(count)).map(function (element, index) {
+				return index + start;
+			});
+		},
+		pageClicked: function pageClicked(page) {
+
+			this.$parent.pageClicked(page);
+		}
+	},
+
+	computed: {
+		paginateLoop: function paginateLoop() {
+			var pageData = this.pageData;
+			if (pageData.last_page > 11) {
+				if (pageData.last_page - 5 <= pageData.current_page) {
+					return pageData.last_page - 10;
+				}
+				if (pageData.current_page > 6) {
+					return pageData.current_page - 5;
+				}
+			}
+			return 1;
+		},
+		numberOfPage: function numberOfPage() {
+			if (this.pageData.last_page < 11) {
+				return this.pageData.last_page;
+			} else {
+				return 11;
+			}
+		}
+	}
+
+});
+
+/***/ }),
+/* 305 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _vm.pageData.last_page > 1
+      ? _c("div", { staticClass: "text-center col-md-12" }, [
+          _c(
+            "ul",
+            { staticClass: "pagination" },
+            [
+              _c(
+                "li",
+                { class: [_vm.pageData.current_page == 1 ? "disabled" : ""] },
+                [
+                  _vm.pageData.current_page != 1
+                    ? _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "?page=" + _vm.pageData.current_page,
+                            "aria-label": "Previous"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.pageClicked(_vm.pageData.current_page - 1)
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("«")
+                          ])
+                        ]
+                      )
+                    : _c("a", [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("«")
+                        ])
+                      ])
+                ]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.range(_vm.paginateLoop, _vm.numberOfPage), function(
+                pageNo
+              ) {
+                return _c(
+                  "li",
+                  {
+                    class: [_vm.pageData.current_page == pageNo ? "active" : ""]
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "?page=" + pageNo },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.pageClicked(pageNo)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(pageNo))]
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  class: [
+                    _vm.pageData.current_page == _vm.pageData.last_page
+                      ? "disabled"
+                      : ""
+                  ]
+                },
+                [
+                  _vm.pageData.current_page != _vm.pageData.last_page
+                    ? _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "?page=" + _vm.pageData.current_page,
+                            "aria-label": "Next"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.pageClicked(_vm.pageData.current_page + 1)
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("»")
+                          ])
+                        ]
+                      )
+                    : _c("a", [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("»")
+                        ])
+                      ])
+                ]
+              )
+            ],
+            2
+          )
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2ef64428", module.exports)
   }
 }
 
