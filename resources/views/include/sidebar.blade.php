@@ -30,11 +30,11 @@
                     </li>
 
                     @php
-                        $side_menu = sideMenu(Auth::user()->role_id) 
+                        $side_menu = Session::get('side_menu'); 
                     @endphp
 
 
-                    @foreach($side_menu as $value)
+                    @foreach($side_menu[0] as $value)
                       
                    @if(count($value['sub_menu'])>0)
                     <li class="parent">

@@ -7,6 +7,7 @@ use App\Menu;
 use App\Permission;
 use DB;
 use Auth;
+use Session;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -178,6 +179,15 @@ class RoleController extends Controller
            }
            
         DB::commit();
+       
+       if(Auth::user()->role_id == $request->id){
+
+        Session::forget('side_menu');
+        $permited_menu = sideMenu(Auth::user()->role_id);
+        Session::push('side_menu',$permited_menu);
+
+       }
+        
 
         return response()->json(['status'=>'success','message'=>'New Permission Given']);
 
