@@ -13,7 +13,7 @@
  </style>
 </head>
 
-<body class="theme-red">
+<body class="theme-red" onload="loaded()">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -276,19 +276,21 @@
     </script>
 
     <script type="text/javascript">
-   $(document).ready(function($) {
+
+   $(document).ready(function() {
    	 	
    	 	$('.select2').select2();
 
+        alert('do something');
+
    	 });
-    // $(window).load(function(){
 
-    //     var segment3 = '{{ Request::segment(1) }}';
-    //     var url = base_url + segment3;
-
-    //     $('a[href="' + url + '"]').parents('.parent').children('a .menu-toggle').addClass('toggled');
-             
-    //        });
+   function loaded(){
+         var segment3 = '{{ Request::segment(1) }}';
+         var current_url = base_url + segment3;
+         $('a[href="' + current_url + '"]').parents('.ml-menu').siblings('a').addClass('toggled');
+         $('a[href="' + current_url + '"]').parents('.ml-menu').css('display','block');
+   }
     </script>
 
 
