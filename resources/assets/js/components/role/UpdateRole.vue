@@ -118,7 +118,7 @@ export default{
    },
     updateRole(id){
         
-        axios.put(base_url+'role/'+id,this.role)
+        axios.post(base_url+'role/update/'+id,this.role)
         .then(res => {
          
           if(res.data.status == 'success'){

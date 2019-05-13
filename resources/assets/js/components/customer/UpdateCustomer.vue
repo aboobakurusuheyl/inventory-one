@@ -158,7 +158,7 @@ export default {
     },
 
     updateCustomer() {
-        axios.put(base_url + "customer/"+this.customer.id, this.customer)
+        axios.post(base_url + "customer/update/"+this.customer.id, this.customer)
 
         .then(response => {
           $("#update-customer").modal("hide");

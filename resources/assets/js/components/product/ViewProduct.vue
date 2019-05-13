@@ -183,12 +183,12 @@ methods : {
            }).then((result) => {
                if (result.value) {
 
-                axios.delete(base_url+'product/'+id)
+                axios.get(base_url+'product/delete/'+id)
                 .then(res => {
 
                    EventBus.$emit('product-created',1);
 
-                   this.successAlert(res.data);
+                   this.successALert(res.data);
                })
             }
         })       

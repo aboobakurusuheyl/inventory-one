@@ -122,7 +122,7 @@ class VendorController extends Controller
      * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $supplier)
+    public function update(Request $request,$id)
     {
         
 
@@ -135,7 +135,7 @@ class VendorController extends Controller
 
         try{
             
-
+            $supplier  = Vendor::find($id);
             $supplier->name = $request->name;
             $supplier->email = $request->email;
             $supplier->phone = $request->phone;

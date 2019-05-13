@@ -120,17 +120,17 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,$id)
     {
         $request->validate([
-         'name' => 'required|unique:categories'
+         'name' => 'required|unique:categories,name,'.$id,
         ]);
 
       
       try{
-       
+        
+        $category = Category::find($id);
         $category->name = $request->name;
-
         $category->update();
 
         return response()->json(['status'=>'success','message'=>'Category Added']);
@@ -148,9 +148,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-
+        $category = Category::find($id);
         $check = Product::where('category_id','=',$category->id)->count();
 
         if($check>0){

@@ -159,7 +159,7 @@ export default{
    },
     updateVendor(id){
         
-        axios.put(base_url+'supplier/'+id,this.vendor)
+        axios.post(base_url+'supplier/update/'+id,this.vendor)
         .then(res => {
          
           if(res.data.status == 'success'){

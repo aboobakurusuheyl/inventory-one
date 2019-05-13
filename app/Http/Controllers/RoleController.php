@@ -222,7 +222,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request,$id)
     {
           
         $request->validate([
@@ -230,7 +230,7 @@ class RoleController extends Controller
         ]);
 
         try{
-        
+        $role = Role::find($id);
         $role->role_name = $request->role_name;
 
         $role->save();
@@ -252,10 +252,12 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
         
         try{
+
+            $role = Role::find($id);
 
             $role->delete();
 
@@ -269,7 +271,9 @@ class RoleController extends Controller
         }
 
     }
+ 
 
+   // just for testing 
     public function userRole(){
          $role_id = Auth::user()->role_id;
 

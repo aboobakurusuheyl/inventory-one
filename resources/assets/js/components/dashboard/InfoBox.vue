@@ -151,14 +151,14 @@
                             <i class="material-icons" >all_inclusive</i>
                         </div>
                         <div class="content">
-                            <div class="text">Gross Profit</div>
+                            <div class="text">Profit</div>
                             <div class="number"><small>৳{{ info.total_gross_profit }}</small></div>
                         </div>
                     </div>             
                 </div> 
 
 
-                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">              
+         <!--         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">              
          
                     <div class="info-box-2 bg-deep-purple hover-expand-effect">
                         <div class="icon">
@@ -169,7 +169,7 @@
                             <div class="number"><small>৳{{ info.total_net_profit }}</small></div>
                         </div>
                     </div>             
-                </div> 
+                </div> --> 
                 
  
     

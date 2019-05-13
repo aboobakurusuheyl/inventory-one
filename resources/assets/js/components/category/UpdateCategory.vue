@@ -118,7 +118,7 @@ export default{
    },
     updatecategory(id){
         
-        axios.put(base_url+'category/'+id,this.category)
+        axios.post(base_url+'category/update/'+id,this.category)
         .then(res => {
          
           if(res.data.status == 'success'){

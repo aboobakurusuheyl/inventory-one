@@ -1,11 +1,6 @@
 <template>
 
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-<!--     <h2 v-if="!invoice_state">
-      <button  @click="showInvoice" type="button" class="btn btn-primary">
-        <i class="glyphicon glyphicon-plus"></i> New Invoice
-      </button>
-    </h2> -->
     <div v-show="invoice_state" class="card">
       <div class="header">
         <h2 class="pull-left">
@@ -216,7 +211,6 @@
           <div class="input-group focused">
             <div class="input-group-addon">$</div>
             <label>{{ invoice.total_disount = totalDiscount }}</label>
-            <!-- 		<input type="number" class="form-control" name="sub_total" :value="invoice.total_disount = totalDiscount" placeholder="Subtotal" disabled=""> -->
           </div>
         </div> 
 
@@ -346,7 +340,7 @@
 
     methods : {
 
-
+     // finding the data which have to be edit 
       editData(id){
 
         axios.get(base_url+'invoice/'+id+'/edit')
@@ -361,10 +355,11 @@
       },
 
 
+      // submit update data 
 
       store(){
 
-        axios.put(base_url+'invoice/'+this.invoice.invoice_no,this.invoice)
+        axios.post(base_url+'invoice/update/'+this.invoice.invoice_no,this.invoice)
         .then(response => {
 
           this.successALert(response.data);
@@ -389,6 +384,7 @@
 
       },
 
+    // new product finding from database 
 
       findProduct(index){ 
 
@@ -411,7 +407,9 @@
       },
 
 
+    // find stcok according to product 
 
+    
       findStock(index){
 
         if(this.invoice.product[index].product_id === ''){

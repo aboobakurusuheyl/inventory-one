@@ -169,7 +169,7 @@
 					}).then((result) => {
 						if (result.value) {
 
-							axios.delete(base_url+'payment/'+id)
+							axios.get(base_url+'payment/delete/'+id)
 							.then(res => {
 								this.getPayment(this.id);
 								this.successALert(res.data);

@@ -254,7 +254,7 @@
              }).then((result) => {
                  if (result.value) {
 
-                    axios.delete(base_url+'stock/'+id)
+                    axios.get(base_url+'stock/delete/'+id)
                     .then(res => {
 
                      EventBus.$emit('stock-created',1);

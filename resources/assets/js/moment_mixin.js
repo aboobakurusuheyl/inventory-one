@@ -1,4 +1,4 @@
-// import {EventBus} from './vue-asset';
+// mixins for moment js ... recomanded to not include when you don't need it
 import moment from 'moment';
 export default{
 

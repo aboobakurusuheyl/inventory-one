@@ -144,7 +144,7 @@ export default {
         () => {}
       ).then(result => {
         if (result.value) {
-          axios.delete(base_url + "category/" + id).then(res => {
+          axios.get(base_url + "category/delete/" + id).then(res => {
             EventBus.$emit("category-created", 1);
             this.successALert(res.data);
           });

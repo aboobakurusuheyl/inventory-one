@@ -153,7 +153,7 @@ export default{
    },
     updateProduct(id){
         
-        axios.put(base_url+'product/'+id,this.product)
+        axios.post(base_url+'product/update/'+id,this.product)
         .then(res => {
          
           if(res.data.status == 'success'){

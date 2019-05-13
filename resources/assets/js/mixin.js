@@ -1,4 +1,4 @@
-// import {EventBus} from './vue-asset';
+// this mixin file excluding moment
 import moment from 'moment';
 export default{
 

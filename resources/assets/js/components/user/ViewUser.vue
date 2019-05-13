@@ -156,7 +156,7 @@ export default {
         () => {}
       ).then(result => {
         if (result.value) {
-          axios.delete(base_url + "user/" + id).then(res => {
+          axios.get(base_url + "user/delete/" + id).then(res => {
             EventBus.$emit("user-created", 1);
             this.successAlert(res.data);
           });

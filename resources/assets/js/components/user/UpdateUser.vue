@@ -128,7 +128,7 @@ export default {
 
     updateUser() {
       axios
-        .put(base_url + "user/" + this.user.id, this.user)
+        .post(base_url + "user/update/" + this.user.id, this.user)
 
         .then(response => {
           $("#update-user").modal("hide");

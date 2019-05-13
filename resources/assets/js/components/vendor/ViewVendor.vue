@@ -163,7 +163,7 @@
              }).then((result) => {
                  if (result.value) {
 
-                    axios.delete(base_url+'supplier/'+id)
+                    axios.get(base_url+'supplier/delete/'+id)
                     .then(res => {
 
                      EventBus.$emit('vendor-created',1);

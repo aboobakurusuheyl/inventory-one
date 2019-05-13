@@ -134,7 +134,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
          $request->validate([
             'name' => 'required',
@@ -143,7 +143,8 @@ class ProductController extends Controller
 
 
         try{
-
+            
+            $product = Product::find($id);
             $product->category_id = $request->category;
             $product->product_name = $request->name;
             $product->details = $request->details;
@@ -166,9 +167,11 @@ class ProductController extends Controller
 
     // delete product 
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         
+
+        $product = Product::find($id);
 
         $check = Stock::where('product_id','=',$product->id)->count();
 

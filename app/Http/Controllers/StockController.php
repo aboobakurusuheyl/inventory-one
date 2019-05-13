@@ -204,7 +204,7 @@ class StockController extends Controller
      * @param  \App\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stock $stock)
+    public function update(Request $request,$id)
     {
 
      $request->validate([
@@ -217,7 +217,7 @@ class StockController extends Controller
 
 
      try{
-
+      $stock = Stock::find($id);
       $stock->category_id = $request->category;
       $stock->product_id = $request->product;
       $stock->vendor_id = $request->vendor;

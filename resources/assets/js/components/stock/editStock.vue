@@ -287,7 +287,7 @@
 				}
 
 
-				axios.put(base_url+'stock/'+id,this.stock)
+				axios.post(base_url+'stock/update/'+id,this.stock)
 
 				.then(response => {
 
@@ -321,7 +321,7 @@
 
 		},
 
-  // end of method section 
+ 
 
 
 

@@ -1,123 +1,123 @@
 <template>
-    <div class="wrap">
+  <div class="wrap">
     <!--    <div class="row">
             
             filtering element 
-        </div> -->
-        <div class="body">
+          </div> -->
+          <div class="body">
 
              <!--  	 <div class="row">
                   <edit-stock :categorys="categorys" :vendors="vendors"></edit-stock>
                   <update-qty></update-qty>
-              </div> -->
+                </div> -->
 
-              <update-invoice :categorys="categorys" :customers="customers"></update-invoice>
-              <create-payment></create-payment>
-              <view-payment></view-payment>
+                <update-invoice :categorys="categorys" :customers="customers"></update-invoice>
+                <create-payment></create-payment>
+                <view-payment></view-payment>
 
-              <div class="row">
+                <div class="row">
                   <div class="col-md-4">
-                      <input type="text" class="form-control "
-                       v-on:keyup="getData(1)" 
-                        v-model="invoice_id" 
-                        placeholder="Search By Invoice Number">
+                    <input type="text" class="form-control "
+                    v-on:keyup="getData(1)" 
+                    v-model="invoice_id" 
+                    placeholder="Search By Invoice Number">
                   </div>
                   <div class="col-md-4">
-                      <select class="form-control  select2" data-live-serach="true"
-                       @change="getData(1)" 
-                       v-model="customer_id"
-                       v-select="customer_id"
-                       >
-                          <option value="">All Customer</option>
+                    <select class="form-control  select2" data-live-serach="true"
+                    @change="getData(1)" 
+                    v-model="customer_id"
+                    v-select="customer_id"
+                    >
+                    <option value="">All Customer</option>
 
-                          <option v-for="(customer,index) in customers" :value="customer.id">{{ customer.customer_name  }}</option>
-                      </select>
-                  </div>
-                  <div class="col-md-4">
-      
+                    <option v-for="(customer,index) in customers" :value="customer.id">{{ customer.customer_name  }}</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+
                  <!--  <vuejs-datepicker :input-class="'form-control'" :format="'yyyy-MM-dd'" value-format="yyyy-MM-dd" :value="start_date"></vuejs-datepicker> -->
 
-                  
-                     </div>
+
+               </div>
 
 
 
-                 </div>
+             </div>
 
-                <div class="loading" v-if="isLoading">
-                    <h2 style="text-align:center">Loading.......</h2>
-                </div>
+             <div class="loading" v-if="isLoading">
+              <h2 style="text-align:center">Loading.......</h2>
+            </div>
 
-                 <div class="table-responsive" v-else>
+            <div class="table-responsive" v-else>
 
-                     <table class="table table-condensed table-hover table-bordered">
-                         <thead>
-                             <tr>
-                                 <th>Invoice</th>
-                                 <th>Date</th>
-                                 <th>Customer</th>
-                                 <th>Total Amount</th>
-                                 <th>Paid</th>
-                                 <th>Due</th>
-                                 <th>Sold By</th>
-                                 <th>payment</th>
-                                 <th>Action</th>
-                                
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr v-for="(value,index) in invoices.data">
-                                 <td>{{ value.id }}</td>
-                                 <td>{{ value.sell_date | moment('LL') }}</td>
-                                 <td>{{ value.customer.customer_name }}</td>
-                                 <td>{{ value.total_amount }}</td>
-                                 <td>{{ value.paid_amount }}</td>
-                                 <td  v-bind:class="{ 'text-success': value.payment_status === 1,
-                                  'text-danger': value.payment_status === 0}" >
-                                  {{ value.total_amount - value.paid_amount }}
-                                 </td>
-                                 <td>{{ value.user.name }}</td>
+             <table class="table table-condensed table-hover table-bordered">
+               <thead>
+                 <tr>
+                   <th>Invoice</th>
+                   <th>Date</th>
+                   <th>Customer</th>
+                   <th>Total Amount</th>
+                   <th>Paid</th>
+                   <th>Due</th>
+                   <th>Sold By</th>
+                   <th>payment</th>
+                   <th>Action</th>
 
-                                 
-                                 <td>
-                                     <a @click.prevent="CreatePayment(value.id)" href=""  data-toggle="modal" data-target="#smallModal" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">attach_money</i></a>
-                                     
-                                      <a @click.prevent="ViewPayment(value.id)" href=""  data-toggle="modal" data-target="#viewPayment" class="btn bg-cyan btn-circle waves-effect waves-circle waves-float"><i class="material-icons">remove_red_eye</i></a>
-                             
-                                 </td>
-
-                                 <td>
-
-                                     <a :href="url+value.id" target="_blank" type="button" class="btn bg-orange btn-circle waves-effect waves-circle waves-float">
-                                         <i class="material-icons">print</i>
-                                     </a>
-
-                                     <button @click="editInvoice(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
-                                         <i class="material-icons">edit</i>
-                                     </button>
-
-                                     <button @click="deleteInvoice(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
-                                         <i class="material-icons">delete</i>
-                                     </button>       
-
-                                 </td>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr v-for="(value,index) in invoices.data">
+                   <td>{{ value.id }}</td>
+                   <td>{{ value.sell_date | moment('LL') }}</td>
+                   <td>{{ value.customer.customer_name }}</td>
+                   <td>{{ value.total_amount }}</td>
+                   <td>{{ value.paid_amount }}</td>
+                   <td  v-bind:class="{ 'text-success': value.payment_status === 1,
+                   'text-danger': value.payment_status === 0}" >
+                   {{ value.total_amount - value.paid_amount }}
+                 </td>
+                 <td>{{ value.user.name }}</td>
 
 
-                             </tr>
+                 <td>
+                   <a @click.prevent="CreatePayment(value.id)" href=""  data-toggle="modal" data-target="#smallModal" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">attach_money</i></a>
 
-                         </tbody>
+                   <a @click.prevent="ViewPayment(value.id)" href=""  data-toggle="modal" data-target="#viewPayment" class="btn bg-cyan btn-circle waves-effect waves-circle waves-float"><i class="material-icons">remove_red_eye</i></a>
 
-                     </table>
+                 </td>
 
-                 </div>
+                 <td>
 
-                 <pagination :pageData="invoices"></pagination>
+                   <a :href="url+value.id" target="_blank" type="button" class="btn bg-orange btn-circle waves-effect waves-circle waves-float">
+                     <i class="material-icons">print</i>
+                   </a>
+
+                   <button @click="editInvoice(value.id)" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float">
+                     <i class="material-icons">edit</i>
+                   </button>
+
+                   <button @click="deleteInvoice(value.id)" type="button" class="btn bg-pink btn-circle waves-effect waves-circle waves-float">
+                     <i class="material-icons">delete</i>
+                   </button>       
+
+                 </td>
+
+
+               </tr>
+
+             </tbody>
+
+           </table>
 
          </div>
-     </div>
- </template>
 
- <script>
+         <pagination :pageData="invoices"></pagination>
+
+       </div>
+     </div>
+   </template>
+
+   <script>
 
     import {EventBus} from '../../vue-asset';
     import mixin from '../../mixin.js';
@@ -133,39 +133,39 @@
 
     export default{
 
-        props: ['categorys','customers'],
+      props: ['categorys','customers'],
 
-        mixins:[mixin,MomentMixin],
+      mixins:[mixin,MomentMixin],
 
-        components : {
+      components : {
 
         //     'edit-stock' : editStock,
-            'update-invoice' : UpdateInvoice,
-            'create-payment' : CreatePayment,
-            'view-payment' : ViewPayment,
-            'vuejs-datepicker' :  Datepicker,
-            'pagination' :  Pagination,
+        'update-invoice' : UpdateInvoice,
+        'create-payment' : CreatePayment,
+        'view-payment' : ViewPayment,
+        'vuejs-datepicker' :  Datepicker,
+        'pagination' :  Pagination,
 
-        },
+      },
 
-        data(){
+      data(){
 
-            return {
+        return {
 
-                invoice_id : '',
-                customer_id : '',
-                start_date : new Date('2019-02-03'),
-                end_date : '',
-                invoices : [],
-                format : 'yyyy-MM-dd',
-                url : base_url+'invoice/',
-                isLoading : true,
+          invoice_id : '',
+          customer_id : '',
+          start_date : new Date('2019-02-03'),
+          end_date : '',
+          invoices : [],
+          format : 'yyyy-MM-dd',
+          url : base_url+'invoice/',
+          isLoading : true,
 
-            }
+        }
 
 
-        },
-        created(){
+      },
+      created(){
 
 
            // this.hello();
@@ -174,83 +174,85 @@
            this.getData();
 
            EventBus.$on('invoice-created', function () {
-               _this.getData();
+             _this.getData();
            });
 
-       },
+         },
 
-       methods : {
+         methods : {
 
            getData(page = 1){
 
-              this.isLoading = true;
-               axios.get(base_url+"invoice-list?page="+page+"&customer_id="+this.customer_id+"&invoice_id="+this.invoice_id+"&start_date="+this.end_date+"&end_date="+this.start_date).then(response =>
-                {
-                      this.invoices = response.data;
-                      this.isLoading = false;
+            this.isLoading = true;
+            axios.get(base_url+"invoice-list?page="+page+"&customer_id="+this.customer_id+"&invoice_id="+this.invoice_id+"&start_date="+this.end_date+"&end_date="+this.start_date).then(response =>
+            {
+              this.invoices = response.data;
+              this.isLoading = false;
 
-                }).catch(error =>
-                {
+            }).catch(error =>
+            {
 
-                      console.log(error);
-                })
-                             },
+              console.log(error);
+            })
+          },
 
 
          // edit vendor 
 
-           editInvoice(id){
+         editInvoice(id){
 
            EventBus.$emit('edit-invoice',id);
 
-                         },
+         },
          // delete vendor 
 
          deleteInvoice(id){
 
-             Swal({
-                 title: 'Are you sure?',
-                 text: "You won't be able to revert this!",
-                 type: 'warning',
-                 showCancelButton: true,
-                 confirmButtonColor: '#3085d6',
-                 cancelButtonColor: '#d33',
-                 confirmButtonText: 'Yes, delete it!'
-             },() => {
+           Swal({
+             title: 'Are you sure?',
+             text: "You won't be able to revert this!",
+             type: 'warning',
+             showCancelButton: true,
+             confirmButtonColor: '#3085d6',
+             cancelButtonColor: '#d33',
+             confirmButtonText: 'Yes, delete it!'
+           },() => {
 
-             }).then((result) => {
-                 if (result.value) {
+           }).then((result) => {
+             if (result.value) {
 
-                     axios.delete(base_url+'invoice/'+id)
-                     .then(res => {
+               axios.get(base_url+'invoice/delete/'+id)
+               .then(res => {
 
-                         EventBus.$emit('invoice-created',1);
+                 EventBus.$emit('invoice-created',1);
 
-                         this.successALert(res.data);
+                 this.successALert(res.data);
 
-                     })
+               })
 
 
-                 }
-             })       
+             }
+           })       
 
 
          },
 
          CreatePayment(id){
-              
-              EventBus.$emit('create-payment',id);
-         },
 
-         ViewPayment(id){
-           
-           EventBus.$emit('view-payment',id);
+          EventBus.$emit('create-payment',id);
+        },
 
-         },
-         pageClicked(pageNo){
-             var vm = this;
-             vm.getData(pageNo);
-         },
+        ViewPayment(id){
+
+         EventBus.$emit('view-payment',id);
+
+       },
+
+       // this function will called from pagination components 
+       pageClicked(pageNo){
+         var vm = this;
+         vm.getData(pageNo);
+       },
 
 
 
@@ -265,10 +267,10 @@
 
 
 
- }
+   }
 
 
 
 
 
-</script>
+ </script>
