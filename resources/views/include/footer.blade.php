@@ -54,12 +54,4 @@
         <script src="{{ url('js/admin.js') }}"></script>
     <script src="{{ url('js/select2.min.js') }}"></script>
 
-    <script >
-        $(document).ready(function(){
-
-          alert('ready');
-           
-        });
-    </script>
-
 

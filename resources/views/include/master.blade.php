@@ -277,14 +277,6 @@
 
     <script type="text/javascript">
 
-   $(document).ready(function() {
-   	 	
-   	 	$('.select2').select2();
-
-        alert('do something');
-
-   	 });
-
    function loaded(){
          var segment3 = '{{ Request::segment(1) }}';
          var current_url = base_url + segment3;
