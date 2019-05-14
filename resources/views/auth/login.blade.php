@@ -7,20 +7,20 @@
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Belontory</b></a>
-            <small>A Inventory Softwaare</small>
+            <a href="javascript:void(0);"><img class="img-fluid" src="{{ url('images/logo.png') }}" alt="belontory logo"> </a>
+            <!-- <small>A Inventory Softwaare</small> -->
         </div>
         <div class="card">
             <div class="body">
                 <form id="sign_in" method="POST" action="{{ route('login') }}">
                 	  {{ csrf_field() }}
-                    <div class="msg">Sign in to start your session</div>
+                    <div class="msg">Lets Sign In</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="email" placeholder="Username" required autofocus>
+                            <input type="text" class="form-control" name="email" placeholder="email" required autofocus>
                         </div>
                            @if ($errors->has('email'))
                                     <span class="help-block">
